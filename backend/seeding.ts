@@ -3,33 +3,82 @@ import { ObjectId } from "mongodb";
 import { Subject as SubjectModel } from "./models/subject"
 import { Note as NodeModel } from "./models/note"
 import { Student, Teacher } from './models/user';
-import { StudentType, TeacherType } from './types';
+import { StudentType, TeacherType, Grade } from './types';
+import { connect } from 'mongoose';
+import bcrypt from 'bcrypt';
+
+
+const mongo_uri = 'mongodb://127.0.0.1:27017/school_proc'
+connect(mongo_uri);
 
 
 
-
-
-
-
-const students: StudentType[] = [
+const grades: Grade[] = [
     {
-        username: "ilyes",
-        email: "ilyes@gmail.com",
-        password: "password",
-        profile_image: "random.png",
-        current_grade: "M1-STIC-2",
-        current_year: 2022,
-    },
-    {
-        username: "ahmed",
-        email: "ahmed@gmail.com",
-        password: "password",
-        profile_image: "random.png",
-        current_grade: "M1-STIC-2",
-        current_year: 2022,
-    },
+        name: "M1-STIC-S1",
+        subjects: []
+    }
 ]
 
+
+const teachers: TeacherType[] = [
+    {
+        username: "mezioud",
+        email: "mezioud@gmail.com",
+        password: "password",
+        subjects: [],
+        idAdmin: false,
+    },
+    {
+        username: "bouzenada",
+        email: "bouzenada@gmail.com",
+        password: "password",
+        subjects: [],
+        idAdmin: false,
+    },
+    {
+        username: "chickhi",
+        email: "chickhi@gmail.com",
+        password: "password",
+        subjects: [],
+        idAdmin: false,
+    },
+    {
+        username: "gharzouli",
+        email: "gharzouli@gmail.com",
+        password: "password",
+        subjects: [],
+        idAdmin: false,
+    },
+    {
+        username: "draa",
+        email: "draa@gmail.com",
+        password: "password",
+        subjects: [],
+        idAdmin: false,
+    },
+    {
+        username: "labed",
+        email: "labed@gmail.com",
+        password: "password",
+        subjects: [],
+        idAdmin: false,
+    },
+    {
+        username: "idk",
+        email: "idk@gmail.com",
+        password: "password",
+        subjects: [],
+        idAdmin: false,
+    },
+    {
+        username: "meriem",
+        email: "meriem@gmail.com",
+        password: "password",
+        subjects: [],
+        idAdmin: false,
+    },
+]
 
 const subjects: Subject[] = [
     {
@@ -135,25 +184,67 @@ const notes: Note[] = [
         teacher: new ObjectId(), // change with existing ones
         subject: new ObjectId(), // change with existing ones
         year: 2022,
-        notes: [
-            {
-                tp: 0,
-                td: 0,
+        notes:{
+                tp: 9,
+                td: 9,
                 exam: 0,
             }
-        ]
+    },
+    {
+        student: new ObjectId(), // change with existing ones
+        teacher: new ObjectId(), // change with existing ones
+        subject: new ObjectId(), // change with existing ones
+        year: 2022,
+        notes:{
+                tp: 9,
+                td: 9,
+                exam: 7,
+            }
     }
 ]
 
 
 
 
-console.log(subjects)
-console.log(notes)
 
 
 
-//SubjectModel.insert
-//NodeModel.insert
+
+const main = async () => {
+    // this is here becuase of the needed await
+    const students: StudentType[] = [
+        {
+            username: "ilyes",
+            email: "ilyes@gmail.com",
+            password: await bcrypt.hash("password", 10),
+            current_grade: "M1-STIC-2",
+            current_year: 2022,
+        },
+        {
+            username: "ahmed",
+            email: "ahmed@gmail.com",
+            password: await bcrypt.hash("password", 10),
+            current_grade: "M1-STIC-2",
+            current_year: 2022,
+        },
+    ]
 
 
+    const inserted_subjects = await SubjectModel.insertMany(subjects)
+    const inserted_students = await Student.insertMany(students)
+    for (let i = 0; i < inserted_subjects.length; i++) {
+        teachers[i].subjects.push(inserted_subjects[i].id)
+    }
+    const inserted_teachers = await Teacher.insertMany(teachers)
+    notes[0].student = inserted_students[0].id
+    notes[0].teacher = inserted_teachers[0].id
+    notes[0].subject = inserted_subjects[0].id
+    notes[1].student = inserted_students[1].id
+    notes[1].teacher = inserted_teachers[1].id
+    notes[1].subject = inserted_subjects[1].id
+    await NodeModel.insertMany(notes)
+    process.exit(0);
+}
+
+
+main()

@@ -1,17 +1,18 @@
-import { Schema, model, Types, DiscriminatorModel } from 'mongoose';
+import { Schema, model, Types } from 'mongoose';
+import { StudentType, TeacherType } from '../types';
 
 
-const student_schema= new Schema({
+const student_schema= new Schema<StudentType>({
     username: {type: String, required: true},
     email: {type: String, required: true},
     password: {type: String, required: true},
     profile_image: {type: String, default: "default.jpg"},
     current_grade: {type: String, required:true},
-    current_year: {type: String, required:true}, // 20xx // 0000 == no longer a student
+    current_year: {type: Number, required:true}, // 20xx // 0000 == no longer a student
 },{timestamps: true})
 
 
-const teacher_schema= new Schema({
+const teacher_schema= new Schema<TeacherType>({
     username: {type: String, required: true},
     email: {type: String, required: true},
     password: {type: String, required: true},

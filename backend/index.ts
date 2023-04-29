@@ -37,6 +37,7 @@ app.use("/",router)
 app.use("/login",router)
 app.use("/register",router)
 app.use("/logout",router)
+app.use("/get_notes",router)
 
 
 

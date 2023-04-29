@@ -6,14 +6,15 @@ import bcrypt from 'bcrypt';
 import { ObjectId } from "mongodb";
 import { sign, verify } from "jsonwebtoken"
 import dotenv from 'dotenv';
+import { Note } from '../models/note';
 
 
 
-const generate_token = (data: UserType) => {
+const generate_token = (data: UserType, id?: ObjectId) => {
 	const port = process.env.JWT_TOKEN_KEY;
 	return sign(
 		{
-			_id : new ObjectId(),
+			_id : id,
 			username : data.username,
 			email : data.email,
 			profile_image : data.profile_image,
@@ -39,9 +40,10 @@ const login = async (req: Request, res: Response) => {
 		message: "bad password",
 	})
 
+
 	res.status(201).json({
 		message: 'login ok',
-		token: generate_token(user)
+		token: generate_token(user, user._id)
 	})
 }
 
@@ -83,6 +85,22 @@ const register_student = async (req: Request, res: Response) => {
 		updatedAt : Date.now()
 	})
 	await student.save()
+
+	// create empty notes here
+
+	Note.insertMany([
+		{
+			student: student._id, // change with existing ones
+			teacher: new ObjectId(), // change with existing ones
+			subject: new ObjectId(), // change with existing ones
+			year: 2022,
+			notes:{
+					tp: 9,
+					td: 9,
+					exam: 7,
+				}
+		}
+	])
 
 	res.status(201).json({
 		message: 'account created',

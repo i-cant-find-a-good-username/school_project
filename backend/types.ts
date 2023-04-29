@@ -4,9 +4,16 @@ interface UserType  {
     username: string,
     email: string,
     password: string,
-    profile_image: string,
+    profile_image?: string,
 }
 
+
+interface Complaint {
+    student: ObjectId,
+    teacher: ObjectId,
+    Note: ObjectId,
+    message: string
+}
 
 interface StudentType extends UserType {
     current_grade: string,
@@ -16,7 +23,7 @@ interface StudentType extends UserType {
 
 interface TeacherType extends UserType {
     subjects: string[],
-    idAdmin: string,
+    idAdmin: boolean,
 }
 
 
@@ -52,15 +59,17 @@ interface Note {
     teacher: ObjectId,
     subject: ObjectId ,
     year: number,
-    notes: [
-        {
+    notes:{
             tp: number,
             td: number,
             exam: number,
         }
-    ]
 }
 
+interface Grade {
+    name: string,
+    subjects: ObjectId[]
+}
 
 export {
     UserType,
@@ -70,4 +79,6 @@ export {
     UserRegsiter,
     Subject,
     Note,
+    Complaint,
+    Grade
 }
