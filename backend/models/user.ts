@@ -1,5 +1,8 @@
-import { Schema, model } from 'mongoose';
-import { idText } from 'typescript';
+import { Schema, model, Types } from 'mongoose';
+
+
+
+
 
 const user_schema= new Schema({
     username: {type: String, required: true},
@@ -9,9 +12,7 @@ const user_schema= new Schema({
     profile_image: {type: String, required: true, default: "default.jpg"},
 },{timestamps: true}) 
 
-const User = model('User',user_schema)
 
-module.exports = User
 
 
 
@@ -22,12 +23,14 @@ module.exports = User
 const notes_schema= new Schema({
 
 
-    teacher: {type: String, required:true},
-    student: {type: String, required:true},
-    subject: {type: String, required:true},
+    student: {type: Types.ObjectId, required:true},
+    teacher: {type: Types.ObjectId, required:true},
+    subject: {type: Types.ObjectId, required:true},
     notes: [
         {
-
+            average: {type: Number, required:true},
+            exam: {type: Number, required:true},
+            tqwim: {type: Number, required:true},
         }
     ]
 
@@ -40,6 +43,47 @@ const notes_schema= new Schema({
 
 
 
+
+
+
+const subs_schema= new Schema({
+
+
+    name: {type: String, required:true},
+    teachers: [{type: Types.ObjectId, required:true}],
+    group: [{type: Types.ObjectId, required:true}],
+    credits: [{type: Types.ObjectId, required:true}],
+    Coefficient: [{type: Number, required:true}],
+    notes: {
+        tp: {
+            value: {type: Number, required:true},
+            Coefficient: {type: Number, required:true},
+        },
+        td: {
+            value: {type: Number, required:true},
+            Coefficient: {type: Number, required:true},
+        },
+        exam: {
+            value: {type: Number, required:true},
+            Coefficient: {type: Number, required:true},
+        }
+    }
+
+
+
+
+
+},{timestamps: true}) 
+
+
+
+
+
+
+
+
+
+const User = model('User',user_schema)
 
 export {
     User

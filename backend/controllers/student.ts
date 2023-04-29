@@ -24,6 +24,21 @@ const func = (req: Request, res: Response) => {
 
 
 
+
+
+const get_notes = (req: Request, res: Response) => {}
+const get_global_notes = (req: Request, res: Response) => {}
+const post_claim = (req: Request, res: Response) => {}
+
+
+
+
+
+
+
+
+
+
 export {
     func
 }

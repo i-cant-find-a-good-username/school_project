@@ -1,8 +1,8 @@
-import { Request, Response, NextFunction } from 'express';
-import { UserType } from "../types"
+import { Request, Response } from 'express';
+import { UserType, UserLogin, UserRegsiter } from "../types"
 
 
-const isUser = (req: Request, res: Response, next: any) => {
+const isUser = (req: Request, res: Response, next: Function) => {
     const body: UserType = req.body
     if (
         body.username !== undefined && typeof(body.username) == "string" &&
@@ -24,8 +24,57 @@ const isUser = (req: Request, res: Response, next: any) => {
 
 
 
-export {
-    isUser
+const isLoginUser = (req: Request, res: Response, next: Function) => {
+    const body: UserType = req.body
+    if (
+        body.email !== undefined && typeof(body.email) == "string" &&
+        body.password !== undefined && typeof(body.password) == "string"
+    ){
+        next()
+    }else{
+        res.json({
+            error: 400,
+            message: "bad input"
+        })
+    }
 }
 
 
+
+const isRegisterUser = (req: Request, res: Response, next: Function) => {
+    const body: UserType = req.body
+    if (
+        body.username !== undefined && typeof(body.username) == "string" &&
+        body.email !== undefined && typeof(body.email) == "string" &&
+        body.password !== undefined && typeof(body.password) == "string"
+    ){
+        next()
+    }else{
+        res.json({
+            error: 400,
+            message: "bad input"
+        })
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export {
+    isUser,
+    isLoginUser,
+    isRegisterUser
+}

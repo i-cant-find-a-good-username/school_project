@@ -34,6 +34,9 @@ import router from './routes'
 
 
 app.use("/",router)
+app.use("/login",router)
+app.use("/register",router)
+app.use("/logout",router)
 
 
 
@@ -56,6 +59,6 @@ app.use("/",router)
 
 
 
-app.listen(3001, () => {
+app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });
