@@ -7,8 +7,6 @@ const isAuth = (req: Request, res: Response, next: Function) => {
     if( req.get("X-Authorization") ) {
         const token: string = req.get("X-Authorization") as string
         verify(token, 'secret', (err: any, decoded: any) => {
-            console.log(decoded)
-            console.log(err)
             if (err === null){
                 res.locals.user_data = decoded
                 next()

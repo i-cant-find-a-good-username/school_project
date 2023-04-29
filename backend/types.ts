@@ -16,14 +16,14 @@ interface Complaint {
 }
 
 interface StudentType extends UserType {
-    current_grade: string,
+    current_grade: ObjectId,
     current_year: number,
 }
 
 
 interface TeacherType extends UserType {
     subjects: string[],
-    idAdmin: boolean,
+    isAdmin: boolean,
 }
 
 
@@ -43,7 +43,7 @@ interface UserRegsiter {
 interface Subject {
     name: string,
     group: string,
-    grade: string ,
+    //grade: ObjectId ,
     credits: number,
     Coefficient: number,
     notes_Coefficient: {

@@ -88,19 +88,20 @@ const register_student = async (req: Request, res: Response) => {
 
 	// create empty notes here
 
-	Note.insertMany([
-		{
-			student: student._id, // change with existing ones
-			teacher: new ObjectId(), // change with existing ones
-			subject: new ObjectId(), // change with existing ones
-			year: 2022,
-			notes:{
-					tp: 9,
-					td: 9,
-					exam: 7,
-				}
-		}
-	])
+	//const 
+	//Note.insertMany([
+	//	{
+	//		student: student._id, // change with existing ones
+	//		teacher: new ObjectId(), // change with existing ones
+	//		subject: new ObjectId(), // change with existing ones
+	//		year: 2022,
+	//		notes:{
+	//				tp: 9,
+	//				td: 9,
+	//				exam: 7,
+	//			}
+	//	}
+	//])
 
 	res.status(201).json({
 		message: 'account created',

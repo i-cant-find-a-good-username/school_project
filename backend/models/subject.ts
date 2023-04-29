@@ -1,11 +1,11 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, Types } from 'mongoose';
 import { Subject } from '../types';
 
 
 const subjects_schema= new Schema<Subject>({
     name: {type: String, required:true},
-    group: {type: String, required:true, ref: "Group"}, // UEF1 // UEF2 // UEM1
-    grade: {type: String, required:true}, // year-speciality-simester //M1-STIC-S1 // L3-TI-S2
+    group: {type: String, required:true}, // UEF1 // UEF2 // UEM1
+    //grade: {type: Types.ObjectId, required:true, ref: 'grade'}
     credits: {type: Number, required:true},
     Coefficient: {type: Number, required:true},
     notes_Coefficient: {
