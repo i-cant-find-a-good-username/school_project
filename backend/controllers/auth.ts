@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import {  } from 'mongoose'
-import { User } from "../models/user"
-import { UserType, UserRegsiter, UserLogin } from "../types"
+import { Student, Teacher } from "../models/user"
+import { UserType, StudentType, TeacherType, UserRegsiter, UserLogin } from "../types"
 import bcrypt from 'bcrypt';
 import { ObjectId } from "mongodb";
 import { sign, verify } from "jsonwebtoken"
@@ -16,7 +16,6 @@ const generate_token = (data: UserType) => {
 			_id : new ObjectId(),
 			username : data.username,
 			email : data.email,
-			role : data.role,
 			profile_image : data.profile_image,
 			created:  Math.floor(Date.now() / 1000)
 		},
@@ -30,12 +29,12 @@ const generate_token = (data: UserType) => {
 const login = async (req: Request, res: Response) => {
 	const data = req.body
 
-	const user = await User.findOne({email: data.email})
+	const user = await Student.findOne({email: data.email})
 	if(!user) return res.status(401).json({
 		message: "email does not exist",
 	})
 	
-	const matched = await bcrypt.compare(req.body.password, user.password)
+	const matched = await bcrypt.compare(data.password, user.password)
 	if(!matched) return res.status(401).json({
 		message: "bad password",
 	})
@@ -48,32 +47,85 @@ const login = async (req: Request, res: Response) => {
 
 
 
-const register = async (req: Request, res: Response) => {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const register_student = async (req: Request, res: Response) => {
 	const data = req.body
 
-	let user = await User.findOne({email: data.email})
-	if(user) return res.status(401).json({
+	let student = await Student.findOne({email: data.email})
+	if(student) return res.status(401).json({
 		message: 'email taken'
 	})
 
 	const hash_password = await bcrypt.hash(data.password, 10)
-	user = new User({
-		_id : new ObjectId(),
+	student = new Student({
 		username : data.username,
 		email : data.email,
 		password : hash_password,
-		role : data.role,
+		profile_image : data.profile_image,
+		current_grade: data.current_grade,
+		current_year: data.current_year,
+		createdAt : Date.now(),
+		updatedAt : Date.now()
+	})
+	await student.save()
+
+	res.status(201).json({
+		message: 'account created',
+		token: generate_token(student)
+	})
+}
+
+const register_teacher = async (req: Request, res: Response) => {
+	const data = req.body
+
+	let teacher = await Teacher.findOne({email: data.email})
+	if(teacher) return res.status(401).json({
+		message: 'email taken'
+	})
+
+	const hash_password = await bcrypt.hash(data.password, 10)
+	teacher = new Teacher({
+		username : data.username,
+		email : data.email,
+		password : hash_password,
 		profile_image : data.profile_image,
 		createdAt : Date.now(),
 		updatedAt : Date.now()
 	})
-	await user.save()
+	await teacher.save()
 
 	res.status(201).json({
 		message: 'account created',
-		token: generate_token(user)
+		token: generate_token(teacher)
 	})
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -84,5 +136,5 @@ const logout = (req: Request, res: Response) => {
 
 
 export {
-    login, register, logout
+    login, register_student, register_teacher, logout
 }

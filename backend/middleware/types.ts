@@ -1,15 +1,34 @@
 import { Request, Response } from 'express';
-import { UserType, UserLogin, UserRegsiter } from "../types"
+import { UserType, UserLogin, UserRegsiter, TeacherType, StudentType } from "../types"
 
 
 const isUser = (req: Request, res: Response, next: Function) => {
     const body: UserType = req.body
     if (
-        body.username !== undefined && typeof(body.username) == "string" &&
-        body.email !== undefined && typeof(body.email) == "string" &&
-        body.password !== undefined && typeof(body.password) == "string" &&
-        body.role !== undefined && typeof(body.role) == "string" &&
-        body.profile_image !== undefined && typeof(body.profile_image) == "string"
+        body.username !== undefined &&
+        body.email !== undefined &&
+        body.password !== undefined 
+    ){
+        next()
+    }else{
+        res.json({
+            error: 400,
+            message: "bad input"
+        })
+    }
+}
+
+
+
+
+const isStudent = (req: Request, res: Response, next: Function) => {
+    const body: StudentType = req.body
+    if (
+        body.username !== undefined &&
+        body.email !== undefined &&
+        body.password !== undefined && 
+        body.current_grade !== undefined &&
+        body.current_year !== undefined
     ){
         next()
     }else{
@@ -24,11 +43,18 @@ const isUser = (req: Request, res: Response, next: Function) => {
 
 
 
+
+
+
+
+
+
+
 const isLoginUser = (req: Request, res: Response, next: Function) => {
     const body: UserType = req.body
     if (
-        body.email !== undefined && typeof(body.email) == "string" &&
-        body.password !== undefined && typeof(body.password) == "string"
+        body.email !== undefined &&
+        body.password !== undefined
     ){
         next()
     }else{
@@ -44,9 +70,9 @@ const isLoginUser = (req: Request, res: Response, next: Function) => {
 const isRegisterUser = (req: Request, res: Response, next: Function) => {
     const body: UserType = req.body
     if (
-        body.username !== undefined && typeof(body.username) == "string" &&
-        body.email !== undefined && typeof(body.email) == "string" &&
-        body.password !== undefined && typeof(body.password) == "string"
+        body.username !== undefined &&
+        body.email !== undefined &&
+        body.password !== undefined
     ){
         next()
     }else{
@@ -74,6 +100,7 @@ const isRegisterUser = (req: Request, res: Response, next: Function) => {
 
 
 export {
+    isStudent,
     isUser,
     isLoginUser,
     isRegisterUser
