@@ -27,28 +27,6 @@ const isAuth = (req: Request, res: Response, next: Function) => {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
 export {
     isAuth
 }

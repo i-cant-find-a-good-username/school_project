@@ -9,9 +9,6 @@ import dotenv from 'dotenv';
 
 
 
-
-
-
 const generate_token = (data: UserType) => {
 	const port = process.env.JWT_TOKEN_KEY;
 	return sign(
@@ -30,8 +27,6 @@ const generate_token = (data: UserType) => {
 
 
 
-
-
 const login = async (req: Request, res: Response) => {
 	const data = req.body
 
@@ -45,27 +40,21 @@ const login = async (req: Request, res: Response) => {
 		message: "bad password",
 	})
 
-
 	res.status(201).json({
 		message: 'login ok',
 		token: generate_token(user)
 	})
-
 }
-
-
-
 
 
 
 const register = async (req: Request, res: Response) => {
 	const data = req.body
+
 	let user = await User.findOne({email: data.email})
 	if(user) return res.status(401).json({
 		message: 'email taken'
 	})
-
-
 
 	const hash_password = await bcrypt.hash(data.password, 10)
 	user = new User({
@@ -80,11 +69,6 @@ const register = async (req: Request, res: Response) => {
 	})
 	await user.save()
 
-
-
-
-
-
 	res.status(201).json({
 		message: 'account created',
 		token: generate_token(user)
@@ -93,15 +77,9 @@ const register = async (req: Request, res: Response) => {
 
 
 
-
-
-
 const logout = (req: Request, res: Response) => {
 
 }
-
-
-
 
 
 
