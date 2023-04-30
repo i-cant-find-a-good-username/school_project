@@ -5,7 +5,10 @@ import { login as student_login, register as student_register } from './controll
 import { login as teacher_login, register as teacher_register } from './controllers/auth_teacher'
 import { get_notes, get_global_notes, submit_complaint } from './controllers/student'
 import { edit_notes, add_notes, get_notes as get_notes_teacher } from './controllers/teacher'
-import {  } from './controllers/admin'
+import { 
+    get_students ,add_student ,delete_student, edit_student,
+    get_teachers ,add_teacher ,delete_teacher, edit_teacher
+   } from './controllers/admin'
 
 
 
@@ -41,13 +44,17 @@ router.put("/teacher/notes/{id}",isAuth ,edit_notes)
 
 
 // admin
-router.post("/admin/student/add",isAuth ,()=>{})
-router.put("/admin/student/edit/{id}",isAuth ,()=>{})
-router.delete("/admin/student/delete/{id}",isAuth ,()=>{})
+router.get("/admin/students",isAuth ,()=>{})
+router.get("/admin/teachers",isAuth ,()=>{})
 
+router.post("/admin/student/add",isAuth ,()=>{})
 router.post("/admin/teacher/add",isAuth ,()=>{})
+
 router.put("/admin/teacher/edit/{id}",isAuth ,()=>{})
+router.put("/admin/student/edit/{id}",isAuth ,()=>{})
+
 router.delete("/admin/teacher/delete/{id}",isAuth ,()=>{})
+router.delete("/admin/student/delete/{id}",isAuth ,()=>{})
 
 router.get("/admin/complaints",isAuth ,()=>{})
 
