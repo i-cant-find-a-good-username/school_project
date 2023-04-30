@@ -41,7 +41,13 @@ router.put("/teacher/notes",isAuth ,edit_notes)
 
 
 // admin
-router.get("/admin",isAuth ,()=>{})
+router.get("/admin/student/add",isAuth ,()=>{})
+router.put("/admin/student/edit",isAuth ,()=>{})
+router.delete("/admin/student/delete",isAuth ,()=>{})
+
+router.get("/admin/teacher/add",isAuth ,()=>{})
+router.put("/admin/teacher/edit",isAuth ,()=>{})
+router.delete("/admin/teacher/delete",isAuth ,()=>{})
 
 
 
