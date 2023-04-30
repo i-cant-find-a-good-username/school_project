@@ -40,7 +40,7 @@
 			<AppRailTile label="Global" value={2}>
 				<List/>
 			</AppRailTile>
-			<AppRailTile label="Profile" slot='trail'>
+			<AppRailTile label="Profile" slot='trail' value={3}>
 				<Profile/>
 			</AppRailTile>
 		</AppRail>

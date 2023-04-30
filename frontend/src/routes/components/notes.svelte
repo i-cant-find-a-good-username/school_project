@@ -4,6 +4,8 @@
 	import { Accordion, AccordionItem, InputChip } from '@skeletonlabs/skeleton';
 	let tableArr = [
         {
+            subject: "igr",
+            teacher: "dude",
             td: 5,
             tp: 12,
             exam: 10,
@@ -17,6 +19,20 @@
     	meta: tableMapperValues(tableArr, ['td', 'tp', 'exam']),
     	foot: ['Total', '', '20.00']
     };
+
+
+
+
+
+
+    const tableSimple2: TableSource = {
+    	head: ['subject', 'teacher', 'TD', 'TP', 'Exam'],
+    	body: tableMapperValues(tableArr, ['subject', 'teacher', 'td', 'tp', 'exam']),
+    	meta: tableMapperValues(tableArr, ['subject', 'teacher', 'td', 'tp', 'exam']),
+    	foot: ['Total', '',  '',  '', '20.00']
+    };
+
+
 
 </script>
 
@@ -38,7 +54,7 @@
 					</a>
 					<!-- ... -->
 				</div>
-                <Table interactive={true} source={tableSimple} regionCell='border-l border-surface-700 text-center  align-bottom' regionHeadCell="text-center"   regionFootCell="text-center"   />                    
+                <Table interactive={true} source={tableSimple} regionCell='border-l border-surface-700 text-center w-1/3 align-bottom' regionHeadCell="text-center"   regionFootCell="text-center"   />                    
 				<InputChip bind:value={complaints} name="chips" placeholder="Write a complaint..." />
 			</svelte:fragment>
 		</AccordionItem>
@@ -48,4 +64,7 @@
 			<svelte:fragment slot="content">(content)</svelte:fragment>
 		</AccordionItem>
 	</Accordion>
+
+	<Table interactive={true} source={tableSimple2} regionCell='border-l border-surface-700 text-center  align-bottom' regionHeadCell="text-center w-1/5"   regionFootCell="text-center"   />                    
+
 </div>

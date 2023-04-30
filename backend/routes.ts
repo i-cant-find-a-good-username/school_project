@@ -29,26 +29,27 @@ router.post("/register/teacher",isRegisterTeacher ,teacher_register)
 
 
 // student
-router.get("/student/notes",isAuth ,get_notes)
+router.get("/student/notes/{id}",isAuth ,get_notes)
 router.get("/student/notes_global",isAuth ,get_global_notes)
-router.post("/student/complaint",isAuth , submit_complaint)
+router.post("/student/complaint/",isAuth , submit_complaint)
 
 
 // teacher
-router.get("/teacher/notes",isAuth ,get_notes_teacher)
+router.get("/teacher/notes/{id}",isAuth ,get_notes_teacher)
 router.post("/teacher/notes",isAuth ,add_notes)
-router.put("/teacher/notes",isAuth ,edit_notes)
+router.put("/teacher/notes/{id}",isAuth ,edit_notes)
 
 
 // admin
-router.get("/admin/student/add",isAuth ,()=>{})
-router.put("/admin/student/edit",isAuth ,()=>{})
-router.delete("/admin/student/delete",isAuth ,()=>{})
+router.post("/admin/student/add",isAuth ,()=>{})
+router.put("/admin/student/edit/{id}",isAuth ,()=>{})
+router.delete("/admin/student/delete/{id}",isAuth ,()=>{})
 
-router.get("/admin/teacher/add",isAuth ,()=>{})
-router.put("/admin/teacher/edit",isAuth ,()=>{})
-router.delete("/admin/teacher/delete",isAuth ,()=>{})
+router.post("/admin/teacher/add",isAuth ,()=>{})
+router.put("/admin/teacher/edit/{id}",isAuth ,()=>{})
+router.delete("/admin/teacher/delete/{id}",isAuth ,()=>{})
 
+router.get("/admin/complaints",isAuth ,()=>{})
 
 
 

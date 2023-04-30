@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Accordion, AccordionItem, ListBox, ListBoxItem, Table, popup, type PopupSettings, tableMapperValues, type TableSource } from "@skeletonlabs/skeleton";
+	import { Accordion, AccordionItem, ListBox, ListBoxItem, Table, popup, type PopupSettings, tableMapperValues, type TableSource, InputChip } from "@skeletonlabs/skeleton";
 	import { Paginator } from "@skeletonlabs/skeleton";
 	const source = [
 		{
@@ -69,6 +69,7 @@
 				return obj[key];
 			});
 	});
+	let complaints = ['add here']
 
 
 </script>
@@ -83,6 +84,8 @@
 		<div class="w-full space-y-2 ">
 			<Table source={tableSimple} regionHeadCell="text-center" regionCell="text-center  align-bottom" regionFootCell="text-center"  />
 			<Paginator bind:settings={page} />
+			<InputChip bind:value={complaints} name="chips" placeholder="Write a complaint..." />
+
 		</div>
 	</div>
 </div>

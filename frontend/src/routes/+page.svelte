@@ -3,6 +3,7 @@
 	import Home from './components/home.svelte'
 	import Notes from './components/notes.svelte'
 	import Global from './components/global.svelte'
+	import Teacher from './components/teacher.svelte'
 	import  { active_page } from '../store'
 	let page = 0
 	active_page.subscribe(value => {
@@ -20,7 +21,7 @@
 			{:else if  page === 2}
 				<Global/>
 			{:else if  page === 3}
-				<Home/>
+				<Teacher/>
 			{/if}
 	</div>
 </div>
