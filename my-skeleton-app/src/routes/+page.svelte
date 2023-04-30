@@ -1,7 +1,8 @@
 <script lang='ts'>
 
-	import Home from './home/+page.svelte'
-	import Notes from './notes/+page.svelte'
+	import Home from './components/home.svelte'
+	import Notes from './components/notes.svelte'
+	import Global from './components/global.svelte'
 	import  { active_page } from '../store'
 	let page = 0
 	active_page.subscribe(value => {
@@ -10,17 +11,16 @@
 </script>
 
 
-<div class="h-full p-4">
-
-	if here {page}
-	{#if page === 0}
-		<Home/>
-	{:else if  page === 1}
-		<Notes/>
-	{:else if  page === 2}
-		<Home/>
-	{:else if  page === 3}
-		<Home/>
-	{/if}
-	
+<div class="h-screen p-4 flex flex-col">
+	<div class='overflow-auto h-full m-4'>
+			{#if page === 0}
+				<Home/>
+			{:else if  page === 1}
+				<Notes/>
+			{:else if  page === 2}
+				<Global/>
+			{:else if  page === 3}
+				<Home/>
+			{/if}
+	</div>
 </div>

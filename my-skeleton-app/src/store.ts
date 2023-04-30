@@ -1,7 +1,7 @@
 import { writable, type Writable } from 'svelte/store';
 
 
-const active_page: Writable<number> = writable(0);
+const active_page: Writable<number> = writable(2);
 
 
 
