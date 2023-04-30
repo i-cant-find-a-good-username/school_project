@@ -13,7 +13,6 @@ import { GridFSBucketReadStream, ObjectId } from "mongodb";
 
 const get_notes = async (req: Request, res: Response) => {
     const notes = await Note.find({student: new ObjectId(res.locals.user_data._id)})
-        //.populate('subject')
         .populate({ path: 'subject', model: Subject})
         .populate({ path: 'teacher', select: 'username email profile_image', model: Teacher })
 
@@ -24,6 +23,8 @@ const get_notes = async (req: Request, res: Response) => {
         message: notes
     })
 }
+
+
 
 
 const get_global_notes = async (req: Request, res: Response) => {
@@ -52,7 +53,7 @@ const get_global_notes = async (req: Request, res: Response) => {
 
 
 
-
+const submit_complaint = async (req: Request, res: Response) => {}
 
 
 
@@ -61,5 +62,6 @@ const get_global_notes = async (req: Request, res: Response) => {
 
 export {
     get_notes,
-    get_global_notes
+    get_global_notes,
+    submit_complaint
 }

@@ -186,22 +186,14 @@ const notes: Note[] = [
         teacher: new ObjectId(), // change with existing ones
         subject: new ObjectId(), // change with existing ones
         year: 2022,
-        notes:{
-                tp: 9,
-                td: 9,
-                exam: 0,
-            }
+        notes:{}
     },
     {
         student: new ObjectId(), // change with existing ones
         teacher: new ObjectId(), // change with existing ones
         subject: new ObjectId(), // change with existing ones
         year: 2022,
-        notes:{
-                tp: 9,
-                td: 9,
-                exam: 7,
-            }
+        notes:{}
     }
 ]
 
@@ -213,8 +205,13 @@ const notes: Note[] = [
 
 
 const main = async () => {
+    
+    const inserted_subjects = await SubjectModel.insertMany(subjects)
+    for (let i = 0; i < inserted_subjects.length; i++) {
+        grades[0].subjects.push(inserted_subjects[i].id)
+        teachers[i].subjects.push(inserted_subjects[i].id)
+    }
     const inserted_grades = await GradeModel.insertMany(grades)
-
     // this is here becuase of the needed await
     const students: StudentType[] = [
         {
@@ -236,12 +233,8 @@ const main = async () => {
     //for (let i = 0; i < subjects.length; i++) {
     //    subjects[i].grade = inserted_grades[0]._id
     //}
-    const inserted_subjects = await SubjectModel.insertMany(subjects)
     const inserted_students = await Student.insertMany(students)
-    for (let i = 0; i < inserted_subjects.length; i++) {
-        grades[0].subjects.push(inserted_subjects[i].id)
-        teachers[i].subjects.push(inserted_subjects[i].id)
-    }
+
     const inserted_teachers = await Teacher.insertMany(teachers)
     notes[0].student = inserted_students[0].id
     notes[0].teacher = inserted_teachers[0].id

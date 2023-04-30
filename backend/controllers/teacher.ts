@@ -1,5 +1,19 @@
-const get_subjects = (req: Request, res: Response) => {}
+import express, { Express, Request, Response, Router } from 'express';
 
 
-const add_note = (req: Request, res: Response) => {}
-const edit_note = (req: Request, res: Response) => {}
+
+
+
+const get_notes = (req: Request, res: Response) => {}
+const add_notes = (req: Request, res: Response) => {}
+const edit_notes = (req: Request, res: Response) => {}
+
+
+
+
+
+export {
+    get_notes,
+    add_notes,
+    edit_notes
+}

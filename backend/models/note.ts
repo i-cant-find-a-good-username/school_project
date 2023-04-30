@@ -8,9 +8,9 @@ const notes_schema= new Schema<Note>({
     subject: {type: Types.ObjectId, required:true, ref: "Subject"},
     year: {type: Number, required:true}, // 2021 // 2022 // 2021 is considered school year 2021-2022 same for all years 2022 = 2022-2023
     notes: {
-            td: {type: Number, required:true},
-            tp: {type: Number, required:true},
-            exam: {type: Number, required:true},
+            td: Number,
+            tp: Number,
+            exam: Number,
         }
 },{timestamps: true}) 
 

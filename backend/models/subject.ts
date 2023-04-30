@@ -5,7 +5,6 @@ import { Subject } from '../types';
 const subjects_schema= new Schema<Subject>({
     name: {type: String, required:true},
     group: {type: String, required:true}, // UEF1 // UEF2 // UEM1
-    //grade: {type: Types.ObjectId, required:true, ref: 'grade'}
     credits: {type: Number, required:true},
     Coefficient: {type: Number, required:true},
     notes_Coefficient: {

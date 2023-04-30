@@ -1,25 +1,52 @@
-import express, { Express, Request, Response, Router } from 'express';
+import { Router } from 'express';
+import { isRegisterTeacher, isLoginUser, isRegisterUser } from './middleware/types'
+import { isAuth } from './middleware/auth'
+import { login as student_login, register as student_register } from './controllers/auth_student'
+import { login as teacher_login, register as teacher_register } from './controllers/auth_teacher'
+import { get_notes, get_global_notes, submit_complaint } from './controllers/student'
+import { edit_notes, add_notes, get_notes as get_notes_teacher } from './controllers/teacher'
+import {  } from './controllers/admin'
+
+
+
 const router = Router()
 
 
 
 
-import { isUser, isLoginUser, isStudent } from './middleware/types'
-import { isAuth } from './middleware/auth'
-import { login, register_student, register_teacher, logout } from './controllers/auth'
-import { get_notes, get_global_notes } from './controllers/student'
+
+
+
+
+//student auth
+router.post("/login/student",isLoginUser ,student_login)
+router.post("/register/student",isRegisterUser ,student_register)
+
+
+//teacher auth
+router.post("/login/teacher",isLoginUser ,teacher_login)
+router.post("/register/teacher",isRegisterTeacher ,teacher_register)
+
+
+// student
+router.get("/student/notes",isAuth ,get_notes)
+router.get("/student/notes_global",isAuth ,get_global_notes)
+router.post("/student/complaint",isAuth , submit_complaint)
+
+
+// teacher
+router.get("/teacher/notes",isAuth ,get_notes_teacher)
+router.post("/teacher/notes",isAuth ,add_notes)
+router.put("/teacher/notes",isAuth ,edit_notes)
+
+
+// admin
+router.get("/admin",isAuth ,()=>{})
 
 
 
 
 
-router.post("/login",isLoginUser ,login)
-router.post("/register_teacher",isUser ,register_teacher) // teacher input type is the same as user
-router.post("/register_student",isStudent ,register_student)
-router.post("/logout",isAuth ,logout)
-
-router.get("/get_notes",isAuth ,get_notes)
-router.get("/get_global_notes",isAuth ,get_global_notes)
 
 
 

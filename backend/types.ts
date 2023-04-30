@@ -60,9 +60,9 @@ interface Note {
     subject: ObjectId ,
     year: number,
     notes:{
-            tp: number,
-            td: number,
-            exam: number,
+            tp?: number,
+            td?: number,
+            exam?: number,
         }
 }
 
