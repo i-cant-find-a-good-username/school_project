@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { UserType } from "../types"
-import { ObjectId } from "mongodb";
 import { sign } from "jsonwebtoken"
 import { Student, Teacher } from "../models/user"
 import bcrypt from 'bcrypt';
@@ -30,7 +29,7 @@ const login = async (req: Request, res: Response) => {
 			message: "bad password",
 		})
 	
-		res.status(201).json({
+		res.status(200).json({
 			message: 'login ok',
 			token: generate_token(user, user.id, data.type)
 		})

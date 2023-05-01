@@ -1,12 +1,9 @@
 import { Request, Response } from 'express';
-import {  } from 'mongoose'
-import { Student, Teacher } from "../models/user"
+import { Teacher } from "../models/user"
 import { Subject } from "../models/subject"
 import { Note } from "../models/note"
 import { Complaint } from "../models/complaint"
-import { Grade } from "../models/grade"
-import { UserType } from "../types"
-import { GridFSBucketReadStream, ObjectId } from "mongodb";
+import { ObjectId } from "mongodb";
 
   
 

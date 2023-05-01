@@ -5,7 +5,6 @@ import { ObjectId } from "mongodb";
 import { Note } from '../models/note';
 import { Subject } from '../models/subject';
 import { Grade } from '../models/grade';
-import { generate_token } from './auth'
 
 
 
@@ -25,18 +24,16 @@ const register = async (req: Request, res: Response) => {
 			email : data.email,
 			password : hash_password,
 			profile_image : data.profile_image,
-			current_grade: new ObjectId(data.current_grade),
-			current_year: data.current_year,
+			grade: new ObjectId(data.grade),
+			year: data.year,
 			createdAt : Date.now(),
 			updatedAt : Date.now()
 		})
-		await (await student.save()).populate({ path: 'current_grade', model: Grade })
-
+		await (await student.save()).populate({ path: 'grade', model: Grade })
+		student.password = ""
+		
 		// @ts-ignore
-		delete student.password
-		// @ts-ignore
-		const teachers = await Teacher.find({subjects: { $in: [...student.current_grade.subjects.map(a => a)] }}).select("id username email profile_image subjects").populate({ path: 'subjects', model: Subject})
-
+		const teachers = await Teacher.find({subjects: { $in: [...student.grade.subjects.map(a => a)] }}).select("id username email profile_image subjects").populate({ path: 'subjects', model: Subject})
 		let notes: Note[] = []
 		for (let i = 0; i < teachers.length; i++) {
 			notes.push(
@@ -53,10 +50,7 @@ const register = async (req: Request, res: Response) => {
 		Note.insertMany(notes)
 
 		res.status(201).json({
-			message: student.current_grade,
-			teachers: teachers,
-			notes: notes,
-			token: generate_token(student, student.id, 'student')
+			message: student,
 		})
 	} catch (error) {
 		res.status(500).json({

@@ -16,8 +16,8 @@ interface Complaint {
 }
 
 interface StudentType extends UserType {
-    current_grade: ObjectId,
-    current_year: number,
+    grade: ObjectId,
+    year: number,
 }
 
 

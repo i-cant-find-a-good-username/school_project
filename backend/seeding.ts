@@ -23,64 +23,6 @@ const grades: Grade[] = [
 ]
 
 
-const teachers: TeacherType[] = [
-    {
-        username: "mezioud",
-        email: "mezioud@gmail.com",
-        password: "password",
-        subjects: [],
-        isAdmin: false,
-    },
-    {
-        username: "bouzenada",
-        email: "bouzenada@gmail.com",
-        password: "password",
-        subjects: [],
-        isAdmin: false,
-    },
-    {
-        username: "chickhi",
-        email: "chickhi@gmail.com",
-        password: "password",
-        subjects: [],
-        isAdmin: false,
-    },
-    {
-        username: "gharzouli",
-        email: "gharzouli@gmail.com",
-        password: "password",
-        subjects: [],
-        isAdmin: false,
-    },
-    {
-        username: "draa",
-        email: "draa@gmail.com",
-        password: "password",
-        subjects: [],
-        isAdmin: false,
-    },
-    {
-        username: "labed",
-        email: "labed@gmail.com",
-        password: "password",
-        subjects: [],
-        isAdmin: false,
-    },
-    {
-        username: "idk",
-        email: "idk@gmail.com",
-        password: "password",
-        subjects: [],
-        isAdmin: false,
-    },
-    {
-        username: "meriem",
-        email: "meriem@gmail.com",
-        password: "password",
-        subjects: [],
-        isAdmin: false,
-    },
-]
 
 const subjects: Subject[] = [
     {
@@ -206,6 +148,65 @@ const notes: Note[] = [
 
 const main = async () => {
     
+    const teachers: TeacherType[] = [
+        {
+            username: "mezioud",
+            email: "mezioud@gmail.com",
+            password: await bcrypt.hash("password", 10),
+            subjects: [],
+            isAdmin: false,
+        },
+        {
+            username: "bouzenada",
+            email: "bouzenada@gmail.com",
+            password: await bcrypt.hash("password", 10),
+            subjects: [],
+            isAdmin: false,
+        },
+        {
+            username: "chickhi",
+            email: "chickhi@gmail.com",
+            password: await bcrypt.hash("password", 10),
+            subjects: [],
+            isAdmin: false,
+        },
+        {
+            username: "gharzouli",
+            email: "gharzouli@gmail.com",
+            password: await bcrypt.hash("password", 10),
+            subjects: [],
+            isAdmin: false,
+        },
+        {
+            username: "draa",
+            email: "draa@gmail.com",
+            password: await bcrypt.hash("password", 10),
+            subjects: [],
+            isAdmin: false,
+        },
+        {
+            username: "labed",
+            email: "labed@gmail.com",
+            password: await bcrypt.hash("password", 10),
+            subjects: [],
+            isAdmin: false,
+        },
+        {
+            username: "idk",
+            email: "idk@gmail.com",
+            password: await bcrypt.hash("password", 10),
+            subjects: [],
+            isAdmin: false,
+        },
+        {
+            username: "meriem",
+            email: "meriem@gmail.com",
+            password: await bcrypt.hash("password", 10),
+            subjects: [],
+            isAdmin: false,
+        },
+    ]
+    
     const inserted_subjects = await SubjectModel.insertMany(subjects)
     for (let i = 0; i < inserted_subjects.length; i++) {
         grades[0].subjects.push(inserted_subjects[i].id)
@@ -218,15 +219,15 @@ const main = async () => {
             username: "ilyes",
             email: "ilyes@gmail.com",
             password: await bcrypt.hash("password", 10),
-            current_grade: inserted_grades[0]._id,
-            current_year: 2022,
+            grade: inserted_grades[0]._id,
+            year: 2022,
         },
         {
             username: "ahmed",
             email: "ahmed@gmail.com",
             password: await bcrypt.hash("password", 10),
-            current_grade: inserted_grades[0]._id,
-            current_year: 2022,
+            grade: inserted_grades[0]._id,
+            year: 2022,
         },
     ]
 

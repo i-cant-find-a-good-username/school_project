@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Student, Teacher } from "../models/user"
+import { Teacher } from "../models/user"
 import bcrypt from 'bcrypt';
 import { generate_token } from './auth'
 
@@ -29,7 +29,6 @@ const register = async (req: Request, res: Response) => {
 	
 		res.status(201).json({
 			message: 'account created',
-			token: generate_token(teacher, teacher.id, 'teacher')
 		})
 	} catch (error) {
 		res.status(500).json({

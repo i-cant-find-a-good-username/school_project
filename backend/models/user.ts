@@ -7,8 +7,8 @@ const student_schema= new Schema<StudentType>({
     email: {type: String, required: true},
     password: {type: String, required: true},
     profile_image: {type: String, default: "default.jpg"},
-    current_grade: {type: Types.ObjectId, required:true, ref: "grade"},
-    current_year: {type: Number, required:true}, // 20xx // 0000 == no longer a student
+    grade: {type: Types.ObjectId, required:true, ref: "grade"},
+    year: {type: Number, required:true}, // 20xx // 0000 == no longer a student
 },{timestamps: true})
 
 
