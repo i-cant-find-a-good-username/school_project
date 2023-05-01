@@ -1,5 +1,6 @@
 import { ObjectId } from "mongodb"
 
+
 interface UserType  {
     username: string,
     email: string,
@@ -7,13 +8,6 @@ interface UserType  {
     profile_image?: string,
 }
 
-
-interface Complaint {
-    student: ObjectId,
-    teacher: ObjectId,
-    Note: ObjectId,
-    message: string
-}
 
 interface StudentType extends UserType {
     grade: ObjectId,
@@ -66,9 +60,18 @@ interface Note {
         }
 }
 
+
 interface Grade {
     name: string,
     subjects: ObjectId[]
+}
+
+
+interface Complaint {
+    student: ObjectId,
+    teacher: ObjectId,
+    Note: ObjectId,
+    message: string
 }
 
 export {

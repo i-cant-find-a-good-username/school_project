@@ -6,7 +6,6 @@ import { generate_token } from './auth'
 
 
 
-
 const register = async (req: Request, res: Response) => {
 	try {
 		const data = req.body
@@ -36,6 +35,8 @@ const register = async (req: Request, res: Response) => {
 		})
 	}
 }
+
+
 
 
 export {

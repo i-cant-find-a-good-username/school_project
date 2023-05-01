@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 import { UserType, UserLogin, UserRegsiter, TeacherType, StudentType } from "../types"
 
 
+
+
 const isLoginUser = (req: Request, res: Response, next: Function) => {
     const body = req.body
     if (
@@ -17,6 +19,8 @@ const isLoginUser = (req: Request, res: Response, next: Function) => {
         })
     }
 }
+
+
 
 
 const isRegisterTeacher = (req: Request, res: Response, next: Function) => {
@@ -36,6 +40,8 @@ const isRegisterTeacher = (req: Request, res: Response, next: Function) => {
 }
 
 
+
+
 const isRegisterStudent = (req: Request, res: Response, next: Function) => {
     const body = req.body
     if (
@@ -53,7 +59,6 @@ const isRegisterStudent = (req: Request, res: Response, next: Function) => {
         })
     }
 }
-
 
 
 
@@ -122,8 +127,6 @@ const teacherEdit = (req: Request, res: Response, next: Function) => {
     }
     next()
 }
-
-
 
 
 

@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 
 
+
+
 const isTeacher = async (req: Request, res: Response, next: Function) => {
     if (res.locals.user_data.type === 'teacher'){
         next()
@@ -10,6 +12,8 @@ const isTeacher = async (req: Request, res: Response, next: Function) => {
         }) 
     }
 }
+
+
 
 
 export {

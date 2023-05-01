@@ -3,6 +3,8 @@ import { Teacher } from "../models/user"
 import { ObjectId } from 'mongodb';
 
 
+
+
 const isAdmin = async (req: Request, res: Response, next: Function) => {
     const teacher = await Teacher.findOne({_id: new ObjectId(res.locals.user_data._id)})
     if (!teacher){
@@ -18,8 +20,9 @@ const isAdmin = async (req: Request, res: Response, next: Function) => {
             }) 
         }
     }
-
 }
+
+
 
 
 export {

@@ -1,27 +1,40 @@
 <script lang='ts'>
-
-	import Home from './components/home.svelte'
-	import Notes from './components/notes.svelte'
-	import Global from './components/global.svelte'
-	import Teacher from './components/teacher.svelte'
+	import '@skeletonlabs/skeleton/themes/theme-gold-nouveau.css';
+	import '@skeletonlabs/skeleton/styles/all.css';
+	import '../app.postcss';
+	import { AppShell } from '@skeletonlabs/skeleton';
+	import { AppRail, AppRailTile } from '@skeletonlabs/skeleton';
 	import  { active_page } from '../store'
-	let page = 0
-	active_page.subscribe(value => {
-		page = value;
-	});
+	import Global from  '../lib/icons/global.svelte';
+	import Home from  '../lib/icons/home.svelte';
+	import List from  '../lib/icons/list.svelte';
+	import Profile from  '../lib/icons/profile.svelte';
+
+	import Main from  './components/main.svelte';
+
+
+
 </script>
+<!-- App Shell -->
+<AppShell>
 
-
-<div class="h-screen p-4 flex flex-col">
-	<div class='overflow-auto h-full m-4'>
-			{#if page === 0}
-				<Home/>
-			{:else if  page === 1}
-				<Notes/>
-			{:else if  page === 2}
+	
+	<svelte:fragment slot="sidebarLeft">
+		<AppRail selected={active_page}>
+			<AppRailTile label="Home Page" value={0}>
 				<Global/>
-			{:else if  page === 3}
-				<Teacher/>
-			{/if}
-	</div>
-</div>
+			</AppRailTile>
+			<AppRailTile label="Notes" value={1}>
+				<Home/>
+			</AppRailTile>
+			<AppRailTile label="Global" value={2}>
+				<List/>
+			</AppRailTile>
+			<AppRailTile label="Profile" slot='trail' value={3}>
+				<Profile/>
+			</AppRailTile>
+		</AppRail>
+	</svelte:fragment>
+	<!-- authenticatio nhere -->
+	<Main />
+</AppShell>

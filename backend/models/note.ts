@@ -2,6 +2,8 @@ import { Schema, model, Types } from 'mongoose';
 import { Note } from '../types';
 
 
+
+
 const notes_schema= new Schema<Note>({
     student: {type: Types.ObjectId, required:true, ref: "Student"},
     teacher: {type: Types.ObjectId, required:true, ref: "Teacher"},
@@ -13,6 +15,8 @@ const notes_schema= new Schema<Note>({
             exam: Number,
         }
 },{timestamps: true}) 
+
+
 
 
 const Note = model('Note',notes_schema)

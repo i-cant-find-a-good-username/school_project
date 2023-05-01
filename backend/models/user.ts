@@ -2,6 +2,8 @@ import { Schema, model, Types } from 'mongoose';
 import { StudentType, TeacherType } from '../types';
 
 
+
+
 const student_schema= new Schema<StudentType>({
     username: {type: String, required: true},
     email: {type: String, required: true},
@@ -12,6 +14,8 @@ const student_schema= new Schema<StudentType>({
 },{timestamps: true})
 
 
+
+
 const teacher_schema= new Schema<TeacherType>({
     username: {type: String, required: true},
     email: {type: String, required: true},
@@ -20,6 +24,8 @@ const teacher_schema= new Schema<TeacherType>({
     subjects: [{type: Types.ObjectId, ref: 'subject'}],
     isAdmin: {type: Boolean, default:false}
 },{timestamps: true})
+
+
 
 
 const Student = model('Student',student_schema)

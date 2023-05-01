@@ -3,6 +3,8 @@ import { UserType } from "../types"
 import { sign, verify } from "jsonwebtoken"
 
 
+
+
 const isAuth = (req: Request, res: Response, next: Function) => {
     if( req.get("X-Authorization") ) {
         const token: string = req.get("X-Authorization") as string
@@ -21,8 +23,9 @@ const isAuth = (req: Request, res: Response, next: Function) => {
             message: 'no auth token',
         })
     }
-
 }
+
+
 
 
 export {

@@ -7,8 +7,6 @@ import bcrypt from 'bcrypt';
 
 
 
-
-
 const login = async (req: Request, res: Response) => {
 	try {
 		const data = req.body
@@ -30,7 +28,7 @@ const login = async (req: Request, res: Response) => {
 		})
 	
 		res.status(200).json({
-			message: 'login ok',
+			role: data.type,
 			token: generate_token(user, user.id, data.type)
 		})
 	} catch (error) {
@@ -39,6 +37,7 @@ const login = async (req: Request, res: Response) => {
 		})
 	}
 }
+
 
 
 
@@ -56,5 +55,8 @@ const generate_token = (data: UserType, id: string, type: 'teacher' | 'student')
 		{ expiresIn: 60 * 60 * 24 * 7} // 1 week
 	);
 }
+
+
+
 
 export { generate_token, login }

@@ -5,7 +5,6 @@ import { Note } from "../models/note"
 import { Complaint } from "../models/complaint"
 import { ObjectId } from "mongodb";
 
-  
 
 
 
@@ -46,6 +45,7 @@ const get_global_notes = async (req: Request, res: Response) => {
 
 
 
+
 const submit_complaint = async (req: Request, res: Response) => {
     try {
         const data = req.body
@@ -77,6 +77,7 @@ const submit_complaint = async (req: Request, res: Response) => {
 
 
 
+
 const delete_complaint = async (req: Request, res: Response) => {
     try {
         const result = await Complaint.deleteOne({_id: new ObjectId(req.params.id)})
@@ -95,6 +96,7 @@ const delete_complaint = async (req: Request, res: Response) => {
         })
     }
 }
+
 
 
 

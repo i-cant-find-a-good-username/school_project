@@ -4,9 +4,7 @@ import { Subject } from "../models/subject"
 import { Note } from "../models/note"
 import { Complaint } from "../models/complaint"
 import { ObjectId } from "mongodb";
-
-
-
+import { Types } from 'mongoose';
 
 
 
@@ -24,6 +22,8 @@ const get_students = async (req: Request, res: Response) => {
         })
     }
 }
+
+
 
 
 const get_teachers = async (req: Request, res: Response) => {
@@ -62,6 +62,10 @@ const delete_student = async (req: Request, res: Response) => {
         })
     }
 }
+
+
+
+
 const delete_teacher = async (req: Request, res: Response) => {
     try {
         const result = await Teacher.deleteOne({_id: new ObjectId(req.params.id)})
@@ -80,10 +84,6 @@ const delete_teacher = async (req: Request, res: Response) => {
         })
     }
 }
-
-
-
-
 
 
 
@@ -130,20 +130,18 @@ const edit_teacher = async (req: Request, res: Response) => {
 
 
 
+
 const get_notes = async (req: Request, res: Response) => {
     try {
         let data = req.body
         const students = await Student.find({grade: data.grade, year: data.year }).select('_id username email profile_image grade year')
-        
+
         let student_ids = [];
         for (let i = 0; i < students.length; i++) {
             student_ids.push(students[i]._id)
         }
 
-
         let complaints = await Complaint.find({ student: { $in : student_ids } })            
-        
-        
 
         res.status(200).json({
             message: students,
@@ -156,8 +154,6 @@ const get_notes = async (req: Request, res: Response) => {
         })
     }
 }
-
-
 
 
 

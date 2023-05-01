@@ -2,6 +2,8 @@ import { Schema, model, Types } from 'mongoose';
 import { Subject } from '../types';
 
 
+
+
 const subjects_schema= new Schema<Subject>({
     name: {type: String, required:true},
     group: {type: String, required:true}, // UEF1 // UEF2 // UEM1
@@ -13,6 +15,8 @@ const subjects_schema= new Schema<Subject>({
         exam: {type: Number, required:true},
     }
 },{timestamps: true}) 
+
+
 
 
 const Subject = model('Subject',subjects_schema)

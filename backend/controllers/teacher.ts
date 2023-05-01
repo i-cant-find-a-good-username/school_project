@@ -25,18 +25,6 @@ const get_notes = async (req: Request, res: Response) => {
 
 
 
-
-
-
-const add_notes = async (req: Request, res: Response) => {}
-
-
-
-
-
-
-
-
 const edit_notes = async (req: Request, res: Response) => {
     try {
         const data = req.body
@@ -63,6 +51,5 @@ const edit_notes = async (req: Request, res: Response) => {
 
 export {
     get_notes,
-    add_notes,
     edit_notes
 }
