@@ -21,7 +21,7 @@
 			average: "20",
 		},
 		{
-			name: "long dude name username",
+			name: "lon gdudenam eusername dudenameuser namedudena meusername",
 			igr: "20",
 			cse: "20",
 			sri: "20",
@@ -39,486 +39,7 @@
 			average: "20",
 		},
 
-		{
-			name: "dude",
-			igr: "20",
-			cse: "20",
-			sri: "20",
-			AVG_UEF1: "20",
-			CRED_UEF1: "20",
-			aaw: "20",
-			mssc: "20",
-			gcc: "20",
-			AVG_UEF2: "20",
-			CRED_UEF2: "20",
-			ang2: "20",
-			mts: "20",
-			AVG_UEM1: "20",
-			CRED_UEM1: "20",
-			average: "20",
-		},
-		{
-			name: "long dude name username",
-			igr: "20",
-			cse: "20",
-			sri: "20",
-			AVG_UEF1: "20",
-			CRED_UEF1: "20",
-			aaw: "20",
-			mssc: "20",
-			gcc: "20",
-			AVG_UEF2: "20",
-			CRED_UEF2: "20",
-			ang2: "20",
-			mts: "20",
-			AVG_UEM1: "20",
-			CRED_UEM1: "20",
-			average: "20",
-		},
-
-		{
-			name: "dude",
-			igr: "20",
-			cse: "20",
-			sri: "20",
-			AVG_UEF1: "20",
-			CRED_UEF1: "20",
-			aaw: "20",
-			mssc: "20",
-			gcc: "20",
-			AVG_UEF2: "20",
-			CRED_UEF2: "20",
-			ang2: "20",
-			mts: "20",
-			AVG_UEM1: "20",
-			CRED_UEM1: "20",
-			average: "20",
-		},
-		{
-			name: "long dude name username",
-			igr: "20",
-			cse: "20",
-			sri: "20",
-			AVG_UEF1: "20",
-			CRED_UEF1: "20",
-			aaw: "20",
-			mssc: "20",
-			gcc: "20",
-			AVG_UEF2: "20",
-			CRED_UEF2: "20",
-			ang2: "20",
-			mts: "20",
-			AVG_UEM1: "20",
-			CRED_UEM1: "20",
-			average: "20",
-		},
-
-		{
-			name: "dude",
-			igr: "20",
-			cse: "20",
-			sri: "20",
-			AVG_UEF1: "20",
-			CRED_UEF1: "20",
-			aaw: "20",
-			mssc: "20",
-			gcc: "20",
-			AVG_UEF2: "20",
-			CRED_UEF2: "20",
-			ang2: "20",
-			mts: "20",
-			AVG_UEM1: "20",
-			CRED_UEM1: "20",
-			average: "20",
-		},
-		{
-			name: "long dude name username",
-			igr: "20",
-			cse: "20",
-			sri: "20",
-			AVG_UEF1: "20",
-			CRED_UEF1: "20",
-			aaw: "20",
-			mssc: "20",
-			gcc: "20",
-			AVG_UEF2: "20",
-			CRED_UEF2: "20",
-			ang2: "20",
-			mts: "20",
-			AVG_UEM1: "20",
-			CRED_UEM1: "20",
-			average: "20",
-		},
-
-		{
-			name: "dude",
-			igr: "20",
-			cse: "20",
-			sri: "20",
-			AVG_UEF1: "20",
-			CRED_UEF1: "20",
-			aaw: "20",
-			mssc: "20",
-			gcc: "20",
-			AVG_UEF2: "20",
-			CRED_UEF2: "20",
-			ang2: "20",
-			mts: "20",
-			AVG_UEM1: "20",
-			CRED_UEM1: "20",
-			average: "20",
-		},
-		{
-			name: "long dude name username",
-			igr: "20",
-			cse: "20",
-			sri: "20",
-			AVG_UEF1: "20",
-			CRED_UEF1: "20",
-			aaw: "20",
-			mssc: "20",
-			gcc: "20",
-			AVG_UEF2: "20",
-			CRED_UEF2: "20",
-			ang2: "20",
-			mts: "20",
-			AVG_UEM1: "20",
-			CRED_UEM1: "20",
-			average: "20",
-		},
-
-		{
-			name: "dude",
-			igr: "20",
-			cse: "20",
-			sri: "20",
-			AVG_UEF1: "20",
-			CRED_UEF1: "20",
-			aaw: "20",
-			mssc: "20",
-			gcc: "20",
-			AVG_UEF2: "20",
-			CRED_UEF2: "20",
-			ang2: "20",
-			mts: "20",
-			AVG_UEM1: "20",
-			CRED_UEM1: "20",
-			average: "20",
-		},
-		{
-			name: "long dude name username",
-			igr: "20",
-			cse: "20",
-			sri: "20",
-			AVG_UEF1: "20",
-			CRED_UEF1: "20",
-			aaw: "20",
-			mssc: "20",
-			gcc: "20",
-			AVG_UEF2: "20",
-			CRED_UEF2: "20",
-			ang2: "20",
-			mts: "20",
-			AVG_UEM1: "20",
-			CRED_UEM1: "20",
-			average: "20",
-		},
-
-		{
-			name: "dude",
-			igr: "20",
-			cse: "20",
-			sri: "20",
-			AVG_UEF1: "20",
-			CRED_UEF1: "20",
-			aaw: "20",
-			mssc: "20",
-			gcc: "20",
-			AVG_UEF2: "20",
-			CRED_UEF2: "20",
-			ang2: "20",
-			mts: "20",
-			AVG_UEM1: "20",
-			CRED_UEM1: "20",
-			average: "20",
-		},
-		{
-			name: "long dude name username",
-			igr: "20",
-			cse: "20",
-			sri: "20",
-			AVG_UEF1: "20",
-			CRED_UEF1: "20",
-			aaw: "20",
-			mssc: "20",
-			gcc: "20",
-			AVG_UEF2: "20",
-			CRED_UEF2: "20",
-			ang2: "20",
-			mts: "20",
-			AVG_UEM1: "20",
-			CRED_UEM1: "20",
-			average: "20",
-		},
-
-		{
-			name: "dude",
-			igr: "20",
-			cse: "20",
-			sri: "20",
-			AVG_UEF1: "20",
-			CRED_UEF1: "20",
-			aaw: "20",
-			mssc: "20",
-			gcc: "20",
-			AVG_UEF2: "20",
-			CRED_UEF2: "20",
-			ang2: "20",
-			mts: "20",
-			AVG_UEM1: "20",
-			CRED_UEM1: "20",
-			average: "20",
-		},
-		{
-			name: "long dude name username",
-			igr: "20",
-			cse: "20",
-			sri: "20",
-			AVG_UEF1: "20",
-			CRED_UEF1: "20",
-			aaw: "20",
-			mssc: "20",
-			gcc: "20",
-			AVG_UEF2: "20",
-			CRED_UEF2: "20",
-			ang2: "20",
-			mts: "20",
-			AVG_UEM1: "20",
-			CRED_UEM1: "20",
-			average: "20",
-		},
-
-		{
-			name: "dude",
-			igr: "20",
-			cse: "20",
-			sri: "20",
-			AVG_UEF1: "20",
-			CRED_UEF1: "20",
-			aaw: "20",
-			mssc: "20",
-			gcc: "20",
-			AVG_UEF2: "20",
-			CRED_UEF2: "20",
-			ang2: "20",
-			mts: "20",
-			AVG_UEM1: "20",
-			CRED_UEM1: "20",
-			average: "20",
-		},
-		{
-			name: "long dude name username",
-			igr: "20",
-			cse: "20",
-			sri: "20",
-			AVG_UEF1: "20",
-			CRED_UEF1: "20",
-			aaw: "20",
-			mssc: "20",
-			gcc: "20",
-			AVG_UEF2: "20",
-			CRED_UEF2: "20",
-			ang2: "20",
-			mts: "20",
-			AVG_UEM1: "20",
-			CRED_UEM1: "20",
-			average: "20",
-		},
-
-		{
-			name: "dude",
-			igr: "20",
-			cse: "20",
-			sri: "20",
-			AVG_UEF1: "20",
-			CRED_UEF1: "20",
-			aaw: "20",
-			mssc: "20",
-			gcc: "20",
-			AVG_UEF2: "20",
-			CRED_UEF2: "20",
-			ang2: "20",
-			mts: "20",
-			AVG_UEM1: "20",
-			CRED_UEM1: "20",
-			average: "20",
-		},
-		{
-			name: "long dude name username",
-			igr: "20",
-			cse: "20",
-			sri: "20",
-			AVG_UEF1: "20",
-			CRED_UEF1: "20",
-			aaw: "20",
-			mssc: "20",
-			gcc: "20",
-			AVG_UEF2: "20",
-			CRED_UEF2: "20",
-			ang2: "20",
-			mts: "20",
-			AVG_UEM1: "20",
-			CRED_UEM1: "20",
-			average: "20",
-		},
-
-		{
-			name: "dude",
-			igr: "20",
-			cse: "20",
-			sri: "20",
-			AVG_UEF1: "20",
-			CRED_UEF1: "20",
-			aaw: "20",
-			mssc: "20",
-			gcc: "20",
-			AVG_UEF2: "20",
-			CRED_UEF2: "20",
-			ang2: "20",
-			mts: "20",
-			AVG_UEM1: "20",
-			CRED_UEM1: "20",
-			average: "20",
-		},
-		{
-			name: "long dude name username",
-			igr: "20",
-			cse: "20",
-			sri: "20",
-			AVG_UEF1: "20",
-			CRED_UEF1: "20",
-			aaw: "20",
-			mssc: "20",
-			gcc: "20",
-			AVG_UEF2: "20",
-			CRED_UEF2: "20",
-			ang2: "20",
-			mts: "20",
-			AVG_UEM1: "20",
-			CRED_UEM1: "20",
-			average: "20",
-		},
-
-		{
-			name: "dude",
-			igr: "20",
-			cse: "20",
-			sri: "20",
-			AVG_UEF1: "20",
-			CRED_UEF1: "20",
-			aaw: "20",
-			mssc: "20",
-			gcc: "20",
-			AVG_UEF2: "20",
-			CRED_UEF2: "20",
-			ang2: "20",
-			mts: "20",
-			AVG_UEM1: "20",
-			CRED_UEM1: "20",
-			average: "20",
-		},
-		{
-			name: "long dude name username",
-			igr: "20",
-			cse: "20",
-			sri: "20",
-			AVG_UEF1: "20",
-			CRED_UEF1: "20",
-			aaw: "20",
-			mssc: "20",
-			gcc: "20",
-			AVG_UEF2: "20",
-			CRED_UEF2: "20",
-			ang2: "20",
-			mts: "20",
-			AVG_UEM1: "20",
-			CRED_UEM1: "20",
-			average: "20",
-		},
-
-		{
-			name: "dude",
-			igr: "20",
-			cse: "20",
-			sri: "20",
-			AVG_UEF1: "20",
-			CRED_UEF1: "20",
-			aaw: "20",
-			mssc: "20",
-			gcc: "20",
-			AVG_UEF2: "20",
-			CRED_UEF2: "20",
-			ang2: "20",
-			mts: "20",
-			AVG_UEM1: "20",
-			CRED_UEM1: "20",
-			average: "20",
-		},
-		{
-			name: "long dude name username",
-			igr: "20",
-			cse: "20",
-			sri: "20",
-			AVG_UEF1: "20",
-			CRED_UEF1: "20",
-			aaw: "20",
-			mssc: "20",
-			gcc: "20",
-			AVG_UEF2: "20",
-			CRED_UEF2: "20",
-			ang2: "20",
-			mts: "20",
-			AVG_UEM1: "20",
-			CRED_UEM1: "20",
-			average: "20",
-		},
-
-		{
-			name: "dude",
-			igr: "20",
-			cse: "20",
-			sri: "20",
-			AVG_UEF1: "20",
-			CRED_UEF1: "20",
-			aaw: "20",
-			mssc: "20",
-			gcc: "20",
-			AVG_UEF2: "20",
-			CRED_UEF2: "20",
-			ang2: "20",
-			mts: "20",
-			AVG_UEM1: "20",
-			CRED_UEM1: "20",
-			average: "20",
-		},
-		{
-			name: "long dude name username",
-			igr: "20",
-			cse: "20",
-			sri: "20",
-			AVG_UEF1: "20",
-			CRED_UEF1: "20",
-			aaw: "20",
-			mssc: "20",
-			gcc: "20",
-			AVG_UEF2: "20",
-			CRED_UEF2: "20",
-			ang2: "20",
-			mts: "20",
-			AVG_UEM1: "20",
-			CRED_UEM1: "20",
-			average: "20",
-		},
+	
 
 	];
 	let head = Object.keys(rows[0])
@@ -532,10 +53,10 @@
 
 </script>
 
-<div class="h-full flex flex-col   space-y-2">
+<div class="h-full flex flex-col  space-y-4  ">
 
 
-	<div class='flex mb-2 space-x-2'>
+	<div class='flex space-x-2'>
 
 			<select class="select">
 				<option value="1">2020</option>
@@ -556,9 +77,51 @@
 	</div>
 
 	<!--  -->
-	<div class="rounded-md w-full  overflow-auto " >
-		<div class="w-full space-y-2 ">
-			<!--
+	<div class="rounded-md w-full grow overflow-auto space-y-8" >
+		<div class="w-full space-y-4  ">
+		
+			<div class="table-container ">
+				<!-- Native Table Element -->
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							{#each head as col}
+								<th class='text-center !align-middle '>{col}</th>
+							{/each}
+						</tr>
+					</thead>
+					<tbody>
+						{#each rows as row, i}
+							<tr class=''>
+								{#each Object.values(row) as col, j}
+									<td class='text-center border-l border-surface-700  !align-middle' style={ j===0 ? '' : 'width: calc( 100% / '+(Object.keys(row).length-1)+' ) ' } >{col}</td>
+								{/each}
+							</tr>
+							{#if i === 0}
+								<tr class="!variant-ghost-error">
+									<td class='text-center !align-middle '>complaint</td>
+									<td colspan="15" class='text-center !align-middle  overflow-hidden truncate '>variant-filled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error error</td>
+								</tr>
+							{/if}
+						{/each}
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+	</div>
+	<InputChip bind:value={complaints} name="chips" placeholder="Write a complaint..." />
+
+</div>
+
+
+
+
+
+
+
+
+	<!--
 					let page = {
 						offset: 0,
 						limit: 5,
@@ -590,47 +153,3 @@
 				<Table source={tableSimple} regionHeadCell="text-center " regionCell="text-center !align-middle" regionFootCell="text-center "  />
 				<Paginator bind:settings={page} />
 			-->
-			<div class="table-container">
-				<!-- Native Table Element -->
-				<table class="table table-hover">
-					<thead>
-						<tr>
-							{#each head as col}
-								<th class='text-center !align-middle'>{col}</th>
-							{/each}
-						</tr>
-					</thead>
-					<tbody>
-						{#each rows as row, i}
-							<tr>
-								{#each head as col}
-									 <td class='text-center !align-middle'>{col}</td>
-								{/each}
-							</tr>
-							{#if i === 4}
-								<tr class="!variant-filled-error">
-									<td class='text-center !align-middle '>complaint</td>
-									<td colspan="15" class='text-center !align-middle overflow-hidden truncate '>variant-filled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error error</td>
-								</tr>
-							{/if}
-						{/each}
-					</tbody>
-					<tfoot>
-						<tr>
-							<th colspan="3">Calculated Total Weight</th>
-							<td>hello</td>
-						</tr>
-					</tfoot>
-				</table>
-			</div>
-
-		</div>
-	</div>
-	<InputChip bind:value={complaints} name="chips" placeholder="Write a complaint..." />
-
-</div>
-
-
-
-
-

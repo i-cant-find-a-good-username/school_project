@@ -32,11 +32,11 @@
 
 <div >
 	<!-- 
-		filled ghost ringed glass
+		filled ghost soft ringed glass
 	-->
-	<Accordion regionControl='variant-glass-surface'>
+	<Accordion regionControl='variant-glass-surface' >
 		{#each Array(4) as item, i}
-			<AccordionItem open={i==0} >
+			<AccordionItem open={i==0}   >
 				<svelte:fragment slot="lead">
 					<p class='!text-2xl'>
 						web applications archetecture <strong>(AAW)</strong>
