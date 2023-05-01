@@ -1,33 +1,10 @@
 import { Request, Response } from 'express';
 import { Student, Teacher } from "../models/user"
 import bcrypt from 'bcrypt';
-import { generate_token } from './generate_token'
+import { generate_token } from './auth'
 
 
-const login = async (req: Request, res: Response) => {
-	try {
-		const data = req.body
 
-		const user = await Student.findOne({email: data.email})
-		if(!user) return res.status(401).json({
-			message: "email does not exist",
-		})
-		
-		const matched = await bcrypt.compare(data.password, user.password)
-		if(!matched) return res.status(401).json({
-			message: "bad password",
-		})
-	
-		res.status(201).json({
-			message: 'login ok',
-			token: generate_token(user, user._id)
-		})
-	} catch (error) {
-		res.status(500).json({
-			message: error
-		})
-	}
-}
 
 
 const register = async (req: Request, res: Response) => {
@@ -52,7 +29,7 @@ const register = async (req: Request, res: Response) => {
 	
 		res.status(201).json({
 			message: 'account created',
-			token: generate_token(teacher)
+			token: generate_token(teacher, teacher.id, 'teacher')
 		})
 	} catch (error) {
 		res.status(500).json({
@@ -63,5 +40,5 @@ const register = async (req: Request, res: Response) => {
 
 
 export {
-    login, register
+    register
 }

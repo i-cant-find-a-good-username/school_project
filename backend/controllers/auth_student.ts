@@ -5,50 +5,7 @@ import { ObjectId } from "mongodb";
 import { Note } from '../models/note';
 import { Subject } from '../models/subject';
 import { Grade } from '../models/grade';
-import { generate_token } from './generate_token'
-
-
-
-
-
-
-
-
-const login = async (req: Request, res: Response) => {
-	try {
-		const data = req.body
-
-		const user = await Student.findOne({email: data.email})
-		if(!user) return res.status(401).json({
-			message: "email does not exist",
-		})
-		
-		const matched = await bcrypt.compare(data.password, user.password)
-		if(!matched) return res.status(401).json({
-			message: "bad password",
-		})
-	
-	
-		res.status(201).json({
-			message: 'login ok',
-			token: generate_token(user, user._id)
-		})
-	} catch (error) {
-		res.status(500).json({
-			message: error
-		})
-	}
-}
-
-
-
-
-
-
-
-
-
-
+import { generate_token } from './auth'
 
 
 
@@ -89,11 +46,7 @@ const register = async (req: Request, res: Response) => {
 					// @ts-ignore
 					subject: new ObjectId(teachers[i].subjects[0]._id),
 					year: 2022,
-					notes:{
-							tp: 0,
-							td: 0,
-							exam: 0,
-						}
+					notes:{}
 				}
 			)
 		}
@@ -103,7 +56,7 @@ const register = async (req: Request, res: Response) => {
 			message: student.current_grade,
 			teachers: teachers,
 			notes: notes,
-			token: generate_token(student)
+			token: generate_token(student, student.id, 'student')
 		})
 	} catch (error) {
 		res.status(500).json({
@@ -121,5 +74,5 @@ const register = async (req: Request, res: Response) => {
 
 
 export {
-    login, register
+    register
 }

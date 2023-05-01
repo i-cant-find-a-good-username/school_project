@@ -6,7 +6,8 @@ const isLoginUser = (req: Request, res: Response, next: Function) => {
     const body = req.body
     if (
         body.email !== undefined &&
-        body.password !== undefined
+        body.password !== undefined &&
+        body.type !== undefined && body.type === "teacher" || body.type === 'student'
     ){
         next()
     }else{
@@ -54,8 +55,50 @@ const isRegisterUser = (req: Request, res: Response, next: Function) => {
 }
 
 
+
+
+
+const isGlobalNotesReq = (req: Request, res: Response, next: Function) => {
+    const body = req.body
+    if (
+        body.grade !== undefined &&
+        body.year !== undefined && typeof(body.year) === "number"
+    ){
+        next()
+    }else{
+        res.json({
+            error: 400,
+            message: "bad input"
+        })
+    }
+}
+
+
+
+
+
+
+
+const isComplaint = (req: Request, res: Response, next: Function) => {
+    const body = req.body
+    if (
+        body.note !== undefined &&
+        body.message !== undefined
+    ){
+        next()
+    }else{
+        res.json({
+            error: 400,
+            message: "bad input"
+        })
+    }
+}
+
+
 export {
     isRegisterTeacher,
     isLoginUser,
-    isRegisterUser
+    isRegisterUser,
+    isGlobalNotesReq,
+    isComplaint
 }
