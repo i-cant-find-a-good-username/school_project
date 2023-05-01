@@ -1,7 +1,7 @@
 <script lang='ts'>
     import { Table, tableMapperValues } from '@skeletonlabs/skeleton';
     import type { TableSource } from '@skeletonlabs/skeleton';
-	import  { active_page } from '../../store'
+	import  { active_page } from '../../page_store'
 	let tableArr = [
         {
             td: 5,

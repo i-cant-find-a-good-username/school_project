@@ -14,7 +14,7 @@ const isAuth = (req: Request, res: Response, next: Function) => {
                 next()
             }else{
                 return res.status(401).json({
-                    message: 'invalid token  ' + err,
+                    message: 'invalid token',
                 }) 
             }
         });

@@ -13,9 +13,9 @@ const login = async (req: Request, res: Response) => {
 
 		let user
 		if(data.type == 'teacher'){
-			user = await Teacher.findOne({email: data.email})
+			user = await Teacher.findOne({email: data.email}).select("_id username email profile_image grade year")
 		}else{
-			user = await Student.findOne({email: data.email})
+			user = await Student.findOne({email: data.email}).select("_id username email profile_image subjects isAdmin")
 		}
 
 		if(!user) return res.status(404).json({
@@ -26,8 +26,16 @@ const login = async (req: Request, res: Response) => {
 		if(!matched) return res.status(401).json({
 			message: "bad password",
 		})
-	
+
+		console.log(
+			{
+				user_data: user,
+				role: data.type,
+				token: generate_token(user, user.id, data.type)
+			}
+		)
 		res.status(200).json({
+			user_data: user,
 			role: data.type,
 			token: generate_token(user, user.id, data.type)
 		})

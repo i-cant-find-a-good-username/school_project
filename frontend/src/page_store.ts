@@ -5,6 +5,6 @@ const active_page: Writable<number> = writable(2);
 
 
 
-
-
-export {active_page}
+export {
+    active_page,
+}

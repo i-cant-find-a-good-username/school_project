@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Table, tableMapperValues, type TableSource, InputChip} from "@skeletonlabs/skeleton";
 	import { Paginator } from "@skeletonlabs/skeleton";
-	const source = [
+	const rows = [
 		{
 			name: "dude",
 			igr: "20",
@@ -521,35 +521,10 @@
 		},
 
 	];
+	let head = Object.keys(rows[0])
 
-	let page = {
-		offset: 0,
-		limit: 5,
-		size: source.length,
-		amounts: [1, 2, 5, 10],
-	};
-	let tableSimple: TableSource = {
-    	head:  [
-			'name', 'igr', 'cse', 'sri', 'AVG UEF1', 'CRED UEF1',
-			'aaw', 'mssc', 'gcc', 'AVG UEF2', 'CRED UEF2',
-			'ang2', 'mts', 'AVG UEM1', 'CRED UEM1', 'average']
-		,
-    	body: tableMapperValues(source, ['name', 'igr', 'cse', 'sri', 'AVG_UEF1', 'CRED_UEF1', 'aaw', 'mssc', 'gcc', 'AVG_UEF2', 'CRED_UEF2', 'ang2', 'mts', 'AVG_UEM1', 'CRED_UEM1', 'average']),
-    	meta: tableMapperValues(source, ['name', 'igr', 'cse', 'sri', 'AVG_UEF1', 'CRED_UEF1', 'aaw', 'mssc', 'gcc', 'AVG_UEF2', 'CRED_UEF2', 'ang2', 'mts', 'AVG_UEM1', 'CRED_UEM1', 'average']),
-    	foot: ['Total', '', '20.00']
-    };
-	$: paginatedSource = source.slice(
-		page.offset * page.limit,
-		page.offset * page.limit + page.limit
-	);
-	$: data = paginatedSource.map(function (obj) {
-		return Object.keys(obj)
-			.sort()
-			.map(function (key) {
-				//@ts-ignore
-				return obj[key];
-			});
-	});
+	console.log(head)
+
 	let complaints = ['add here']
 
 
@@ -583,8 +558,72 @@
 	<!--  -->
 	<div class="rounded-md w-full  overflow-auto " >
 		<div class="w-full space-y-2 ">
-			<Table source={tableSimple} regionHeadCell="text-center " regionCell="text-center !align-middle" regionFootCell="text-center "  />
-			<Paginator bind:settings={page} />
+			<!--
+					let page = {
+						offset: 0,
+						limit: 5,
+						size: source.length,
+						amounts: [1, 2, 5, 10],
+					};
+					let tableSimple: TableSource = {
+    					head:  [
+							'name', 'igr', 'cse', 'sri', 'AVG UEF1', 'CRED UEF1',
+							'aaw', 'mssc', 'gcc', 'AVG UEF2', 'CRED UEF2',
+							'ang2', 'mts', 'AVG UEM1', 'CRED UEM1', 'average']
+						,
+    					body: tableMapperValues(source, ['name', 'igr', 'cse', 'sri', 'AVG_UEF1', 'CRED_UEF1', 'aaw', 'mssc', 'gcc', 'AVG_UEF2', 'CRED_UEF2', 'ang2', 'mts', 'AVG_UEM1', 'CRED_UEM1', 'average']),
+    					meta: tableMapperValues(source, ['name', 'igr', 'cse', 'sri', 'AVG_UEF1', 'CRED_UEF1', 'aaw', 'mssc', 'gcc', 'AVG_UEF2', 'CRED_UEF2', 'ang2', 'mts', 'AVG_UEM1', 'CRED_UEM1', 'average']),
+    					foot: ['Total', '', '20.00']
+    				};
+					$: paginatedSource = source.slice(
+						page.offset * page.limit,
+						page.offset * page.limit + page.limit
+					);
+					$: data = paginatedSource.map(function (obj) {
+						return Object.keys(obj)
+							.sort()
+							.map(function (key) {
+								//@ts-ignore
+								return obj[key];
+							});
+					});
+				<Table source={tableSimple} regionHeadCell="text-center " regionCell="text-center !align-middle" regionFootCell="text-center "  />
+				<Paginator bind:settings={page} />
+			-->
+			<div class="table-container">
+				<!-- Native Table Element -->
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							{#each head as col}
+								<th class='text-center !align-middle'>{col}</th>
+							{/each}
+						</tr>
+					</thead>
+					<tbody>
+						{#each rows as row, i}
+							<tr>
+								{#each head as col}
+									 <td class='text-center !align-middle'>{col}</td>
+								{/each}
+							</tr>
+							{#if i === 4}
+								<tr class="!variant-filled-error">
+									<td class='text-center !align-middle '>complaint</td>
+									<td colspan="15" class='text-center !align-middle overflow-hidden truncate '>variant-filled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error error</td>
+								</tr>
+							{/if}
+						{/each}
+					</tbody>
+					<tfoot>
+						<tr>
+							<th colspan="3">Calculated Total Weight</th>
+							<td>hello</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+
 		</div>
 	</div>
 	<InputChip bind:value={complaints} name="chips" placeholder="Write a complaint..." />

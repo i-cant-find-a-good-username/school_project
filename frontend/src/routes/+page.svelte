@@ -4,7 +4,7 @@
 	import '../app.postcss';
 	import { AppShell } from '@skeletonlabs/skeleton';
 	import { AppRail, AppRailTile } from '@skeletonlabs/skeleton';
-	import  { active_page } from '../store'
+	import  { active_page } from '../page_store'
 	import Global from  '../lib/icons/global.svelte';
 	import Home from  '../lib/icons/home.svelte';
 	import List from  '../lib/icons/list.svelte';

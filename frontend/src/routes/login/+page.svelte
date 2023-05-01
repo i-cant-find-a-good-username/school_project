@@ -9,13 +9,26 @@
     let is_teacher = false
 
 
+    let error0: HTMLElement
+    let error1: HTMLElement
+    let valid_input = false
+
+
+    // validation
+    let ff: RegExpMatchArray | null
     const email_input = () => {
-
+        ff = email.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+        if(ff == null){
+            email.classList.add('input-warning')
+            error0.classList.remove('hidden')
+            valid_input = false
+        }else{
+            email.classList.remove('input-warning')
+            error0.classList.add('hidden')
+            valid_input = true
+        }
     }
 
-    const password_input = () => {
-
-    }
 
     import {
 		PUBLIC_API_URL,
@@ -27,36 +40,43 @@
 
     const login_enter = (e: KeyboardEvent) => {
         if (e.keyCode === 13){
-            login()
+            if (valid_input){
+                login()
+            }
         }
     }
     const login = () => {
-        console.log(email.value)
-        console.log(password.value)
-        console.log(is_teacher)
-
+        if(valid_input){
             fetch(PUBLIC_API_URL + url + '/login' , {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({email: email.value, password: password.value, type: is_teacher ? 'teacher' : 'student'})
             })
             .then((response) => {
-                console.log()
+                console.log(response)
                 if (response.status === 200){
                     toastStore.trigger(res_200);
+                    return response.json()
                 }else if (response.status === 401){
                     toastStore.trigger(err_401);
                 }else if (response.status === 404){
                     toastStore.trigger(err_404);
                 }
-                return response.json()
             })
             .then(data => {
-                localStorage.setItem('role', data.role)
-                localStorage.setItem('token', data.token)
                 console.log(data)
+                let user_data = data.user_data
+                console.log(user_data)
+                user_data.role = data.role
+                localStorage.setItem('user_data', user_data)
+                localStorage.setItem('token', data.token)
 			    goto(`/`);
             })
+        }else{
+            toastStore.trigger(invalid_inputs);
+        }
+
+
 
     }
 
@@ -73,6 +93,10 @@
         message: 'logged in',
 	    background: 'variant-filled-success',
     };
+    const invalid_inputs: ToastSettings = {
+        message: 'both fields',
+	    background: 'variant-filled-success',
+    };
 
 
 
@@ -83,29 +107,31 @@
 
 <Toast />
 <div class='flex items-center justify-center h-full '>
-
     <div class="variant-ghost-surface card p-8 space-y-4 ">
-        {PUBLIC_API_URL + url + '/login'}
 
         <label class="label">
             <span>Email</span>
             <input on:keydown={login_enter} bind:this={email} on:input={email_input} class="input p-2 variant-form-material" type="text" placeholder="Email" />
+            <span bind:this={error0} class='text-warning-600 flex justify-end hidden'>
+                Invalid email
+            </span>
         </label>
+
+
 
         <label class="label">
             <span>Password</span>
-            <input on:keydown={login_enter} bind:this={password} on:input={password_input} class="input p-2 variant-form-material" type="password" placeholder="Password" />
+            <input on:keydown={login_enter} bind:this={password} class="input p-2 variant-form-material" type="password" placeholder="Password" />
         </label>
 
 
-        <label class="flex items-center space-x-2">
-            <input bind:checked={is_teacher} class="checkbox" type="checkbox" />
-            <p>Login as teacher</p>
-        </label>
 
-
-        <div class='w-full flex justify-end'>
-            <button on:click={login} type="button" class="btn variant-filled-surface">Submit</button>
+        <div class='w-full flex justify-between'>
+            <label class="flex items-center space-x-2">
+                <input bind:checked={is_teacher} class="checkbox" type="checkbox" />
+                <p>Login as teacher</p>
+            </label>
+            <button on:click={login} type="button" class="btn variant-filled-surface"  disabled={!valid_input}>Submit</button>
         </div>
    
     
