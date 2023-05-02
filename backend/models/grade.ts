@@ -5,7 +5,9 @@ import { Grade } from '../types';
 
 
 const grades_schema= new Schema<Grade>({
-    name: {type: String, required:true, ref: "Student"},
+    grade: {type: String, required:true},
+    speciality: {type: String, required:true},
+    simester: {type: String, required:true},
     subjects: [{type: Types.ObjectId, required:true, ref: "subject"}],
 },{timestamps: true}) 
 

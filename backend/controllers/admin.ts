@@ -134,6 +134,16 @@ const edit_teacher = async (req: Request, res: Response) => {
 const get_notes = async (req: Request, res: Response) => {
     try {
         let data = req.body
+
+        // middleware mabe change location to middleware file
+        const my_grades_admin = await Teacher.findOne({ _id: res.locals.user_data._id })
+        // @ts-ignore
+        if(!my_grades_admin.grades_admin.includes(data.grade)){
+            return res.status(400).json({
+                message: "invalid grade"
+            })   
+        }
+        
         const students = await Student.find({grade: data.grade, year: data.year }).select('_id username email profile_image grade year')
 
         let student_ids = [];
@@ -149,6 +159,7 @@ const get_notes = async (req: Request, res: Response) => {
             complaints: complaints,
         }) 
     } catch (error) {
+        console.log(error)
         res.status(500).json({
             message: error
         })

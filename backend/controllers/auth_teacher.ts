@@ -15,6 +15,9 @@ const register = async (req: Request, res: Response) => {
 			message: 'email taken'
 		})
 	
+
+		console.log(data)
+
 		const hash_password = await bcrypt.hash(data.password, 10)
 		teacher = new Teacher({
 			username : data.username,

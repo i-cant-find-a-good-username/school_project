@@ -97,6 +97,8 @@
 		themes_modal = !themes_modal
 		set_theme('crimson')
 		modalStore.trigger(d);
+		themes_modal = false
+
 	}
 	const ff = () => {
 		console.log('rfe')

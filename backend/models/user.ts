@@ -22,7 +22,8 @@ const teacher_schema= new Schema<TeacherType>({
     password: {type: String, required: true},
     profile_image: {type: String, default: "default.jpg"},
     subjects: [{type: Types.ObjectId, ref: 'subject'}],
-    isAdmin: {type: Boolean, default:false}
+    isAdmin: {type: Boolean, default:false},
+    grades_admin: {type: [Types.ObjectId], ref: "grade", default: []}
 },{timestamps: true})
 
 

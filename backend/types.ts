@@ -18,6 +18,7 @@ interface StudentType extends UserType {
 interface TeacherType extends UserType {
     subjects: string[],
     isAdmin: boolean,
+    grades_admin: ObjectId[],
 }
 
 
@@ -62,7 +63,9 @@ interface Note {
 
 
 interface Grade {
-    name: string,
+    grade: string,
+    speciality: string,
+    simester: string,
     subjects: ObjectId[]
 }
 

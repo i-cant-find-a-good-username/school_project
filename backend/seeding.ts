@@ -17,7 +17,22 @@ connect(mongo_uri);
 
 const grades: Grade[] = [
     {
-        name: "M1-STIC-S1",
+        grade: 'master 1',
+        speciality: 'stic',
+        simester: '2',
+        subjects: []
+    },
+    {
+        grade: 'master 1',
+        speciality: 'stic',
+        simester: '1',
+        subjects: []
+    },
+
+    {
+        grade: 'master 1',
+        speciality: 'stic',
+        simester: '1',
         subjects: []
     }
 ]
@@ -155,6 +170,7 @@ const main = async () => {
             password: await bcrypt.hash("password", 10),
             subjects: [],
             isAdmin: false,
+            grades_admin: [],
         },
         {
             username: "bouzenada",
@@ -162,6 +178,7 @@ const main = async () => {
             password: await bcrypt.hash("password", 10),
             subjects: [],
             isAdmin: false,
+            grades_admin: [],
         },
         {
             username: "chickhi",
@@ -169,6 +186,7 @@ const main = async () => {
             password: await bcrypt.hash("password", 10),
             subjects: [],
             isAdmin: false,
+            grades_admin: [],
         },
         {
             username: "gharzouli",
@@ -176,6 +194,7 @@ const main = async () => {
             password: await bcrypt.hash("password", 10),
             subjects: [],
             isAdmin: false,
+            grades_admin: [],
         },
         {
             username: "draa",
@@ -183,6 +202,7 @@ const main = async () => {
             password: await bcrypt.hash("password", 10),
             subjects: [],
             isAdmin: false,
+            grades_admin: [],
         },
         {
             username: "labed",
@@ -190,6 +210,7 @@ const main = async () => {
             password: await bcrypt.hash("password", 10),
             subjects: [],
             isAdmin: false,
+            grades_admin: [],
         },
         {
             username: "idk",
@@ -197,6 +218,7 @@ const main = async () => {
             password: await bcrypt.hash("password", 10),
             subjects: [],
             isAdmin: false,
+            grades_admin: [],
         },
         {
             username: "meriem",
@@ -204,6 +226,7 @@ const main = async () => {
             password: await bcrypt.hash("password", 10),
             subjects: [],
             isAdmin: false,
+            grades_admin: [],
         },
     ]
     
@@ -226,7 +249,14 @@ const main = async () => {
             username: "ahmed",
             email: "ahmed@gmail.com",
             password: await bcrypt.hash("password", 10),
-            grade: inserted_grades[0]._id,
+            grade: inserted_grades[1]._id,
+            year: 2022,
+        },
+        {
+            username: "ali",
+            email: "ali@gmail.com",
+            password: await bcrypt.hash("password", 10),
+            grade: inserted_grades[2]._id,
             year: 2022,
         },
     ]
