@@ -4,6 +4,10 @@ interface UserData{
     email: string, 
     profile_image: string,
     role: string,
+    previous?: [{
+        year: number,
+        grade: string
+    }],
     grade?: string,
     year?: string,
     subjects?: string,

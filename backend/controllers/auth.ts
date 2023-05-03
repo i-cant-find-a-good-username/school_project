@@ -18,6 +18,9 @@ const login = async (req: Request, res: Response) => {
 	            .populate({ path: 'grades_admin', model: Grade })
 		}else{
 			user = await Student.findOne({email: data.email})
+				.populate({ path: 'grade', model: Grade })
+				.populate({ path: 'previous.grade', model: Grade })
+			console.log(user)
 		}
 
 		if(!user) return res.status(404).json({

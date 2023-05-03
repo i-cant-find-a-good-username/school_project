@@ -12,6 +12,10 @@ interface UserType  {
 interface StudentType extends UserType {
     grade: ObjectId,
     year: number,
+    previous: [{
+        year: number,
+        grade: ObjectId
+    }]
 }
 
 

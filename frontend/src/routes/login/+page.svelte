@@ -14,7 +14,6 @@
     let valid_input = false
 
 
-    // validation
     let ff: RegExpMatchArray | null
     const email_input = () => {
         ff = email.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
@@ -64,9 +63,7 @@
                 }
             })
             .then(data => {
-                console.log(data)
                 let user_data = data.user_data
-                console.log(user_data)
                 user_data.role = data.role
                 localStorage.setItem('user_data', JSON.stringify(user_data))
                 localStorage.setItem('token', data.token)
@@ -75,9 +72,6 @@
         }else{
             toastStore.trigger(invalid_inputs);
         }
-
-
-
     }
 
     
@@ -100,8 +94,6 @@
 
 
 
-//input-success
-//input-error
 
 </script>
 

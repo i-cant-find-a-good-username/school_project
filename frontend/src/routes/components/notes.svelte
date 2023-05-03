@@ -2,6 +2,14 @@
     import { Table, tableMapperValues } from '@skeletonlabs/skeleton';
     import type { TableSource } from '@skeletonlabs/skeleton';
 	import { Accordion, AccordionItem, InputChip } from '@skeletonlabs/skeleton';
+	import { user } from '../../user_store'
+
+	let user_data: any
+	user.subscribe(user => {
+		user_data = user;
+	});
+
+	
 	let tableArr = [
         {
             subject: "igr",
@@ -30,10 +38,32 @@
 
 </script>
 
-<div >
+<div  class='space-y-4'>
 	<!-- 
 		filled ghost soft ringed glass
 	-->
+
+	<div class='flex space-x-2'>
+
+		<select class="select">
+			{#each user_data.user_data.previous as item, i}
+				<option value={item.year}>{item.year}</option>
+			{/each}
+			<option selected value={user_data.user_data.year}>{user_data.user_data.year}</option>
+		</select>
+
+		<select class="select">
+			{#each user_data.user_data.previous as item, i}
+				<option value={item.grade}>{item.grade}</option>
+			{/each}
+			<option selected value={user_data.user_data.grade}>{user_data.user_data.grade.grade}</option>
+		</select>
+
+
+	</div>
+
+
+
 	<Accordion regionControl='variant-glass-surface' >
 		{#each Array(4) as item, i}
 			<AccordionItem open={i==0}   >

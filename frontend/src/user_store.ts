@@ -8,6 +8,7 @@ import type { Data } from './types';
 
 const user: Writable<Data> = writable();
 const user_notes: Writable<Data> = writable();
+const global_notes: Writable<Data> = writable();
  
 
 

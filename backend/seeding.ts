@@ -23,15 +23,15 @@ const grades: Grade[] = [
         subjects: []
     },
     {
-        grade: 'master 1',
-        speciality: 'stic',
+        grade: 'license 3',
+        speciality: 'ti',
         simester: '1',
         subjects: []
     },
 
     {
-        grade: 'master 1',
-        speciality: 'stic',
+        grade: 'license 2',
+        speciality: 'mi',
         simester: '1',
         subjects: []
     }
@@ -246,20 +246,38 @@ const main = async () => {
             password: await bcrypt.hash("password", 10),
             grade: inserted_grades[0]._id,
             year: 2022,
+            previous: [
+                {
+                    year: 2021,
+                    grade: inserted_grades[1]._id
+                }
+            ]
         },
         {
             username: "ahmed",
             email: "ahmed@gmail.com",
             password: await bcrypt.hash("password", 10),
-            grade: inserted_grades[1]._id,
+            grade: inserted_grades[0]._id,
             year: 2022,
+            previous: [
+                {
+                    year: 2021,
+                    grade: inserted_grades[1]._id
+                }
+            ]
         },
         {
             username: "ali",
             email: "ali@gmail.com",
             password: await bcrypt.hash("password", 10),
-            grade: inserted_grades[2]._id,
+            grade: inserted_grades[1]._id,
             year: 2022,
+            previous: [
+                {
+                    year: 2021,
+                    grade: inserted_grades[2]._id
+                }
+            ]
         },
     ]
 

@@ -11,6 +11,10 @@ const student_schema= new Schema<StudentType>({
     profile_image: {type: String, default: "default.jpg"},
     grade: {type: Types.ObjectId, required:true, ref: "grade"},
     year: {type: Number, required:true}, // 20xx // 0000 == no longer a student
+    previous: [{
+        year: {type: Number, required:true}, 
+        grade: {type: Types.ObjectId, required:true, ref: "grade"},
+    }],
 },{timestamps: true})
 
 
