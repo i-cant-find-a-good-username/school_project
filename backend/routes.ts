@@ -35,14 +35,14 @@ router.post("/teacher/register",isRegisterTeacher ,teacher_register)
 
 
 // student
-router.get("/student/notes/",isAuth, isStudent, get_notes)
+router.get("/student/notes/:grade/:year",isAuth, isStudent, get_notes)
 router.get("/student/notes_global", isGlobalNotesReq, isAuth, isStudent, get_global_notes)
 router.post("/student/complaint/", isComplaint, isAuth, isStudent, submit_complaint)
 router.delete("/student/complaint/:id", isAuth, isStudent, delete_complaint)
 
 
 // teacher
-router.get("/teacher/notes/", isAuth, isTeacher, get_notes_teacher)
+router.get("/teacher/notes/:grade/:year", isAuth, isTeacher, get_notes_teacher)
 router.put("/teacher/notes/:id", note, isAuth, isTeacher, edit_notes)
 
 

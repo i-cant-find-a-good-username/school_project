@@ -22,13 +22,12 @@ const isLoginUser = (req: Request, res: Response, next: Function) => {
 
 
 
-
 const isRegisterTeacher = (req: Request, res: Response, next: Function) => {
     const body = req.body
     if (
-        body.username !== undefined &&
-        body.email !== undefined &&
-        body.password !== undefined 
+        body.username !== undefined && 
+        body.email !== undefined &&  /\S+@\S+\.\S+/.test(body.email) &&
+        body.password !== undefined && body.email.length > 7 
     ){
         next()
     }else{
@@ -46,8 +45,8 @@ const isRegisterStudent = (req: Request, res: Response, next: Function) => {
     const body = req.body
     if (
         body.username !== undefined &&
-        body.email !== undefined &&
-        body.password !== undefined &&
+        body.email !== undefined &&  /\S+@\S+\.\S+/.test(body.email) &&
+        body.password !== undefined && body.email.length > 7  &&
         body.grade !== undefined &&
         body.year !== undefined
     ){

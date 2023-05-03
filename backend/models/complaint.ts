@@ -5,9 +5,9 @@ import { Complaint } from '../types';
 
 
 const complaints_schema= new Schema<Complaint>({
-    student: {type: Types.ObjectId, required:true, ref: "Student"},
-    teacher: {type: Types.ObjectId, required:true, ref: "Teacher"},
-    Note: {type: Types.ObjectId, required:true, ref: "Note"},
+    student: {type: Types.ObjectId, required:true, ref: "student"},
+    teacher: {type: Types.ObjectId, required:true, ref: "teacher"},
+    note: {type: Types.ObjectId, required:true, ref: "note"},
     message: {type: String, required: true}
 },{timestamps: true}) 
 

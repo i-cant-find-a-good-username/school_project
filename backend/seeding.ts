@@ -142,6 +142,7 @@ const notes: Note[] = [
         student: new ObjectId(), // change with existing ones
         teacher: new ObjectId(), // change with existing ones
         subject: new ObjectId(), // change with existing ones
+        grade: new ObjectId(), // change with existing ones
         year: 2022,
         notes:{}
     },
@@ -149,6 +150,7 @@ const notes: Note[] = [
         student: new ObjectId(), // change with existing ones
         teacher: new ObjectId(), // change with existing ones
         subject: new ObjectId(), // change with existing ones
+        grade: new ObjectId(), // change with existing ones
         year: 2022,
         notes:{}
     }
@@ -270,9 +272,11 @@ const main = async () => {
     notes[0].student = inserted_students[0].id
     notes[0].teacher = inserted_teachers[0].id
     notes[0].subject = inserted_subjects[0].id
+    notes[0].grade = inserted_grades[0].id
     notes[1].student = inserted_students[1].id
     notes[1].teacher = inserted_teachers[1].id
     notes[1].subject = inserted_subjects[1].id
+    notes[1].grade = inserted_grades[1].id
     await NodeModel.insertMany(notes)
     process.exit(0);
 }

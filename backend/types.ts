@@ -52,7 +52,8 @@ interface Subject {
 interface Note {
     student: ObjectId,
     teacher: ObjectId,
-    subject: ObjectId ,
+    subject: ObjectId,
+    grade: ObjectId,
     year: number,
     notes:{
             tp?: number,
@@ -73,7 +74,7 @@ interface Grade {
 interface Complaint {
     student: ObjectId,
     teacher: ObjectId,
-    Note: ObjectId,
+    note: ObjectId,
     message: string
 }
 

@@ -10,7 +10,11 @@ import { ObjectId } from "mongodb";
 
 const get_notes = async (req: Request, res: Response) => {
     try {
-        const notes = await Note.find({student: new ObjectId(res.locals.user_data._id)})
+        const notes = await Note.find({
+            student: new ObjectId(res.locals.user_data._id),
+            grade: new ObjectId(req.params.grade),
+            year: req.params.year,
+        })
             .populate({ path: 'subject', model: Subject})
             .populate({ path: 'teacher', select: 'username email profile_image', model: Teacher })
 
@@ -29,7 +33,10 @@ const get_notes = async (req: Request, res: Response) => {
 
 const get_global_notes = async (req: Request, res: Response) => {
     try {
-        let notes = await Note.find({})
+        let notes = await Note.find({
+            grade: new ObjectId(req.params.grade),
+            year: req.params.year,
+        })
             .populate('subject', 'name coefficient credits group _id')
             .populate('student', 'username')
     
