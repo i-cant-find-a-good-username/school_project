@@ -41,96 +41,96 @@ const grades: Grade[] = [
 
 const subjects: Subject[] = [
     {
-        name: "igr",
+        name: "interconnection gestion reseaux",
         group: "UEF1",
         //grade: new ObjectId(), // change with existing ones
         credits: 5,
-        Coefficient: 5,
-        notes_Coefficient: {
+        coefficient: 5,
+        notes_coefficient: {
             tp: 0.5,
             td: 0.5,
             exam: 2,
         }
     },
     {
-        name: "cse",
+        name: "concuurence system information",
         group: "UEF1",
         //grade: new ObjectId(), // change with existing ones
         credits: 5,
-        Coefficient: 5,
-        notes_Coefficient: {
+        coefficient: 5,
+        notes_coefficient: {
             tp: 0.5,
             td: 0.5,
             exam: 2,
         }
     },
     {
-        name: "sri",
+        name: "security reseau informatic",
         group: "UEF1",
         //grade: new ObjectId(), // change with existing ones
         credits: 3,
-        Coefficient: 3,
-        notes_Coefficient: {
+        coefficient: 3,
+        notes_coefficient: {
             tp: 0,
             td: 0,
             exam: 1,
         }
     },
     {
-        name: "aaw",
+        name: "archetecture application web",
         group: "UEF2",
         //grade: new ObjectId(), // change with existing ones
         credits: 3,
-        Coefficient: 3,
-        notes_Coefficient: {
+        coefficient: 3,
+        notes_coefficient: {
             tp: 0.5,
             td: 0.5,
             exam: 2,
         }
     },
     {
-        name: "mssc",
+        name: "model sim sys complex",
         group: "UEF2",
         //grade: new ObjectId(), // change with existing ones
         credits: 4,
-        Coefficient: 4,
-        notes_Coefficient: {
+        coefficient: 4,
+        notes_coefficient: {
             tp: 0.5,
             td: 0.5,
             exam: 2,
         }
     },
     {
-        name: "gcc",
+        name: "grilles calcule cloude",
         group: "UEF2",
         //grade: new ObjectId(), // change with existing ones
         credits: 4,
-        Coefficient: 4,
-        notes_Coefficient: {
+        coefficient: 4,
+        notes_coefficient: {
             tp: 0.5,
             td: 0.5,
             exam: 2,
         }
     },
     {
-        name: "ang2",
+        name: "anglais",
         group: "UEM1",
         //grade: new ObjectId(), // change with existing ones
         credits: 2,
-        Coefficient: 2,
-        notes_Coefficient: {
+        coefficient: 2,
+        notes_coefficient: {
             tp: 0,
             td: 0,
             exam: 1,
         }
     },
     {
-        name: "mts",
+        name: "metho travail science",
         group: "UEM1",
         //grade: new ObjectId(), // change with existing ones
         credits: 2,
-        Coefficient: 2,
-        notes_Coefficient: {
+        coefficient: 2,
+        notes_coefficient: {
             tp: 0,
             td: 0,
             exam: 1,
@@ -144,7 +144,11 @@ const notes: Note[] = [
         subject: new ObjectId(), // change with existing ones
         grade: new ObjectId(), // change with existing ones
         year: 2022,
-        notes:{}
+        notes:{
+            tp: 15,
+            td: 20,
+            exam: 13,
+        }
     },
     {
         student: new ObjectId(), // change with existing ones
@@ -152,8 +156,48 @@ const notes: Note[] = [
         subject: new ObjectId(), // change with existing ones
         grade: new ObjectId(), // change with existing ones
         year: 2022,
-        notes:{}
-    }
+        notes:{
+            tp: 3,
+            td: 7,
+            exam: 12,
+        }
+    },
+    {
+        student: new ObjectId(), // change with existing ones
+        teacher: new ObjectId(), // change with existing ones
+        subject: new ObjectId(), // change with existing ones
+        grade: new ObjectId(), // change with existing ones
+        year: 2022,
+        notes:{
+            tp: 5,
+            td: 5,
+            exam: 2,
+        }
+    },
+    {
+        student: new ObjectId(), // change with existing ones
+        teacher: new ObjectId(), // change with existing ones
+        subject: new ObjectId(), // change with existing ones
+        grade: new ObjectId(), // change with existing ones
+        year: 2022,
+        notes:{
+            tp: 7,
+            td: 5,
+            exam: 2,
+        }
+    },
+    {
+        student: new ObjectId(), // change with existing ones
+        teacher: new ObjectId(), // change with existing ones
+        subject: new ObjectId(), // change with existing ones
+        grade: new ObjectId(), // change with existing ones
+        year: 2022,
+        notes:{
+            tp: 9,
+            td: 5,
+            exam: 12,
+        }
+    },
 ]
 
 
@@ -291,10 +335,22 @@ const main = async () => {
     notes[0].teacher = inserted_teachers[0].id
     notes[0].subject = inserted_subjects[0].id
     notes[0].grade = inserted_grades[0].id
-    notes[1].student = inserted_students[1].id
+    notes[1].student = inserted_students[0].id
     notes[1].teacher = inserted_teachers[1].id
     notes[1].subject = inserted_subjects[1].id
-    notes[1].grade = inserted_grades[1].id
+    notes[1].grade = inserted_grades[0].id
+    notes[2].student = inserted_students[0].id
+    notes[2].teacher = inserted_teachers[2].id
+    notes[2].subject = inserted_subjects[2].id
+    notes[2].grade = inserted_grades[0].id
+    notes[3].student = inserted_students[0].id
+    notes[3].teacher = inserted_teachers[3].id
+    notes[3].subject = inserted_subjects[3].id
+    notes[3].grade = inserted_grades[0].id
+    notes[4].student = inserted_students[0].id
+    notes[4].teacher = inserted_teachers[4].id
+    notes[4].subject = inserted_subjects[4].id
+    notes[4].grade = inserted_grades[0].id
     await NodeModel.insertMany(notes)
     process.exit(0);
 }

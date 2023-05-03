@@ -3,6 +3,7 @@
 
     import { Toast, toastStore } from '@skeletonlabs/skeleton';
     import type { ToastSettings } from '@skeletonlabs/skeleton';
+    import { create_toast } from '../../toasts'
 
     let email: HTMLInputElement
     let password: HTMLInputElement
@@ -54,12 +55,12 @@
             .then((response) => {
                 console.log(response)
                 if (response.status === 200){
-                    toastStore.trigger(res_200);
+                    toastStore.trigger(create_toast('success', 'data fetched'));
                     return response.json()
                 }else if (response.status === 401){
-                    toastStore.trigger(err_401);
+                    toastStore.trigger(create_toast('error', 'Wrong credentials'));
                 }else if (response.status === 404){
-                    toastStore.trigger(err_404);
+                    toastStore.trigger(create_toast('error', 'Email not found'));
                 }
             })
             .then(data => {
@@ -70,34 +71,20 @@
 			    goto(`/`);
             })
         }else{
-            toastStore.trigger(invalid_inputs);
+            toastStore.trigger(create_toast('error', 'both fields are required'));
         }
     }
 
+                    
+
+
     
-    const err_401: ToastSettings = {
-        message: 'Wrong credentials',
-	    background: 'variant-filled-error',
-    };
-    const err_404: ToastSettings = {
-        message: 'Email not found',
-	    background: 'variant-filled-error',
-    };
-    const res_200: ToastSettings = {
-        message: 'logged in',
-	    background: 'variant-filled-success',
-    };
-    const invalid_inputs: ToastSettings = {
-        message: 'both fields',
-	    background: 'variant-filled-success',
-    };
 
 
 
 
 </script>
 
-<Toast />
 <div class='flex items-center justify-center h-full '>
     <div class="variant-ghost-surface card p-8 space-y-4 ">
 

@@ -44,8 +44,8 @@ interface Subject {
     group: string,
     //grade: ObjectId ,
     credits: number,
-    Coefficient: number,
-    notes_Coefficient: {
+    coefficient: number,
+    notes_coefficient: {
         tp: number,
         td: number,
         exam: number,

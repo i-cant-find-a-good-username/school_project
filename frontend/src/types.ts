@@ -8,7 +8,11 @@ interface UserData{
         year: number,
         grade: string
     }],
-    grade?: string,
+    grade?: {
+        grade: string,
+        speciality: string,
+        simester: string,
+    },
     year?: string,
     subjects?: string,
     isAdmin?: string,
@@ -21,6 +25,13 @@ interface Data {
 }
 
 
+interface Note{
+    td: number,
+    tp: number,
+    exam: number,
+}
+
 export type {
     Data,
+    Note
 }

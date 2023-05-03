@@ -1,7 +1,8 @@
 <script lang='ts'>
-let is_logged_in = false
-    
-import { ConicGradient, type ConicStop } from '@skeletonlabs/skeleton';
+	let is_logged_in = false
+	import { Toast } from '@skeletonlabs/skeleton';
+	
+	import { ConicGradient, type ConicStop } from '@skeletonlabs/skeleton';
 
 	import { set_user } from '../user_store'
 
@@ -40,6 +41,7 @@ import { ConicGradient, type ConicStop } from '@skeletonlabs/skeleton';
 
 
 
+<Toast />
 
 {#if is_logged_in}
 	<slot/>

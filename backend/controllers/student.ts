@@ -18,9 +18,15 @@ const get_notes = async (req: Request, res: Response) => {
             .populate({ path: 'subject', model: Subject})
             .populate({ path: 'teacher', select: 'username email profile_image', model: Teacher })
 
-        res.status(200).json({
-            message: notes
-        }) 
+
+            console.log(new ObjectId(res.locals.user_data._id))
+            console.log(new ObjectId(req.params.grade))
+            console.log(req.params.year)
+
+
+            console.log(notes)
+
+        res.status(200).json(notes) 
     } catch (error) {
         res.status(500).json({
             message: error
