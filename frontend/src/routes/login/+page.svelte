@@ -68,7 +68,7 @@
                 let user_data = data.user_data
                 console.log(user_data)
                 user_data.role = data.role
-                localStorage.setItem('user_data', user_data)
+                localStorage.setItem('user_data', JSON.stringify(user_data))
                 localStorage.setItem('token', data.token)
 			    goto(`/`);
             })

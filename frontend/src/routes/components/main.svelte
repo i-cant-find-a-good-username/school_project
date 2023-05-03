@@ -4,10 +4,9 @@
 	import Notes from './notes.svelte'
 	import Global from './global.svelte'
 	import Teacher from './teacher.svelte'
+	import Profile from './profile.svelte'
 	import { active_page } from '../../page_store'
 	import { user, set_user } from '../../user_store'
-    import { onMount } from 'svelte';
-    import { goto } from '$app/navigation';
 	import type { Data } from '../../types';
 
 
@@ -18,21 +17,11 @@
 		page = value;
 	});
 
-	let gg: Data
+	let user_data: Data
 	user.subscribe(user => {
-		gg = user;
+		user_data = user;
 	});
 
-	onMount(() => {
-		let user_data = localStorage.getItem('user_data')
-		let token = localStorage.getItem('token')
-		if (user_data && token){
-			set_user({
-				user_data: JSON.parse(user_data),
-				token: token,
-			})
-		}
-	})
 
 
 </script>
@@ -41,14 +30,19 @@
 
 <div class="h-screen p-4 flex flex-col">
 	<div class='overflow-auto h-full m-4'>
+		{JSON.stringify(user_data)}
 			{#if page === 0}
 				<Home/>
 			{:else if  page === 1}
-				<Notes/>
+				{#if user_data.user_data.role}
+					<Notes/>
+				{:else}
+					<Teacher/>
+				{/if}
 			{:else if  page === 2}
 				<Global/>
 			{:else if  page === 3}
-				<Teacher/>
+				<Profile/>
 			{/if}
 	</div>
 </div>
