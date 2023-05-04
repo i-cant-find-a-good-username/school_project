@@ -9,41 +9,77 @@ export const students = async () => {
             username: "ilyes",
             email: "ilyes@gmail.com",
             password: await bcrypt.hash("password", 10),
-            grade: inserted_grades[0]._id,
+            grade: "",
             year: 2022,
-            previous: [
-                {
-                    year: 2021,
-                    grade: inserted_grades[1]._id
-                }
-            ]
+            previous: []
         },
+
+
+
+
+
+
+
         {
             username: "ahmed",
             email: "ahmed@gmail.com",
             password: await bcrypt.hash("password", 10),
-            grade: inserted_grades[0]._id,
+            grade: "",
             year: 2022,
-            previous: [
-                {
-                    year: 2021,
-                    grade: inserted_grades[1]._id
-                }
-            ]
+            previous: []
         },
+
+
+
+
+
+
+
         {
             username: "ali",
             email: "ali@gmail.com",
             password: await bcrypt.hash("password", 10),
-            grade: inserted_grades[1]._id,
+            grade: "",
             year: 2022,
-            previous: [
-                {
-                    year: 2021,
-                    grade: inserted_grades[2]._id
-                }
-            ]
+            previous: []
         },
+
+
+
+
+
+
+
+        {
+            username: "ali",
+            email: "ali@gmail.com",
+            password: await bcrypt.hash("password", 10),
+            grade: "",
+            year: 2022,
+            previous: []
+        },
+
+
+
+
+
+
+
+        {
+            username: "ali",
+            email: "ali@gmail.com",
+            password: await bcrypt.hash("password", 10),
+            grade: "",
+            year: 2022,
+            previous: []
+        },
+
+
+
+
+
+
+
     ]
 }
 

@@ -128,6 +128,7 @@
         })
         .then(data => {
 			if (data.lenght > 0 || Object.keys(data).length > 0){
+				console.log(data)
 				notes_data = data
 				data_fetched = true
 			}else{
@@ -168,11 +169,14 @@
 		</select>
 	</div>
 
-
+	{
+		JSON.stringify(notes_data)
+	}
 
 	{#if data_fetched}
 		<Accordion regionControl='variant-ghost-surface' >
 			{#each notes_data as note, i}
+			{i}hello
 				<AccordionItem open={i==0}   >
 					<svelte:fragment slot="lead">
 						<p class='!text-2xl'>

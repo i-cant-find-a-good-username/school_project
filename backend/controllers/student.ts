@@ -64,7 +64,7 @@ const get_complaints = async (req: Request, res: Response) => {
         let complaints = await Complaint.find({student: new ObjectId(res.locals.user_data._id)})
 
         if(complaints.length === 0){
-            res.status(404).json({
+            return res.status(404).json({
                 message: "no complaints"
             })
         }

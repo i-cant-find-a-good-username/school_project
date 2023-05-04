@@ -20,7 +20,7 @@ interface StudentType extends UserType {
 
 
 interface TeacherType extends UserType {
-    subjects: string[],
+    subjects: ObjectId[],
     isAdmin: boolean,
     grades_admin: ObjectId[],
 }

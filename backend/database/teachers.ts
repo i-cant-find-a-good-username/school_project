@@ -6,64 +6,124 @@ import bcrypt from 'bcrypt';
 export const teachers = async () => {
     return [
         {
-            username: "mezioud",
-            email: "mezioud@gmail.com",
+            username: "ahmed",
+            email: "ahmed@gmail.com",
             password: await bcrypt.hash("password", 10),
             subjects: [],
             isAdmin: false,
             grades_admin: [],
         },
+
+
+
+
+
         {
-            username: "bouzenada",
-            email: "bouzenada@gmail.com",
+            username: "jamal",
+            email: "jamal@gmail.com",
             password: await bcrypt.hash("password", 10),
             subjects: [],
             isAdmin: false,
             grades_admin: [],
         },
+
+
+
+
+
         {
-            username: "chickhi",
-            email: "chickhi@gmail.com",
+            username: "adli",
+            email: "adli@gmail.com",
             password: await bcrypt.hash("password", 10),
             subjects: [],
             isAdmin: false,
             grades_admin: [],
         },
+
+
+
+
+
         {
-            username: "gharzouli",
-            email: "gharzouli@gmail.com",
+            username: "mohamed",
+            email: "mohamed@gmail.com",
             password: await bcrypt.hash("password", 10),
             subjects: [],
             isAdmin: false,
             grades_admin: [],
         },
+
+
+
+
+
         {
-            username: "draa",
-            email: "draa@gmail.com",
+            username: "mostafa",
+            email: "mostafa@gmail.com",
             password: await bcrypt.hash("password", 10),
             subjects: [],
             isAdmin: false,
             grades_admin: [],
         },
+
+
+
+
+
         {
-            username: "labed",
-            email: "labed@gmail.com",
+            username: "amar",
+            email: "amar@gmail.com",
             password: await bcrypt.hash("password", 10),
             subjects: [],
             isAdmin: false,
             grades_admin: [],
         },
+
+
+
+
+        
         {
-            username: "idk",
-            email: "idk@gmail.com",
+            username: "sief",
+            email: "sief@gmail.com",
             password: await bcrypt.hash("password", 10),
             subjects: [],
             isAdmin: false,
             grades_admin: [],
         },
+
+
+
+
+        
         {
-            username: "meriem",
-            email: "meriem@gmail.com",
+            username: "fadi",
+            email: "fadi@gmail.com",
+            password: await bcrypt.hash("password", 10),
+            subjects: [],
+            isAdmin: false,
+            grades_admin: [],
+        },
+
+
+
+        
+        {
+            username: "youcef",
+            email: "youcef@gmail.com",
+            password: await bcrypt.hash("password", 10),
+            subjects: [],
+            isAdmin: false,
+            grades_admin: [],
+        },
+
+
+
+
+        
+        {
+            username: "oussama",
+            email: "oussama@gmail.com",
             password: await bcrypt.hash("password", 10),
             subjects: [],
             isAdmin: false,
