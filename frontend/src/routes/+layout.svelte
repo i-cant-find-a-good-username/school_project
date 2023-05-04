@@ -4,7 +4,7 @@
 	
 	import { ConicGradient, type ConicStop } from '@skeletonlabs/skeleton';
 
-	import { set_user } from '../user_store'
+	import { set_user } from '../stores/user_store'
 
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';

@@ -2,24 +2,22 @@
 
 
 
-	import { Modal, modalStore } from '@skeletonlabs/skeleton';
-	import type { ModalSettings, ModalComponent } from '@skeletonlabs/skeleton';
-	import Theme_modal from  './modals/Theme.svelte';
-
 	import '@skeletonlabs/skeleton/themes/theme-gold-nouveau.css';
+
 	import '@skeletonlabs/skeleton/styles/all.css';
 	import '../app.postcss';
-	import { AppShell } from '@skeletonlabs/skeleton';
-	import { AppRail, AppRailTile } from '@skeletonlabs/skeleton';
-	import { active_page } from '../page_store'
-    import {set_theme} from '../theme_store'
-	import Global from  '../lib/icons/global.svelte';
-	import Home from  '../lib/icons/home.svelte';
-	import List from  '../lib/icons/list.svelte';
-	import Profile from  '../lib/icons/profile.svelte';
-	import Theme from  '../lib/icons/theme.svelte';
+	import { AppRail, AppShell, AppRailTile, Modal, modalStore } from '@skeletonlabs/skeleton';
+	import type { ModalSettings, ModalComponent } from '@skeletonlabs/skeleton';
+	import { active_page } from '../stores/page_store'
+    import {set_theme} from '../stores/theme_store'
 
-	import Main from  './components/main.svelte';
+	import Theme_modal from './modals/Theme.svelte';
+	import Global from '../lib/icons/global.svelte';
+	import Home from '../lib/icons/home.svelte';
+	import List from '../lib/icons/list.svelte';
+	import Profile from '../lib/icons/profile.svelte';
+	import Theme from '../lib/icons/theme.svelte';
+	import Main from './components/main.svelte';
 
 
 

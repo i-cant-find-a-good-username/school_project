@@ -3,10 +3,10 @@
     import { Table, tableMapperValues, toastStore, ConicGradient, type ConicStop } from '@skeletonlabs/skeleton';
     import type { TableSource } from '@skeletonlabs/skeleton';
 	import { Accordion, AccordionItem, InputChip } from '@skeletonlabs/skeleton';
-	import { user } from '../../user_store'
+	import { user } from '../../stores/user_store'
     import { PUBLIC_API_URL } from '$env/static/public';
 	import { create_toast } from '../../toasts'
-    import type { Note, NotesData, Complaint } from '../../types';
+    import type { Note, NotesData } from '../../types';
 
 
 	let selected_grade_year: string
@@ -20,6 +20,7 @@
 	user.subscribe(user => {
 		user_data = user;
 	});
+
 
 
 
@@ -55,10 +56,25 @@
 				'Content-Type': 'application/json',
 				'X-Authorization': localStorage.getItem('token') || ""
 			},
-			bod
+			body: JSON.stringify({
+				note: note_id,
+				message: e.detail.chipValue
+			})
         })
         .then((response) => {
-			return response.json()
+			if (response.status === 201){
+                toastStore.trigger(create_toast('success', 'complaint submitted'));
+				return response.json()
+            }else if (response.status === 401){
+                toastStore.trigger(create_toast('error', 'messagfe here'));
+				complaints.pop()
+            }else if (response.status === 404){
+                toastStore.trigger(create_toast('error', 'messagfe here'));
+				complaints.pop()
+            }else{
+                toastStore.trigger(create_toast('error', 'unknown error'));
+				complaints.pop()
+			}
         })
         .then(data => {
 			console.log(data)
@@ -154,9 +170,8 @@
 
 
 
-	
 	{#if data_fetched}
-		<Accordion regionControl='variant-glass-surface' >
+		<Accordion regionControl='variant-ghost-surface' >
 			{#each notes_data as note, i}
 				<AccordionItem open={i==0}   >
 					<svelte:fragment slot="lead">

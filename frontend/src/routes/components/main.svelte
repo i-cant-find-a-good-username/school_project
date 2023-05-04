@@ -5,8 +5,8 @@
 	import Global from './global.svelte'
 	import Teacher from './teacher.svelte'
 	import Profile from './profile.svelte'
-	import { active_page } from '../../page_store'
-	import { user, set_user } from '../../user_store'
+	import { active_page } from '../../stores/page_store'
+	import { user, set_user } from '../../stores/user_store'
 	import type { Data } from '../../types';
 
 

@@ -1,8 +1,8 @@
 <script lang='ts'>
-	import { active_page } from '../../page_store'
+	import { active_page } from '../../stores/page_store'
     import type { Data } from '../../types';
 
-    import { user } from '../../user_store'
+    import { user } from '../../stores/user_store'
 
 	let user_data: Data
 	user.subscribe(user => {

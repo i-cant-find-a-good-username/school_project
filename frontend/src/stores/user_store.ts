@@ -1,5 +1,5 @@
 import { writable, type Writable } from 'svelte/store';
-import type { Data } from './types';
+import type { Data } from '../types';
 
 
 

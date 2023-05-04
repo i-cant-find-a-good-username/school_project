@@ -72,10 +72,21 @@ interface Complaint {
     message: string,
 }
 
+interface Grade {
+    _id: string,
+    grade: string,
+    speciality: string,
+    simester: number,
+    subjects: string[],
+    createdAt: string,
+    updatedAt: string
+}
+
 
 export type {
     Data,
     Note,
     NotesData,
-    Complaint
+    Complaint,
+    Grade
 }

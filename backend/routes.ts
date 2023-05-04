@@ -13,6 +13,7 @@ import {
     get_students ,delete_student, edit_student, get_notes as get_notes_admin,
     get_teachers ,delete_teacher, edit_teacher, 
    } from './controllers/admin'
+import { get_grades } from './controllers/common';
 
 
 
@@ -61,6 +62,18 @@ router.put("/admin/teacher/:id", teacherEdit, isAuth ,isAdmin , edit_teacher)
 
 router.delete("/admin/student/:id", isAuth, isAdmin, delete_student)
 router.delete("/admin/teacher/:id", isAuth, isAdmin, delete_teacher)
+
+
+
+
+
+
+
+router.get("/grades", get_grades)
+
+
+
+
 
 
 

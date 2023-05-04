@@ -1,92 +1,74 @@
 <script lang="ts">
-	import { Table, tableMapperValues, type TableSource, InputChip} from "@skeletonlabs/skeleton";
-	import { Paginator } from "@skeletonlabs/skeleton";
+	import { InputChip } from "@skeletonlabs/skeleton";
     import { onMount } from "svelte";
-	const rows = [
-		{
-			name: "dude",
-			igr: "20",
-			cse: "20",
-			sri: "20",
-			AVG_UEF1: "20",
-			CRED_UEF1: "20",
-			aaw: "20",
-			mssc: "20",
-			gcc: "20",
-			AVG_UEF2: "20",
-			CRED_UEF2: "20",
-			ang2: "20",
-			mts: "20",
-			AVG_UEM1: "20",
-			CRED_UEM1: "20",
-			average: "20",
-		},
-		{
-			name: "lon gdudenam eusername dudenameuser namedudena meusername",
-			igr: "20",
-			cse: "20",
-			sri: "20",
-			AVG_UEF1: "20",
-			CRED_UEF1: "20",
-			aaw: "20",
-			mssc: "20",
-			gcc: "20",
-			AVG_UEF2: "20",
-			CRED_UEF2: "20",
-			ang2: "20",
-			mts: "20",
-			AVG_UEM1: "20",
-			CRED_UEM1: "20",
-			average: "20",
-		},
+	import { create_toast } from '../../toasts'
+    import type { NotesData } from '../../types';
+	import { grades } from '../../stores/grades_store'
+
+	let data_fetched = false
+	let notes_data: NotesData[]
+	
+
+	let grades_data: any
+	grades.subscribe((grades: any) => {
+		grades_data = grades;
+	});
+
 
 	
 
-	];
-	let head = Object.keys(rows[0])
+	const head = ['name', 'igr', 'cse', 'sri', 'AVG', 'CRED', 'aaw', 'mssc', 'gcc', 'AVG', 'CRED', 'ang2', 'mts', 'AVG', 'CRED', 'average']
 
-	console.log(head)
+	const rows = [
+		["dude", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20"],
+		["lon gdudenam eusername dudenameuser namedudena meusername", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20"]
+	];
+
+
 
 	let complaints = ['add here']
 
 	const fetch_data = () => {
-		notes_data = []
-		data_fetched = false
-		fetch(PUBLIC_API_URL + '/student/notes/' + selected_grade_year.split(' ')[0] + "/" + selected_grade_year.split(' ')[1], {
-            method: 'GET',
-            headers: {
-				'Content-Type': 'application/json',
-				'X-Authorization': localStorage.getItem('token') || ""
-			},
-        })
-        .then((response) => {
-            console.log(response)
-            if (response.status === 200){
-				return response.json()
-            }else if (response.status === 401){
-                toastStore.trigger(create_toast('error', 'messagfe here'));
-            }else if (response.status === 404){
-                toastStore.trigger(create_toast('error', 'messagfe here'));
-            }else{
-                toastStore.trigger(create_toast('error', 'unknown error'));
-			}
-        })
-        .then(data => {
-			if (data.lenght > 0 || Object.keys(data).length > 0){
-				notes_data = data
-				data_fetched = true
-			}else{
-				toastStore.trigger(create_toast('warning', 'data set empty'));
-				data_fetched = true
-			}
-		})
+		//notes_data = []
+		//data_fetched = false
+		//fetch(PUBLIC_API_URL + '/student/notes/' + selected_grade_year.split(' ')[0] + "/" + selected_grade_year.split(' ')[1], {
+        //    method: 'GET',
+        //    headers: {
+		//		'Content-Type': 'application/json',
+		//		'X-Authorization': localStorage.getItem('token') || ""
+		//	},
+        //})
+        //.then((response) => {
+        //    console.log(response)
+        //    if (response.status === 200){
+		//		return response.json()
+        //    }else if (response.status === 401){
+        //        toastStore.trigger(create_toast('error', 'messagfe here'));
+        //    }else if (response.status === 404){
+        //        toastStore.trigger(create_toast('error', 'messagfe here'));
+        //    }else{
+        //        toastStore.trigger(create_toast('error', 'unknown error'));
+		//	}
+        //})
+        //.then(data => {
+		//	if (data.lenght > 0 || Object.keys(data).length > 0){
+		//		notes_data = data
+		//		data_fetched = true
+		//	}else{
+		//		toastStore.trigger(create_toast('warning', 'data set empty'));
+		//		data_fetched = true
+		//	}
+		//})
 	}
 
 	onMount(() => {
-		fetch_data()
+		//fetch_data()
 	})
 
-
+	let selected_grade: string
+	let selected_year: string
+	
+	
 </script>
 
 <div class="h-full flex flex-col  space-y-4  ">
@@ -94,35 +76,76 @@
 
 	<div class='flex space-x-2'>
 
-			<select class="select">
-				<option value="1">2020</option>
-				<option value="2">2021</option>
-				<option value="3">2022</option>
-				<option value="4">2023</option>
-				<option value="5">2024</option>
-			</select>
+		<!-- all years -->
+		<!-- all years 
+		<select class="select" bind:value={selected_grade_year} on:change={fetch_data} >
+			<option selected value={user_data.user_data.grade._id + " " + user_data.user_data.year}>{user_data.user_data.year} {user_data.user_data.grade.grade}</option>
+		</select>
+		-->
 
-			<select class="select ">
-				<option value="1">Master1 STIC S1</option>
-				<option value="2">Master1 RSD S1</option>
-				<option value="3">Master1  S1</option>
-				<option value="4">License3 TI S1</option>
-				<option value="5">Master1 STIW S1</option>
-			</select>
+		<!-- all grades -->
+
+		<select class="select" bind:value={selected_grade} on:change={fetch_data} >
+			{#each grades_data as grade}
+				<option  value={grade._id}>{grade.grade}</option>
+			{/each}
+		</select>
+
+
+
+		<select class="select" bind:value={selected_year} on:change={fetch_data} >
+			<option value="">2000</option>
+			<option value="">2001</option>
+			<option value="">2002</option>
+			<option value="">2003</option>
+			<option value="">2004</option>
+			<option value="">2005</option>
+			<option value="">2006</option>
+			<option value="">2007</option>
+			<option value="">2008</option>
+			<option value="">2009</option>
+			<option value="">2010</option>
+			<option value="">2011</option>
+			<option value="">2012</option>
+			<option value="">2013</option>
+			<option value="">2014</option>
+			<option value="">2015</option>
+			<option value="">2016</option>
+			<option value="">2017</option>
+			<option value="">2018</option>
+			<option value="">2019</option>
+			<option value="">2020</option>
+			<option value="">2021</option>
+			<option value="">2022</option>
+			<option selected value="">2023</option>
+		</select>
+
 
 	</div>
 
 	<!--  -->
+
+
 	<div class="rounded-md w-full grow overflow-auto space-y-8" >
 		<div class="w-full space-y-4  ">
 		
 			<div class="table-container ">
 				<!-- Native Table Element -->
 				<table class="table table-hover">
+
 					<thead>
 						<tr>
-							{#each head as col}
-								<th class='text-center !align-middle '>{col}</th>
+							<th class='text-center !align-middle'  >-</th>
+							<th class='text-center !align-middle border-l border-surface-600' colspan="5" >UEF1</th>
+							<th class='text-center !align-middle border-l border-surface-600' colspan="5" >UEF2</th>
+							<th class='text-center !align-middle border-l border-surface-600' colspan="4" >UEM1</th>
+							<th class='text-center !align-middle border-l border-surface-600'  >-</th>
+						</tr>
+					</thead>
+					<thead>
+						<tr>
+							{#each head as col, i}
+								<th class='text-center border-surface-600  !align-middle { i !== 0 ? 'border-l' : ''}   '>{col}</th>
 							{/each}
 						</tr>
 					</thead>
@@ -130,7 +153,7 @@
 						{#each rows as row, i}
 							<tr class=''>
 								{#each Object.values(row) as col, j}
-									<td class='text-center border-l border-surface-700  !align-middle' style={ j===0 ? '' : 'width: calc( 100% / '+(Object.keys(row).length-1)+' ) ' } >{col}</td>
+									<td class='text-center  border-surface-700  !align-middle { j !== 0 ? 'border-l' : ''} ' style={ j===0 ? '' : 'width: calc( 100% / '+(Object.keys(row).length-1)+' ) ' } >{col}</td>
 								{/each}
 							</tr>
 							{#if i === 0}
