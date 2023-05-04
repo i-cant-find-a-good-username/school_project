@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Table, tableMapperValues, type TableSource, InputChip} from "@skeletonlabs/skeleton";
 	import { Paginator } from "@skeletonlabs/skeleton";
+    import { onMount } from "svelte";
 	const rows = [
 		{
 			name: "dude",
@@ -48,7 +49,42 @@
 
 	let complaints = ['add here']
 
+	const fetch_data = () => {
+		notes_data = []
+		data_fetched = false
+		fetch(PUBLIC_API_URL + '/student/notes/' + selected_grade_year.split(' ')[0] + "/" + selected_grade_year.split(' ')[1], {
+            method: 'GET',
+            headers: {
+				'Content-Type': 'application/json',
+				'X-Authorization': localStorage.getItem('token') || ""
+			},
+        })
+        .then((response) => {
+            console.log(response)
+            if (response.status === 200){
+				return response.json()
+            }else if (response.status === 401){
+                toastStore.trigger(create_toast('error', 'messagfe here'));
+            }else if (response.status === 404){
+                toastStore.trigger(create_toast('error', 'messagfe here'));
+            }else{
+                toastStore.trigger(create_toast('error', 'unknown error'));
+			}
+        })
+        .then(data => {
+			if (data.lenght > 0 || Object.keys(data).length > 0){
+				notes_data = data
+				data_fetched = true
+			}else{
+				toastStore.trigger(create_toast('warning', 'data set empty'));
+				data_fetched = true
+			}
+		})
+	}
 
+	onMount(() => {
+		fetch_data()
+	})
 
 
 </script>

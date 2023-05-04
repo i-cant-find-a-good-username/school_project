@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Teacher } from "../models/user"
+import { Student, Teacher } from "../models/user"
 import { Subject } from "../models/subject"
 import { Note } from "../models/note"
 import { Complaint } from "../models/complaint"
@@ -43,12 +43,34 @@ const get_global_notes = async (req: Request, res: Response) => {
             grade: new ObjectId(req.params.grade),
             year: req.params.year,
         })
-            .populate('subject', 'name coefficient credits group _id')
-            .populate('student', 'username')
+            .populate({path:'subject', model: Subject, select: 'name coefficient credits group _id'})
+            .populate({path:'student', model: Student, select: 'username'})
     
-        res.status(200).json({
-            message: notes
-        })  
+        console.log(notes)
+        res.status(200).json(notes)  
+    } catch (error) {
+        console.log(error)
+
+        res.status(500).json({
+            message: error
+        })
+    }
+}
+
+
+
+const get_complaints = async (req: Request, res: Response) => {
+    try {
+        let complaints = await Complaint.find({student: new ObjectId(res.locals.user_data._id)})
+
+        if(complaints.length === 0){
+            res.status(404).json({
+                message: "no complaints"
+            })
+        }
+
+        res.status(200).json(complaints)
+
     } catch (error) {
         res.status(500).json({
             message: error
@@ -58,12 +80,12 @@ const get_global_notes = async (req: Request, res: Response) => {
 
 
 
-
 const submit_complaint = async (req: Request, res: Response) => {
     try {
         const data = req.body
         let note = await Note.findOne({_id: new ObjectId(data.note)})
-            .populate('teacher', '_id')
+            .populate({path: 'teacher', model: Teacher, select: '_id'})
+        console.log(note)
         if(!note){
             res.status(404).json({
                 message: "note not found"
@@ -73,15 +95,14 @@ const submit_complaint = async (req: Request, res: Response) => {
                 student: new ObjectId(res.locals.user_data._id),
                 // @ts-ignore
                 teacher: new ObjectId(note.teacher._id),
-                Note: new ObjectId(note._id),
+                note: new ObjectId(note._id),
                 message: data.message,
             })
             complaint.save()
-            res.status(200).json({
-                result: "success"
-            })
+            res.status(201).json(complaint)
         }
     } catch (error) {
+        console.log(error)
         res.status(500).json({
             message: error
         })
@@ -116,6 +137,7 @@ const delete_complaint = async (req: Request, res: Response) => {
 export {
     get_notes,
     get_global_notes,
+    get_complaints,
     submit_complaint,
     delete_complaint
 }

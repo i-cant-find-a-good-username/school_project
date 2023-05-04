@@ -31,7 +31,51 @@ interface Note{
     exam: number,
 }
 
+
+interface Subject { 
+    _id: string,
+    name: string,
+    group: string,
+    credits: number,
+    coefficient: number,
+    notes_coefficient: {
+       tp: number,
+       td: number,
+       exam: number
+    },
+}
+
+
+
+interface NotesData{
+    _id: string,
+    student: string,
+    teacher: {
+        _id: string,
+        username: string,
+        email: string,
+        profile_image: string 
+    },
+    subject: Subject
+    notes: Note
+    grade: string,
+    year: number,
+    createdAt: string,
+    updatedAt: string
+}
+
+interface Complaint {
+    _id: string,
+    student: string,
+    teacher: string,
+    note: string,
+    message: string,
+}
+
+
 export type {
     Data,
-    Note
+    Note,
+    NotesData,
+    Complaint
 }

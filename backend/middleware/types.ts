@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { UserType, UserLogin, UserRegsiter, TeacherType, StudentType } from "../types"
+import { ObjectId } from 'mongodb';
 
 
 
@@ -47,7 +47,7 @@ const isRegisterStudent = (req: Request, res: Response, next: Function) => {
         body.username !== undefined &&
         body.email !== undefined &&  /\S+@\S+\.\S+/.test(body.email) &&
         body.password !== undefined && body.email.length > 7  &&
-        body.grade !== undefined &&
+        body.grade !== undefined && ObjectId.isValid(body.grade) &&
         body.year !== undefined
     ){
         next()
@@ -65,7 +65,7 @@ const isRegisterStudent = (req: Request, res: Response, next: Function) => {
 const isGlobalNotesReq = (req: Request, res: Response, next: Function) => {
     const body = req.body
     if (
-        body.grade !== undefined &&
+        body.grade !== undefined && ObjectId.isValid(body.grade) &&
         body.year !== undefined && typeof(body.year) === "number"
     ){
         next()
@@ -83,7 +83,7 @@ const isGlobalNotesReq = (req: Request, res: Response, next: Function) => {
 const isComplaint = (req: Request, res: Response, next: Function) => {
     const body = req.body
     if (
-        body.note !== undefined &&
+        body.note !== undefined && ObjectId.isValid(body.note) &&
         body.message !== undefined
     ){
         next()
