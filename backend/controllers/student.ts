@@ -18,14 +18,6 @@ const get_notes = async (req: Request, res: Response) => {
             .populate({ path: 'subject', model: Subject})
             .populate({ path: 'teacher', select: 'username email profile_image', model: Teacher })
 
-
-            console.log(new ObjectId(res.locals.user_data._id))
-            console.log(new ObjectId(req.params.grade))
-            console.log(req.params.year)
-
-
-            console.log(notes)
-
         res.status(200).json(notes) 
     } catch (error) {
         res.status(500).json({
@@ -43,14 +35,12 @@ const get_global_notes = async (req: Request, res: Response) => {
             grade: new ObjectId(req.params.grade),
             year: req.params.year,
         })
-            .populate({path:'subject', model: Subject, select: 'name coefficient credits group _id'})
+            .populate({path:'subject', model: Subject})
             .populate({path:'student', model: Student, select: 'username'})
     
-        console.log(notes)
         res.status(200).json(notes)  
     } catch (error) {
         console.log(error)
-
         res.status(500).json({
             message: error
         })
@@ -85,7 +75,6 @@ const submit_complaint = async (req: Request, res: Response) => {
         const data = req.body
         let note = await Note.findOne({_id: new ObjectId(data.note)})
             .populate({path: 'teacher', model: Teacher, select: '_id'})
-        console.log(note)
         if(!note){
             res.status(404).json({
                 message: "note not found"

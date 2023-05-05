@@ -16,7 +16,6 @@ const register = async (req: Request, res: Response) => {
 		})
 	
 
-		console.log(data)
 
 		const hash_password = await bcrypt.hash(data.password, 10)
 		teacher = new Teacher({

@@ -1,15 +1,20 @@
 <script lang="ts">
-	import { InputChip } from "@skeletonlabs/skeleton";
+	import { InputChip, toastStore } from "@skeletonlabs/skeleton";
     import { onMount } from "svelte";
 	import { create_toast } from '../../toasts'
-    import type { NotesData } from '../../types';
+    import type { Grade, NotesData } from '../../types';
 	import { grades } from '../../stores/grades_store'
+    import { PUBLIC_API_URL } from '$env/static/public';
 
 	let data_fetched = false
+	let selected_grade: string
+	let selected_year: string
 	let notes_data: NotesData[]
-	
-
+	let complaints: string[] = []
 	let grades_data: any
+	let current_grade: any
+
+
 	grades.subscribe((grades: any) => {
 		grades_data = grades;
 	});
@@ -17,56 +22,56 @@
 
 	
 
-	const head = ['name', 'igr', 'cse', 'sri', 'AVG', 'CRED', 'aaw', 'mssc', 'gcc', 'AVG', 'CRED', 'ang2', 'mts', 'AVG', 'CRED', 'average']
+	$: head = ['name', 'igr', 'cse', 'sri', 'AVG', 'CRED', 'aaw', 'mssc', 'gcc', 'AVG', 'CRED', 'ang2', 'mts', 'AVG', 'CRED', 'average']
 
-	const rows = [
-		["dude", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20"],
-		["lon gdudenam eusername dudenameuser namedudena meusername", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20"]
+	let rows: any = [
+		//["dude", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20"],
+		//["lon gdudenam eusername dudenameuser namedudena meusername", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20"]
 	];
 
 
 
-	let complaints = ['add here']
 
 	const fetch_data = () => {
-		//notes_data = []
-		//data_fetched = false
-		//fetch(PUBLIC_API_URL + '/student/notes/' + selected_grade_year.split(' ')[0] + "/" + selected_grade_year.split(' ')[1], {
-        //    method: 'GET',
-        //    headers: {
-		//		'Content-Type': 'application/json',
-		//		'X-Authorization': localStorage.getItem('token') || ""
-		//	},
-        //})
-        //.then((response) => {
-        //    console.log(response)
-        //    if (response.status === 200){
-		//		return response.json()
-        //    }else if (response.status === 401){
-        //        toastStore.trigger(create_toast('error', 'messagfe here'));
-        //    }else if (response.status === 404){
-        //        toastStore.trigger(create_toast('error', 'messagfe here'));
-        //    }else{
-        //        toastStore.trigger(create_toast('error', 'unknown error'));
-		//	}
-        //})
-        //.then(data => {
-		//	if (data.lenght > 0 || Object.keys(data).length > 0){
-		//		notes_data = data
-		//		data_fetched = true
-		//	}else{
-		//		toastStore.trigger(create_toast('warning', 'data set empty'));
-		//		data_fetched = true
-		//	}
-		//})
+		notes_data = []
+		data_fetched = false
+		fetch(PUBLIC_API_URL + '/student/notes_global/' + selected_grade + "/" + selected_year, {
+            method: 'GET',
+            headers: {
+				'Content-Type': 'application/json',
+				'X-Authorization': localStorage.getItem('token') || ""
+			},
+        })
+        .then((response) => {
+            console.log(response)
+            if (response.status === 200){
+				return response.json()
+            }else if (response.status === 401){
+                toastStore.trigger(create_toast('error', 'messagfe here'));
+            }else if (response.status === 404){
+                toastStore.trigger(create_toast('error', 'messagfe here'));
+            }else{
+                toastStore.trigger(create_toast('error', 'unknown error '+response.status));
+			}
+        })
+        .then(data => {
+			console.log(data)
+			if (data.lenght > 0 || Object.keys(data).length > 0){
+				notes_data = data
+				data_fetched = true
+			}else{
+				toastStore.trigger(create_toast('warning', 'data set empty'));
+				data_fetched = true
+			}
+		})
 	}
 
 	onMount(() => {
-		//fetch_data()
+		current_grade = grades_data.find((x: Grade) => x._id === selected_grade);
+		console.log(current_grade)
+		fetch_data()
 	})
 
-	let selected_grade: string
-	let selected_year: string
 	
 	
 </script>
@@ -85,39 +90,41 @@
 
 		<!-- all grades -->
 
+
+		
+
 		<select class="select" bind:value={selected_grade} on:change={fetch_data} >
 			{#each grades_data as grade}
-				<option  value={grade._id}>{grade.grade}</option>
+				<option class='capitalize'  value={grade._id}>{grade.grade} {grade.speciality} {grade.simester}</option>
 			{/each}
 		</select>
 
 
 
 		<select class="select" bind:value={selected_year} on:change={fetch_data} >
-			<option value="">2000</option>
-			<option value="">2001</option>
-			<option value="">2002</option>
-			<option value="">2003</option>
-			<option value="">2004</option>
-			<option value="">2005</option>
-			<option value="">2006</option>
-			<option value="">2007</option>
-			<option value="">2008</option>
-			<option value="">2009</option>
-			<option value="">2010</option>
-			<option value="">2011</option>
-			<option value="">2012</option>
-			<option value="">2013</option>
-			<option value="">2014</option>
-			<option value="">2015</option>
-			<option value="">2016</option>
-			<option value="">2017</option>
-			<option value="">2018</option>
-			<option value="">2019</option>
-			<option value="">2020</option>
-			<option value="">2021</option>
-			<option value="">2022</option>
-			<option selected value="">2023</option>
+			<option value="2000">2000</option>
+			<option value="2001">2001</option>
+			<option value="2002">2002</option>
+			<option value="2003">2003</option>
+			<option value="2004">2004</option>
+			<option value="2005">2005</option>
+			<option value="2006">2006</option>
+			<option value="2007">2007</option>
+			<option value="2008">2008</option>
+			<option value="2009">2009</option>
+			<option value="2010">2010</option>
+			<option value="2011">2011</option>
+			<option value="2012">2012</option>
+			<option value="2013">2013</option>
+			<option value="2014">2014</option>
+			<option value="2015">2015</option>
+			<option value="2016">2016</option>
+			<option value="2017">2017</option>
+			<option value="2018">2018</option>
+			<option value="2019">2019</option>
+			<option value="2020">2020</option>
+			<option value="2021">2021</option>
+			<option selected value="2022">2022</option>
 		</select>
 
 

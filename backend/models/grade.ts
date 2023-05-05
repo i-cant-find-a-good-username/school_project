@@ -8,7 +8,7 @@ const grades_schema= new Schema<Grade>({
     grade: {type: String, required:true},
     speciality: {type: String, required:true},
     simester: {type: String, required:true},
-    subjects: [{type: Types.ObjectId, required:true, ref: "subject"}],
+    subjects: [{type: Types.ObjectId, required:true, ref: "subjects"}],
 },{timestamps: true}) 
 
 

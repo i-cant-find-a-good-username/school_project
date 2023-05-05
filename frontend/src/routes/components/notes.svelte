@@ -106,9 +106,7 @@
 		}else{
 			let average
 			if( data[0].tp && data[0].td && data[0].exam ){
-				console.log(data[0])
 				average = data[0].tp*coeffs.tp + data[0].td*coeffs.td + data[0].exam*coeffs.exam
-				console.log(average/3)
 				average = (average / 3).toFixed(2)
 			}else{
 				average = '-'

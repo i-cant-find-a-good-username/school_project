@@ -92,7 +92,6 @@ const edit_student = async (req: Request, res: Response) => {
     try {
         const data = req.body
         const result = await Student.updateOne({_id: new ObjectId(req.params.id)}, data)
-        console.log(result)
         if(result.modifiedCount !== 0){
             res.status(200).json({
                 result: "success"

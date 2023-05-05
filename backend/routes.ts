@@ -37,7 +37,7 @@ router.post("/teacher/register",isRegisterTeacher ,teacher_register)
 
 // student
 router.get("/student/notes/:grade/:year",isAuth, isStudent, get_notes)
-router.get("/student/notes_global/:grade/:year", isGlobalNotesReq, isAuth, isStudent, get_global_notes)
+router.get("/student/notes_global/:grade/:year", isAuth, isStudent, get_global_notes)
 router.get("/student/complaints/", isAuth, isStudent, get_complaints)
 router.post("/student/complaints/", isComplaint, isAuth, isStudent, submit_complaint)
 router.delete("/student/complaints/:id", isAuth, isStudent, delete_complaint)

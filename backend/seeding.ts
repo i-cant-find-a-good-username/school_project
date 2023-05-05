@@ -280,9 +280,7 @@ const main = async () => {
         }
     )
 
-        console.log(notes)
 
-    const inserted_notes = await NoteModel.insertMany(notes)
     
     
     // subjects
@@ -333,6 +331,162 @@ const main = async () => {
     //notes[4].subject = inserted_subjects[4].id
     //notes[4].grade = inserted_grades[0].id
     //await NoteModel.insertMany(notes)
+
+
+    const more_users = [
+        {
+            username: "bruh1",
+            email: "bruh1@gmail.com",
+            password: await bcrypt.hash("password", 10),
+            grade: new ObjectId(),
+            year: 2022,
+            previous: []
+        },
+        {
+            username: "bruh2",
+            email: "bruh2@gmail.com",
+            password: await bcrypt.hash("password", 10),
+            grade: new ObjectId(),
+            year: 2022,
+            previous: [
+                {}
+            ]
+        },
+    ]
+    for (let i = 0; i < more_users.length; i++) {
+        more_users[i].grade = inserted_grades[0]._id
+    }
+
+
+    more_users[0].previous = [
+        {
+            year: 2022,
+            grade: inserted_grades[2]._id
+        },
+        {
+            year: 2021,
+            grade: inserted_grades[3]._id
+        },
+        {
+            year: 2020,
+            grade: inserted_grades[4]._id
+        }
+    ]
+    more_users[1].previous = [
+        {
+            year: 2022,
+            grade: inserted_grades[2]._id
+        },
+        {
+            year: 2021,
+            grade: inserted_grades[3]._id
+        },
+        {
+            year: 2020,
+            grade: inserted_grades[4]._id
+        }
+    ]
+    const more_data = await Student.insertMany(more_users)
+
+
+
+
+
+
+    notes.push(
+        {
+            student: new ObjectId(more_data[0]._id),
+            teacher: new ObjectId(inserted_teachers[0]._id),
+            // @ts-ignore
+            subject: new ObjectId(inserted_grades[0].subjects[0]._id),
+            grade: new ObjectId(inserted_grades[0]._id),
+            year: 2022,
+            notes:{}
+        },
+        {
+            student: new ObjectId(more_data[0]._id),
+            teacher: new ObjectId(inserted_teachers[1]._id),
+            // @ts-ignore
+            subject: new ObjectId(inserted_grades[0].subjects[1]._id),
+            grade: new ObjectId(inserted_grades[0]._id),
+            year: 2022,
+            notes:{}
+        },
+        {
+            student: new ObjectId(more_data[0]._id),
+            teacher: new ObjectId(inserted_teachers[2]._id),
+            // @ts-ignore
+            subject: new ObjectId(inserted_grades[0].subjects[2]._id),
+            grade: new ObjectId(inserted_grades[0]._id),
+            year: 2022,
+            notes:{}
+        },
+        {
+            student: new ObjectId(more_data[0]._id),
+            teacher: new ObjectId(inserted_teachers[3]._id),
+            // @ts-ignore
+            subject: new ObjectId(inserted_grades[0].subjects[3]._id),
+            grade: new ObjectId(inserted_grades[0]._id),
+            year: 2022,
+            notes:{}
+        },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        {
+            student: new ObjectId(more_data[1]._id),
+            teacher: new ObjectId(inserted_teachers[0]._id),
+            // @ts-ignore
+            subject: new ObjectId(inserted_grades[0].subjects[0]._id),
+            grade: new ObjectId(inserted_grades[0]._id),
+            year: 2022,
+            notes:{}
+        },
+        {
+            student: new ObjectId(more_data[1]._id),
+            teacher: new ObjectId(inserted_teachers[1]._id),
+            // @ts-ignore
+            subject: new ObjectId(inserted_grades[0].subjects[1]._id),
+            grade: new ObjectId(inserted_grades[0]._id),
+            year: 2022,
+            notes:{}
+        },
+        {
+            student: new ObjectId(more_data[1]._id),
+            teacher: new ObjectId(inserted_teachers[2]._id),
+            // @ts-ignore
+            subject: new ObjectId(inserted_grades[0].subjects[2]._id),
+            grade: new ObjectId(inserted_grades[0]._id),
+            year: 2022,
+            notes:{}
+        },
+        {
+            student: new ObjectId(more_data[1]._id),
+            teacher: new ObjectId(inserted_teachers[3]._id),
+            // @ts-ignore
+            subject: new ObjectId(inserted_grades[0].subjects[3]._id),
+            grade: new ObjectId(inserted_grades[0]._id),
+            year: 2022,
+            notes:{}
+        },
+    )
+    const inserted_notes = await NoteModel.insertMany(notes)
+
+
 
 
 
