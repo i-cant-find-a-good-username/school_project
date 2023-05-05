@@ -95,13 +95,31 @@
 
 
 	
-	const create_table = (i: number, data: Note[]): TableSource  => {
-		return {
-			head: ['TD', 'TP', 'Exam'],
-			body: tableMapperValues(data, ['td', 'tp', 'exam']),
-			meta: tableMapperValues(data, ['td', 'tp', 'exam']),
-			foot: ['Average', '', '20.00']
-		};
+	const create_table = (i: number, data: Note[], coeffs: Note): TableSource  => {
+		if ( data[0] === undefined ){
+			return {
+				head: ['TD', 'TP', 'Exam'],
+				body: tableMapperValues([{td:0,tp:0,exam:0}], ['td', 'tp', 'exam']),
+				meta: tableMapperValues([{td:0,tp:0,exam:0}], ['td', 'tp', 'exam']),
+				foot: ['Average', '', '-']
+			};
+		}else{
+			let average
+			if( data[0].tp && data[0].td && data[0].exam ){
+				console.log(data[0])
+				average = data[0].tp*coeffs.tp + data[0].td*coeffs.td + data[0].exam*coeffs.exam
+				console.log(average/3)
+				average = (average / 3).toFixed(2)
+			}else{
+				average = '-'
+			}
+			return {
+				head: ['TD', 'TP', 'Exam'],
+				body: tableMapperValues(data, ['td', 'tp', 'exam']),
+				meta: tableMapperValues(data, ['td', 'tp', 'exam']),
+				foot: ['Average', '', average.toString()]
+			};
+		}
 	}
 
 	const fetch_data = () => {
@@ -169,14 +187,10 @@
 		</select>
 	</div>
 
-	{
-		JSON.stringify(notes_data)
-	}
 
 	{#if data_fetched}
 		<Accordion regionControl='variant-ghost-surface' >
 			{#each notes_data as note, i}
-			{i}hello
 				<AccordionItem open={i==0}   >
 					<svelte:fragment slot="lead">
 						<p class='!text-2xl'>
@@ -198,7 +212,7 @@
 							</a>
 							<!-- ... -->
 						</div>
-    			        <Table interactive={true} source={create_table(i, [note.notes])} regionCell='border-l border-surface-700 text-center w-1/3 align-bottom' regionHeadCell="text-center"   regionFootCell="text-center"   />               
+    			        <Table interactive={true} source={create_table(i, [note.notes], note.subject.notes_coefficient)} regionCell='border-l border-surface-700 text-center w-1/3 align-bottom' regionHeadCell="text-center"   regionFootCell="text-center"   />               
 						Last Update: {note.updatedAt.substring(0,10)} {note.updatedAt.substring(11,19)}     
 						<InputChip on:add={(e) => {submit_complaint(e, note._id)}} on:remove={(e) => {delete_complaint(e, note._id)}} bind:value={complaints} name="chips" placeholder="Write a complaint..." />
 					</svelte:fragment>

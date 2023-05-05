@@ -1,7 +1,7 @@
 import { Subject, Note } from './types'
 import { ObjectId } from "mongodb";
 import { Subject as SubjectModel } from "./models/subject"
-import { Note as NodeModel } from "./models/note"
+import { Note as NoteModel } from "./models/note"
 import { Student, Teacher } from './models/user';
 import { StudentType, TeacherType, Grade } from './types';
 import { connect } from 'mongoose';
@@ -93,40 +93,197 @@ const main = async () => {
             grade: inserted_grades[4]._id
         }
     ]
+
+
     const inserted_students = await Student.insertMany(student_data)
-    let users_data = []
-    for (let i = 0; i < inserted_students.length; i++) {
-        users_data.push(inserted_students[i]._id)
-    }
+
+
+
+    let notes: NoteModel[] = []
+
+
+    console.log((inserted_grades))
+    notes.push(
+        {
+            student: new ObjectId(inserted_students[0]._id),
+            teacher: new ObjectId(inserted_teachers[0]._id),
+            // @ts-ignore
+            subject: new ObjectId(inserted_grades[0].subjects[0]._id),
+            grade: new ObjectId(inserted_grades[0]._id),
+            year: 2022,
+            notes:{}
+        },
+        {
+            student: new ObjectId(inserted_students[0]._id),
+            teacher: new ObjectId(inserted_teachers[1]._id),
+            // @ts-ignore
+            subject: new ObjectId(inserted_grades[0].subjects[1]._id),
+            grade: new ObjectId(inserted_grades[0]._id),
+            year: 2022,
+            notes:{}
+        },
+        {
+            student: new ObjectId(inserted_students[0]._id),
+            teacher: new ObjectId(inserted_teachers[2]._id),
+            // @ts-ignore
+            subject: new ObjectId(inserted_grades[0].subjects[2]._id),
+            grade: new ObjectId(inserted_grades[0]._id),
+            year: 2022,
+            notes:{}
+        },
+        {
+            student: new ObjectId(inserted_students[0]._id),
+            teacher: new ObjectId(inserted_teachers[3]._id),
+            // @ts-ignore
+            subject: new ObjectId(inserted_grades[0].subjects[3]._id),
+            grade: new ObjectId(inserted_grades[0]._id),
+            year: 2022,
+            notes:{}
+        },
+
+
+
+
+
+
+
+
+
+
+        {
+            student: new ObjectId(inserted_students[1]._id),
+            teacher: new ObjectId(inserted_teachers[0]._id),
+            // @ts-ignore
+            subject: new ObjectId(inserted_grades[1].subjects[0]._id),
+            grade: new ObjectId(inserted_grades[1]._id),
+            year: 2022,
+            notes:{}
+        },
+        {
+            student: new ObjectId(inserted_students[1]._id),
+            teacher: new ObjectId(inserted_teachers[1]._id),
+            // @ts-ignore
+            subject: new ObjectId(inserted_grades[1].subjects[1]._id),
+            grade: new ObjectId(inserted_grades[1]._id),
+            year: 2022,
+            notes:{}
+        },
+        {
+            student: new ObjectId(inserted_students[1]._id),
+            teacher: new ObjectId(inserted_teachers[2]._id),
+            // @ts-ignore
+            subject: new ObjectId(inserted_grades[1].subjects[2]._id),
+            grade: new ObjectId(inserted_grades[1]._id),
+            year: 2022,
+            notes:{}
+        },
+        {
+            student: new ObjectId(inserted_students[1]._id),
+            teacher: new ObjectId(inserted_teachers[3]._id),
+            // @ts-ignore
+            subject: new ObjectId(inserted_grades[1].subjects[3]._id),
+            grade: new ObjectId(inserted_grades[1]._id),
+            year: 2022,
+            notes:{}
+        },
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+        {
+            student: new ObjectId(inserted_students[2]._id),
+            teacher: new ObjectId(inserted_teachers[0]._id),
+            // @ts-ignore
+            subject: new ObjectId(inserted_grades[2].subjects[0]._id),
+            grade: new ObjectId(inserted_grades[2]._id),
+            year: 2022,
+            notes:{}
+        },
+        {
+            student: new ObjectId(inserted_students[2]._id),
+            teacher: new ObjectId(inserted_teachers[1]._id),
+            // @ts-ignore
+            subject: new ObjectId(inserted_grades[2].subjects[1]._id),
+            grade: new ObjectId(inserted_grades[2]._id),
+            year: 2022,
+            notes:{}
+        },
+        {
+            student: new ObjectId(inserted_students[2]._id),
+            teacher: new ObjectId(inserted_teachers[2]._id),
+            // @ts-ignore
+            subject: new ObjectId(inserted_grades[2].subjects[2]._id),
+            grade: new ObjectId(inserted_grades[2]._id),
+            year: 2022,
+            notes:{}
+        },
+        {
+            student: new ObjectId(inserted_students[2]._id),
+            teacher: new ObjectId(inserted_teachers[3]._id),
+            // @ts-ignore
+            subject: new ObjectId(inserted_grades[2].subjects[3]._id),
+            grade: new ObjectId(inserted_grades[2]._id),
+            year: 2022,
+            notes:{}
+        },
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+        {
+            student: new ObjectId(inserted_students[3]._id),
+            teacher: new ObjectId(inserted_teachers[0]._id),
+            // @ts-ignore
+            subject: new ObjectId(inserted_grades[3].subjects[0]._id),
+            grade: new ObjectId(inserted_grades[3]._id),
+            year: 2022,
+            notes:{}
+        },
+        {
+            student: new ObjectId(inserted_students[3]._id),
+            teacher: new ObjectId(inserted_teachers[1]._id),
+            // @ts-ignore
+            subject: new ObjectId(inserted_grades[3].subjects[1]._id),
+            grade: new ObjectId(inserted_grades[3]._id),
+            year: 2022,
+            notes:{}
+        },
+        {
+            student: new ObjectId(inserted_students[3]._id),
+            teacher: new ObjectId(inserted_teachers[2]._id),
+            // @ts-ignore
+            subject: new ObjectId(inserted_grades[3].subjects[2]._id),
+            grade: new ObjectId(inserted_grades[3]._id),
+            year: 2022,
+            notes:{}
+        },
+        {
+            student: new ObjectId(inserted_students[3]._id),
+            teacher: new ObjectId(inserted_teachers[3]._id),
+            // @ts-ignore
+            subject: new ObjectId(inserted_grades[3].subjects[3]._id),
+            grade: new ObjectId(inserted_grades[3]._id),
+            year: 2022,
+            notes:{}
+        }
+    )
+
+        console.log(notes)
+
+    const inserted_notes = await NoteModel.insertMany(notes)
     
-    for (let i = 0; i < inserted_students.length; i++) {
-        const students = await Student.find({_id: { $in: users_data }}).populate({ path: 'grade', model: GradeModel })
-		console.log(students)
-        let arr = students.map(ele => {
-            return ele.grade.subjects
-        })
-        arr = Array.prototype.concat.apply([], arr);
-
-        const teachers = await Teacher.find({subjects: { $in: arr }}).select("id username email profile_image subjects").populate({ path: 'subjects', model: SubjectModel})
-		
-        console.log(teachers)
-
-        let notes: Note[] = []
-		for (let j = 0; j < students.length; j++) {
-			notes.push(
-				{
-					student: new ObjectId(inserted_students[Math.floor(Math.random() * 5)]._id),
-					teacher: new ObjectId(teachers[Math.floor(Math.random() * 5)]._id),
-					// @ts-ignore
-					subject: new ObjectId(teachers[Math.floor(Math.random() * 5)].subjects[0]._id),
-					grade: new ObjectId(inserted_students[j].grade),
-					year: 2022,
-					notes:{}
-				}
-			)
-		}
-		NodeModel.insertMany(notes)
-    }
     
     // subjects
     // grades
@@ -175,7 +332,7 @@ const main = async () => {
     //notes[4].teacher = inserted_teachers[4].id
     //notes[4].subject = inserted_subjects[4].id
     //notes[4].grade = inserted_grades[0].id
-    //await NodeModel.insertMany(notes)
+    //await NoteModel.insertMany(notes)
 
 
 
