@@ -22,7 +22,9 @@
 
 	
 
-	$: head = ['name', 'igr', 'cse', 'sri', 'AVG', 'CRED', 'aaw', 'mssc', 'gcc', 'AVG', 'CRED', 'ang2', 'mts', 'AVG', 'CRED', 'average']
+	// val groupe name, len number of subjects
+	let groups_head: {val: string, len: number}[] = []
+	let head: {id: string, val: string}[] = [{id:"", val:'name'}]
 
 	let rows: any = [
 		//["dude", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20"],
@@ -59,6 +61,20 @@
 			if (data.lenght > 0 || Object.keys(data).length > 0){
 				notes_data = data
 				data_fetched = true
+
+
+				for (let i = 0; i < notes_data.length; i++) {
+					let tempo_arr = []
+					let new_obj: any = {}
+					let subj = head.find((x: any) => x.id === notes_data[i].subject._id)
+					console.log("******************")
+					// @ts-ignore
+					new_obj.username = notes_data[i].student.username
+					new_obj.subject = notes_data[i].subject
+					console.log(new_obj)
+				
+					//notes_data[i]
+				}
 			}else{
 				toastStore.trigger(create_toast('warning', 'data set empty'));
 				data_fetched = true
@@ -69,7 +85,31 @@
 	onMount(() => {
 		current_grade = grades_data.find((x: Grade) => x._id === selected_grade);
 		console.log(current_grade)
+
+
+		const groups = current_grade.subjects.reduce((groups:any, item:any) => ({
+		  ...groups,
+		  [item.group]: [...(groups[item.group] || []), item]
+		}), {});
+
+		const heads: string[] = Object.keys(groups)
+		for (let i = 0; i < heads.length; i++) {
+			groups_head = [...groups_head, {val: heads[i], len: groups[heads[i]].length}]
+			for (let j = 0; j < groups[heads[i]].length; j++) {
+				head = [...head, {
+					id: groups[heads[i]][j]._id,
+					val: groups[heads[i]][j].name.match(/\b(\w)/g).join('')
+				}]
+			}
+			head = [...head, {id: '', val: "avg"}, {id: '', val: 'cred'}]
+		}
+		head = [...head, {id: '', val: 'average'}]
+		console.log(head)
+
 		fetch_data()
+		
+
+
 	})
 
 	
@@ -100,23 +140,7 @@
 		</select>
 
 
-
 		<select class="select" bind:value={selected_year} on:change={fetch_data} >
-			<option value="2000">2000</option>
-			<option value="2001">2001</option>
-			<option value="2002">2002</option>
-			<option value="2003">2003</option>
-			<option value="2004">2004</option>
-			<option value="2005">2005</option>
-			<option value="2006">2006</option>
-			<option value="2007">2007</option>
-			<option value="2008">2008</option>
-			<option value="2009">2009</option>
-			<option value="2010">2010</option>
-			<option value="2011">2011</option>
-			<option value="2012">2012</option>
-			<option value="2013">2013</option>
-			<option value="2014">2014</option>
 			<option value="2015">2015</option>
 			<option value="2016">2016</option>
 			<option value="2017">2017</option>
@@ -143,20 +167,27 @@
 					<thead>
 						<tr>
 							<th class='text-center !align-middle'  >-</th>
-							<th class='text-center !align-middle border-l border-surface-600' colspan="5" >UEF1</th>
-							<th class='text-center !align-middle border-l border-surface-600' colspan="5" >UEF2</th>
-							<th class='text-center !align-middle border-l border-surface-600' colspan="4" >UEM1</th>
+							{#each groups_head as head}
+								<th class='text-center !align-middle border-l border-surface-600'  colspan={head.len+2} > {head.val} </th>
+							{/each}
 							<th class='text-center !align-middle border-l border-surface-600'  >-</th>
 						</tr>
 					</thead>
 					<thead>
 						<tr>
 							{#each head as col, i}
-								<th class='text-center border-surface-600  !align-middle { i !== 0 ? 'border-l' : ''}   '>{col}</th>
+								<th class='text-center border-surface-600  !align-middle { i !== 0 ? 'border-l' : ''}   '>{col.val}</th>
 							{/each}
 						</tr>
 					</thead>
 					<tbody>
+						{#if rows.length === 0}
+							<tr class="">
+								<td colspan="100" class='text-center !align-middle  overflow-hidden truncate '>
+									<h3>no students</h3>
+								</td>
+							</tr>
+						{/if}
 						{#each rows as row, i}
 							<tr class=''>
 								{#each Object.values(row) as col, j}
@@ -180,42 +211,3 @@
 
 </div>
 
-
-
-
-
-
-
-
-	<!--
-					let page = {
-						offset: 0,
-						limit: 5,
-						size: source.length,
-						amounts: [1, 2, 5, 10],
-					};
-					let tableSimple: TableSource = {
-    					head:  [
-							'name', 'igr', 'cse', 'sri', 'AVG UEF1', 'CRED UEF1',
-							'aaw', 'mssc', 'gcc', 'AVG UEF2', 'CRED UEF2',
-							'ang2', 'mts', 'AVG UEM1', 'CRED UEM1', 'average']
-						,
-    					body: tableMapperValues(source, ['name', 'igr', 'cse', 'sri', 'AVG_UEF1', 'CRED_UEF1', 'aaw', 'mssc', 'gcc', 'AVG_UEF2', 'CRED_UEF2', 'ang2', 'mts', 'AVG_UEM1', 'CRED_UEM1', 'average']),
-    					meta: tableMapperValues(source, ['name', 'igr', 'cse', 'sri', 'AVG_UEF1', 'CRED_UEF1', 'aaw', 'mssc', 'gcc', 'AVG_UEF2', 'CRED_UEF2', 'ang2', 'mts', 'AVG_UEM1', 'CRED_UEM1', 'average']),
-    					foot: ['Total', '', '20.00']
-    				};
-					$: paginatedSource = source.slice(
-						page.offset * page.limit,
-						page.offset * page.limit + page.limit
-					);
-					$: data = paginatedSource.map(function (obj) {
-						return Object.keys(obj)
-							.sort()
-							.map(function (key) {
-								//@ts-ignore
-								return obj[key];
-							});
-					});
-				<Table source={tableSimple} regionHeadCell="text-center " regionCell="text-center !align-middle" regionFootCell="text-center "  />
-				<Paginator bind:settings={page} />
-			-->
