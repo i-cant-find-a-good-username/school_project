@@ -133,11 +133,12 @@
         .then((response) => {
             console.log(response)
             if (response.status === 200){
+                toastStore.trigger(create_toast('success', 'data fetched'));
 				return response.json()
             }else if (response.status === 401){
-                toastStore.trigger(create_toast('error', 'messagfe here'));
+                toastStore.trigger(create_toast('error', 'message here'));
             }else if (response.status === 404){
-                toastStore.trigger(create_toast('error', 'messagfe here'));
+                toastStore.trigger(create_toast('error', 'message here'));
             }else{
                 toastStore.trigger(create_toast('error', 'unknown error'));
 			}
@@ -173,8 +174,6 @@
 	<!-- 
 		filled ghost soft ringed glass
 	-->	
-	{JSON.stringify(complaints)}
-	{JSON.stringify(complaints_ids)}
 
 	<div class='flex space-x-2'>
 		<select class="select" bind:value={selected_grade_year} on:change={fetch_data} >

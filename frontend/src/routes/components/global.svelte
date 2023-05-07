@@ -31,7 +31,7 @@
 		//["lon gdudenam eusername dudenameuser namedudena meusername", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20"]
 	];
 
-
+	
 
 
 	const fetch_data = () => {
@@ -47,6 +47,7 @@
         .then((response) => {
             console.log(response)
             if (response.status === 200){
+                toastStore.trigger(create_toast('success', 'data fetched'));
 				return response.json()
             }else if (response.status === 401){
                 toastStore.trigger(create_toast('error', 'messagfe here'));
@@ -63,18 +64,41 @@
 				data_fetched = true
 
 
-				for (let i = 0; i < notes_data.length; i++) {
+				//for (let i = 0; i < notes_data.length; i++) {
+				//	let tempo_arr = []
+				//	let new_obj: any = {}
+				//	let subj = head.find((x: any) => x.id === notes_data[i].subject._id)
+				//	console.log("******************")
+				//	// @ts-ignore
+				//	new_obj.username = notes_data[i].student.username
+				//	new_obj.subject = notes_data[i].subject
+				//	console.log(new_obj)
+				//
+				//	//notes_data[i]
+				//}
+
+
+				for (let i = 0; i < head.length; i++) {
 					let tempo_arr = []
 					let new_obj: any = {}
-					let subj = head.find((x: any) => x.id === notes_data[i].subject._id)
+					let subj = notes_data.find((x: any) => x.subject._id === head[i].id)
 					console.log("******************")
-					// @ts-ignore
-					new_obj.username = notes_data[i].student.username
-					new_obj.subject = notes_data[i].subject
-					console.log(new_obj)
-				
+					console.log(subj?.student.username)
+
+
+					new_obj.username = subj?.student.username
+						
+
+
+					if(subj === undefined){
+
+					}else{
+						""
+					}
+					//new_arr.push()
 					//notes_data[i]
 				}
+				
 			}else{
 				toastStore.trigger(create_toast('warning', 'data set empty'));
 				data_fetched = true
@@ -135,7 +159,7 @@
 
 		<select class="select" bind:value={selected_grade} on:change={fetch_data} >
 			{#each grades_data as grade}
-				<option class='capitalize'  value={grade._id}>{grade.grade} {grade.speciality} {grade.simester}</option>
+				<option class='capitalize'  value={grade._id}>{grade.grade} {grade.speciality} S{grade.simester}</option>
 			{/each}
 		</select>
 
