@@ -107,7 +107,7 @@
 			let average
 			if( data[0].tp && data[0].td && data[0].exam ){
 				average = data[0].tp*coeffs.tp + data[0].td*coeffs.td + data[0].exam*coeffs.exam
-				average = (average / 3).toFixed(2)
+				average = (average / (coeffs.td + coeffs.tp + coeffs.exam)).toFixed(2)
 			}else{
 				average = '-'
 			}

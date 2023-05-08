@@ -78,27 +78,84 @@
 				//}
 
 
-				for (let i = 0; i < head.length; i++) {
-					let tempo_arr = []
-					let new_obj: any = {}
-					let subj = notes_data.find((x: any) => x.subject._id === head[i].id)
-					console.log("******************")
-					console.log(subj?.student.username)
+				//for (let i = 0; i < head.length; i++) {
+				//	let tempo_arr = []
+				//	let new_obj: any = {}
+				//	let subj = notes_data.find((x: any) => x.subject._id === head[i].id)
+				//	console.log("******************")
+				//	console.log(subj?.student.username)
+				//	new_obj.username = subj?.student.username
+				//	if(subj === undefined){
+				//	}else{
+				//		""
+				//	}
+				//	//new_arr.push()
+				//	//notes_data[i]
+				//}
+
+				const notes_groups = data.reduce((groups:any, item:any) => ({
+				  ...groups,
+				  [item.student._id]: [...(groups[item.student._id] || []), item]
+				}), {});
+				console.log(Object.keys(notes_groups))
+				console.log(notes_groups)
+				console.log(head)
+				console.log(current_grade.subjects)
 
 
-					new_obj.username = subj?.student.username
-						
-
-
-					if(subj === undefined){
-
-					}else{
-						""
+				const subjects_groups = current_grade.subjects.reduce((groups:any, item:any) => ({
+				  ...groups,
+				  [item.group]: [...(groups[item.group] || []), item]
+				}), {});
+				let subjs: any = []
+				for (let k = 0; k < Object.keys(subjects_groups).length; k++) {
+					let new_ar: any = []
+ 					for (let m = 0; m < subjects_groups[Object.keys(subjects_groups)[k]].length; m++) {
+						new_ar.push(subjects_groups[Object.keys(subjects_groups)[k]][m])
 					}
-					//new_arr.push()
-					//notes_data[i]
+					subjs.push(new_ar)
+				}
+
+				for (let i = 0; i < Object.keys(notes_groups).length; i++) {
+					const group = Object.keys(notes_groups)[i]
+					let student_row: any = []
+					var arr = new Array(head.length).fill("")
+
+
+					arr[0] = notes_groups[group][0].student.username
+					console.log(notes_groups[group])
+					for (let j = 1; j < head.length; j++) {
+						if( head[j].id !== '' ){
+							//get the note by this id **** head[j].id
+							console.log( head[j])
+							let obj = notes_groups[group].find(o => o.subject._id === head[j].id)
+							if( obj.notes === undefined ){
+								arr[j] = "not set"
+							}else{
+								const note = (obj.notes.td * obj.subject.notes_coefficient.td + obj.notes.tp * obj.subject.notes_coefficient.tp + obj.notes.exam * obj.subject.notes_coefficient.exam) / (obj.subject.notes_coefficient.exam + obj.subject.notes_coefficient.td + obj.subject.notes_coefficient.tp) 
+								console.log(obj)
+								arr[j] = (note.toFixed(2))
+								//calculate here
+							}
+						}else if ( head[j].val === 'cred' ) {
+							//check if cred or avg
+							arr[j] = '/' + j
+						}else if (head[j].val === 'avg'){
+							arr[j] = '/' + j
+						}
+						// average here
+						arr[head.length-1] = '/' + j
+
+					}
+					console.log(arr)
+					rows = [...rows, arr]
+					//for (let j = 0; j < notes_groups[Object.keys(notes_groups)[i]].length; j++) {
+					//	console.log(notes_groups[Object.keys(notes_groups)[i]][j])
+					//}
+					//console.log('***********************')
 				}
 				
+
 			}else{
 				toastStore.trigger(create_toast('warning', 'data set empty'));
 				data_fetched = true
