@@ -7,11 +7,11 @@ import { isStudent } from './middleware/student'
 import { register as student_register } from './controllers/auth_student'
 import { register as teacher_register } from './controllers/auth_teacher'
 import { get_notes, get_global_notes, get_complaints, submit_complaint, delete_complaint } from './controllers/student'
-import { edit_notes, get_notes as get_notes_teacher, get_global_notes_teacher } from './controllers/teacher'
+import { edit_notes, get_notes as get_notes_teacher, get_global_notes_teacher, get_teacher_complaints } from './controllers/teacher'
 import { login } from './controllers/auth'
 import { 
     get_students ,delete_student, edit_student, get_notes as get_notes_admin,
-    get_teachers ,delete_teacher, edit_teacher, 
+    get_teachers ,delete_teacher, edit_teacher, get_admin_complaints
    } from './controllers/admin'
 import { get_grades } from './controllers/common';
 
@@ -47,6 +47,7 @@ router.delete("/student/complaints/:id", isAuth, isStudent, delete_complaint)
 router.get("/teacher/notes/", isAuth, isTeacher, get_notes_teacher)
 router.get("/teacher/notes_global/:grade/:year/", isAuth, isTeacher, get_global_notes_teacher)
 router.put("/teacher/notes/:id", note, isAuth, isTeacher, edit_notes)
+router.get("/teacher/complaints/", isAuth, isTeacher, get_teacher_complaints)
 
 
 // admin
@@ -64,6 +65,7 @@ router.put("/admin/teacher/:id", teacherEdit, isAuth ,isAdmin , edit_teacher)
 router.delete("/admin/student/:id", isAuth, isAdmin, delete_student)
 router.delete("/admin/teacher/:id", isAuth, isAdmin, delete_teacher)
 
+router.get("/teacher/complaints/", isAuth, isTeacher, get_admin_complaints)
 
 
 

@@ -4,6 +4,7 @@ import { Subject } from "../models/subject"
 import { Note } from "../models/note"
 import { ObjectId } from "mongodb";
 import { Grade } from '../models/grade';
+import { Complaint } from '../models/complaint';
 
 
 
@@ -75,8 +76,33 @@ const edit_notes = async (req: Request, res: Response) => {
 
 
 
+
+
+const get_teacher_complaints = async (req: Request, res: Response) => {
+    try {
+        let complaints = await Complaint.find({teacher: new ObjectId(res.locals.user_data._id)})
+
+        if(complaints.length === 0){
+            return res.status(404).json({
+                message: "no complaints"
+            })
+        }
+
+        res.status(200).json(complaints)
+
+    } catch (error) {
+        res.status(500).json({
+            message: error
+        })
+    }
+    
+}
+
+
+
 export {
     get_notes,
     edit_notes,
-    get_global_notes_teacher
+    get_global_notes_teacher,
+    get_teacher_complaints,
 }

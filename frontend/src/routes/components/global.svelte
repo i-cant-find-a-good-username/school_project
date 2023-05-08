@@ -289,7 +289,7 @@
 								if there is a complaint with this id only teacher see it and student can see own complaints
 							-->
 							{#if i === 0}
-								<tr class="!variant-ghost-error">
+								<tr class="!variant-filled-error">
 									<td class='text-center !align-middle '>complaint</td>
 									<td colspan="15" class='text-center !align-middle  overflow-hidden truncate '>variant-filled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error error</td>
 								</tr>

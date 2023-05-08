@@ -1,43 +1,32 @@
-<script lang='ts'>
-    import { toastStore, type TableSource } from '@skeletonlabs/skeleton';
-	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
-	import Trash from '../../lib/icons/trash.svelte';
-	import Pen from '../../lib/icons/pen.svelte';
-	import Cancel from '../../lib/icons/cancel.svelte';
-	import Check from '../../lib/icons/check.svelte';
-    import type { NotesData } from '../../types';
-    import { PUBLIC_API_URL } from '$env/static/public';
-    import { create_toast } from '../../toasts';
-    import { onMount } from 'svelte';
-	let tableArr: any[] = []
-	let selected_year: string
-
-    
+<script lang="ts">
+    import { toastStore, type TableSource } from "@skeletonlabs/skeleton";
+    import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
+    import Trash from "../../lib/icons/trash.svelte";
+    import Pen from "../../lib/icons/pen.svelte";
+    import Cancel from "../../lib/icons/cancel.svelte";
+    import Check from "../../lib/icons/check.svelte";
+    import type { NotesData } from "../../types";
+    import { PUBLIC_API_URL } from "$env/static/public";
+    import { create_toast } from "../../toasts";
+    import { onMount } from "svelte";
+    let tableArr: any[] = [];
+    let selected_year: string;
     // change 1 with lenght or elements
-    let editable: boolean[][] = [ [] ]
+    let editable: boolean[][] = [[]];
+	let complaints: any[] = []
 
     const toggle_editable = (n: number, m: number) => {
-        console.log(n, m)
-        editable[n][m] = !editable[n][m]
-        console.log(editable)
-        
-    }
+        console.log(n, m);
+        editable[n][m] = !editable[n][m];
+        console.log(editable);
+    };
 
+    let selected_grade_year: string;
+    let data_fetched = false;
+    let notes_data: NotesData[];
 
-
-
-
-
-
-	let selected_grade_year: string
-	let data_fetched = false
-	let notes_data: NotesData[]
-
-
-	const fetch_data = () => {
-		notes_data = []
-		data_fetched = false
-		fetch(PUBLIC_API_URL + '/teacher/notes/', {
+    const get_complaint = () => {
+		fetch(PUBLIC_API_URL + '/teacher/complaints/', {
             method: 'GET',
             headers: {
 				'Content-Type': 'application/json',
@@ -45,84 +34,82 @@
 			},
         })
         .then((response) => {
-            console.log(response)
-            if (response.status === 200){
-                toastStore.trigger(create_toast('success', 'data fetched'));
-				return response.json()
-            }else if (response.status === 401){
-                toastStore.trigger(create_toast('error', 'message here'));
-            }else if (response.status === 404){
-                toastStore.trigger(create_toast('error', 'message here'));
-            }else{
-                toastStore.trigger(create_toast('error', 'unknown error'));
-			}
+			return response.json()
         })
         .then(data => {
-			if (data.lenght > 0 || Object.keys(data).length > 0){
-                data_fetched = true
-                console.log(data)
-                console.log(editable)
-
-                const notes_data = data.reduce((groups:any, item:any) => ({
-                    ...groups,
-                    [item.grade._id]: [...(groups[item.grade._id] || []), item]
-				}), {});
-                console.log(notes_data)
-                    const keys = Object.keys(notes_data)
-                    console.log(keys)
-                    console.log(keys.length)
-                    for (let j = 0; j < keys.length; j++) {
-                        console.log(notes_data[keys[j]])
-                        tableArr = [...tableArr, notes_data[keys[j]]]
-                    }                     
-                console.log(tableArr)
-				editable = new Array(tableArr.length).fill([])
-                for (let h = 0; h < tableArr.length; h++) {
-                    editable[h] = new Array(tableArr[h].length).fill(false)
-                }
-                console.log(editable)
-
-
-			}else{
-				toastStore.trigger(create_toast('warning', 'data set empty'));
-				data_fetched = true
-			}
+			console.log(data)
+			complaints = data
 		})
 	}
 
-	onMount(() => {
-		fetch_data()
-		//get_complaint()
-	})
+    const fetch_data = () => {
+        notes_data = [];
+        data_fetched = false;
+        fetch(PUBLIC_API_URL + "/teacher/notes/", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "X-Authorization": localStorage.getItem("token") || "",
+            },
+        })
+            .then((response) => {
+                console.log(response);
+                if (response.status === 200) {
+                    toastStore.trigger(create_toast("success", "data fetched"));
+                    return response.json();
+                } else if (response.status === 401) {
+                    toastStore.trigger(create_toast("error", "message here"));
+                } else if (response.status === 404) {
+                    toastStore.trigger(create_toast("error", "message here"));
+                } else {
+                    toastStore.trigger(create_toast("error", "unknown error"));
+                }
+            })
+            .then((data) => {
+                if (data.lenght > 0 || Object.keys(data).length > 0) {
+                    data_fetched = true;
 
+                    const notes_data = data.reduce(
+                        (groups: any, item: any) => ({
+                            ...groups,
+                            [item.grade._id]: [
+                                ...(groups[item.grade._id] || []),
+                                item,
+                            ],
+                        }),
+                        {}
+                    );
+                    const keys = Object.keys(notes_data);
+                    for (let j = 0; j < keys.length; j++) {
+                        console.log(notes_data[keys[j]]);
+                        tableArr = [...tableArr, notes_data[keys[j]]];
+                    }
+                    editable = new Array(tableArr.length).fill([]);
+                    for (let h = 0; h < tableArr.length; h++) {
+                        editable[h] = new Array(tableArr[h].length).fill(false);
+                    }
+                } else {
+                    toastStore.trigger(
+                        create_toast("warning", "data set empty")
+                    );
+                    data_fetched = true;
+                }
+            });
+    };
 
-
-
-
-
+    onMount(() => {
+        fetch_data();
+        get_complaint()
+    });
 </script>
 
 
+
+
+{JSON.stringify(complaints)}
 <div class="h-full flex flex-col  space-y-4  ">
 
-
 	<div class='flex space-x-2'>
-
-		<!-- all years -->
-		<!-- all years 
-		<select class="select" bind:value={selected_grade_year} on:change={fetch_data} >
-			<option selected value={user_data.user_data.grade._id + " " + user_data.user_data.year}>{user_data.user_data.year} {user_data.user_data.grade.grade}</option>
-		</select>
-		-->
-
-		<!-- all grades -->
-
-
-		
-
-
-
-
 		<select class="select" bind:value={selected_year} on:change={fetch_data} >
 			<option value="2015">2015</option>
 			<option value="2016">2016</option>
@@ -133,8 +120,6 @@
 			<option value="2021">2021</option>
 			<option selected value="2022">2022</option>
 		</select>
-
-
 	</div>
 
     <Accordion class="" regionControl='variant-glass-surface'>
@@ -165,8 +150,8 @@
                             <tbody class=' w-full '>
                                 {#each table as row, j}
                                     <tr class=" " >
-                                        <td class='text-center !align-middle '>{i+1}</td>
-                                        <td class='text-center  border-l border-surface-700 w-1/6 !align-middle '>{row.student.username}</td>
+                                        <td class='text-center !align-middle '>{j+1}</td>
+                                        <td class='text-center  border-l border-surface-700 w-1/6 !align-middle '>{row.student.username} </td>
                                         <td class='text-center  border-l border-surface-700 w-1/6 !align-middle ' >
                                             {#if row.notes}
                                                 {#if row.notes.td}
@@ -236,16 +221,21 @@
                                         {:else}
                                             <td class='text-center  border-l border-surface-700 w-1/6 !p-2 space-x-8 !align-middle '> 
                                                 <button type="button" class="btn-icon variant-filled-primary" on:click={()=>{toggle_editable(i, j)}}><Check/></button>
-                                                <button type="button" class="btn-icon variant-filled-error"> <Cancel/></button>
+                                                <button type="button" class="btn-icon variant-filled-error" on:click={()=>{toggle_editable(i, j)}}> <Cancel/></button>
                                             </td>
                                         {/if}
                                     </tr>
-                                    {#if i === 0}
-                                        <tr class="!variant-filled-error">
-                                            <td class='text-center !align-middle '>complaint</td>
-                                            <td colspan="5" class='text-center !align-middle overflow-hidden truncate '>variant-filled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error error</td>
-                                            <td class='text-center !align-middle overflow-hidden truncate '> <button type="button" class="btn variant-filled-primary">responde</button> </td>
-                                        </tr>
+                                    
+                                    {@const tempo_comps = complaints.filter(o => o.student === row.student._id)}
+                                  
+                                    {#if tempo_comps }
+                                        {#each tempo_comps as complaint}
+                                            <tr class="!variant-filled-error">
+                                                <td class='text-center !align-middle '>complaint</td>
+                                                <td colspan="5" class='text-center !align-middle overflow-hidden truncate '> {complaint.message} </td>
+                                                <td class='text-center !align-middle overflow-hidden truncate '> <button type="button" class="btn variant-filled-primary">responde</button> </td>
+                                            </tr>
+                                        {/each}
                                     {/if}
                                 {/each}
                             </tbody>

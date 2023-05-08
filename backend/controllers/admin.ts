@@ -168,6 +168,31 @@ const get_notes = async (req: Request, res: Response) => {
 
 
 
+
+
+
+const get_admin_complaints = async (req: Request, res: Response) => {
+    try {
+        /// fix the previlage
+        let complaints = await Complaint.find({teacher: new ObjectId(res.locals.user_data._id)})
+
+        if(complaints.length === 0){
+            return res.status(404).json({
+                message: "no complaints"
+            })
+        }
+
+        res.status(200).json(complaints)
+
+    } catch (error) {
+        res.status(500).json({
+            message: error
+        })
+    }
+    
+}
+
+
 export {
     get_students,
     get_teachers,
@@ -175,5 +200,6 @@ export {
     edit_student,
     delete_teacher,
     edit_teacher,
-    get_notes
+    get_notes,
+    get_admin_complaints
 }
