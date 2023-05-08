@@ -5,6 +5,7 @@
     import type { Grade, NotesData } from '../../types';
 	import { grades } from '../../stores/grades_store'
     import { PUBLIC_API_URL } from '$env/static/public';
+    import { user } from "../../stores/user_store";
 
 	let data_fetched = false
 	let selected_grade: string
@@ -13,13 +14,16 @@
 	let complaints: string[] = []
 	let grades_data: any
 	let current_grade: any
-
+	let user_data: any
 
 	grades.subscribe((grades: any) => {
 		grades_data = grades;
 	});
 
 
+	user.subscribe(( user : any) => {
+		user_data = user.user_data;
+	});
 	
 
 	// val groupe name, len number of subjects
@@ -37,7 +41,13 @@
 	const fetch_data = () => {
 		notes_data = []
 		data_fetched = false
-		fetch(PUBLIC_API_URL + '/student/notes_global/' + selected_grade + "/" + selected_year, {
+		let url: string = ""
+		if( user_data.role === 'student' ){
+			url = PUBLIC_API_URL + '/student/notes_global/' + selected_grade + "/" + selected_year
+		}else if ( user_data.role === 'teacher' ){
+			url = PUBLIC_API_URL + '/teacher/notes_global/' + selected_grade + "/" + selected_year
+		}
+		fetch(url, {
             method: 'GET',
             headers: {
 				'Content-Type': 'application/json',

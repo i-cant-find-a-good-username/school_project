@@ -25,6 +25,33 @@ const get_notes = async (req: Request, res: Response) => {
 
 
 
+
+
+const get_global_notes_teacher = async (req: Request, res: Response) => {
+    try {
+        let notes = await Note.find({
+            grade: new ObjectId(req.params.grade),
+            year: req.params.year,
+        })
+            .populate({path:'grade', model: Grade})
+            .populate({path:'subject', model: Subject})
+            .populate({path:'student', model: Student, select: 'username'})
+    
+        res.status(200).json(notes)  
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            message: error
+        })
+    }
+}
+
+
+
+
+
+
+
 const edit_notes = async (req: Request, res: Response) => {
     try {
         const data = req.body
@@ -50,5 +77,6 @@ const edit_notes = async (req: Request, res: Response) => {
 
 export {
     get_notes,
-    edit_notes
+    edit_notes,
+    get_global_notes_teacher
 }
