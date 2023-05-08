@@ -33,7 +33,7 @@
 			{#if page === 0}
 				<Home/>
 			{:else if  page === 1}
-				{#if user_data.user_data.role}
+				{#if user_data.user_data.role === "student"}
 					<Notes/>
 				{:else}
 					<Teacher/>

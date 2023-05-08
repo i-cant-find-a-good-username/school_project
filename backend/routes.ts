@@ -44,7 +44,7 @@ router.delete("/student/complaints/:id", isAuth, isStudent, delete_complaint)
 
 
 // teacher
-router.get("/teacher/notes/:grade/:year", isAuth, isTeacher, get_notes_teacher)
+router.get("/teacher/notes/", isAuth, isTeacher, get_notes_teacher)
 router.put("/teacher/notes/:id", note, isAuth, isTeacher, edit_notes)
 
 

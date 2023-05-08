@@ -9,7 +9,6 @@
     let password: HTMLInputElement
     let is_teacher = false
 
-
     let error0: HTMLElement
     let error1: HTMLElement
     let valid_input = false

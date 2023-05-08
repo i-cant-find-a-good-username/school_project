@@ -1,5 +1,6 @@
 <script lang='ts'>
 	let is_logged_in = false
+	let to_be_logged_in = false
 	import { Toast } from '@skeletonlabs/skeleton';
 	
 	import { ConicGradient, type ConicStop } from '@skeletonlabs/skeleton';
@@ -20,6 +21,7 @@
 			})
 			is_logged_in = true
 		}else{
+			to_be_logged_in = true
 			goto('/login')
 		}
 	})
@@ -43,13 +45,10 @@
 
 <Toast />
 
-{#if is_logged_in}
+{#if is_logged_in || to_be_logged_in}
 	<slot/>
-
 {:else}
-
 	<div class='h-full w-full flex items-center justify-center bg-gradient-to-br from-pink-500 to-violet-500 bg-clip-text text-transparent box-decoration-clone ' >
-			<ConicGradient  stops={conicStops} spin>Loading</ConicGradient>
+		<ConicGradient  stops={conicStops} spin>Loading</ConicGradient>
 	</div>
-
 {/if}

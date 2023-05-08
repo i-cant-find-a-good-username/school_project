@@ -1,18 +1,15 @@
 <script lang='ts'>
-    import type { TableSource } from '@skeletonlabs/skeleton';
+    import { toastStore, type TableSource } from '@skeletonlabs/skeleton';
 	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
 	import Trash from '../../lib/icons/trash.svelte';
 	import Pen from '../../lib/icons/pen.svelte';
 	import Cancel from '../../lib/icons/cancel.svelte';
 	import Check from '../../lib/icons/check.svelte';
-	let tableArr = [
-        {
-            subject: "duude duude",
-            td: 5,
-            tp: 12,
-            exam: 10,
-        },
-    ]
+    import type { NotesData } from '../../types';
+    import { PUBLIC_API_URL } from '$env/static/public';
+    import { create_toast } from '../../toasts';
+    import { onMount } from 'svelte';
+	let tableArr: any[] = []
 
     
     // change 1 with lenght or elements
@@ -23,20 +20,98 @@
         editable[n] = !editable[n]
     }
 
+
+
+
+
+
+
+	let selected_grade_year: string
+	let data_fetched = false
+	let notes_data: NotesData[]
+
+
+	const fetch_data = () => {
+		notes_data = []
+		data_fetched = false
+		fetch(PUBLIC_API_URL + '/teacher/notes/', {
+            method: 'GET',
+            headers: {
+				'Content-Type': 'application/json',
+				'X-Authorization': localStorage.getItem('token') || ""
+			},
+        })
+        .then((response) => {
+            console.log(response)
+            if (response.status === 200){
+                toastStore.trigger(create_toast('success', 'data fetched'));
+				return response.json()
+            }else if (response.status === 401){
+                toastStore.trigger(create_toast('error', 'message here'));
+            }else if (response.status === 404){
+                toastStore.trigger(create_toast('error', 'message here'));
+            }else{
+                toastStore.trigger(create_toast('error', 'unknown error'));
+			}
+        })
+        .then(data => {
+			if (data.lenght > 0 || Object.keys(data).length > 0){
+                data_fetched = true
+                const notes_data = data.reduce((groups:any, item:any) => ({
+                    ...groups,
+                    [item.grade._id]: [...(groups[item.grade._id] || []), item]
+				}), {});
+                console.log(notes_data)
+                for (let i = 0; i < notes_data.length; i++) {
+                    let arra: any = []
+                    console.log(notes_data[i])
+
+                    for (let k = 0; k < notes_data[i].length; k++) {
+                        console.log(notes_data[i][k])
+                        const new_obj = {
+                            username: "dcadz",
+                            td: 458,
+                            tp: 458,
+                            exam: 458,
+                            average: 458,
+                        } 
+                        arra.push(new_obj)
+                    }                     
+                    tableArr = [...tableArr, arra]
+                }
+                console.log(tableArr)
+
+			}else{
+				toastStore.trigger(create_toast('warning', 'data set empty'));
+				data_fetched = true
+			}
+		})
+	}
+
+	onMount(() => {
+		fetch_data()
+		//get_complaint()
+	})
+
+
+
+
+
+
 </script>
 
 <div >
 	<!--  -->
     <Accordion class="" regionControl='variant-glass-surface'>
-		{#each Array(4) as item, i}
-			<AccordionItem open={i==0} >
-		    	<svelte:fragment slot="lead">
+		{#each tableArr as table, i}
+            <AccordionItem open={i==0} >
+                <svelte:fragment slot="lead">
                     <p class='!text-2xl'>
                         IGR Master 1 Stic S2 
-					</p>
+                    </p>
                 </svelte:fragment>
-		    	<svelte:fragment slot="summary"> &nbsp; </svelte:fragment>
-		    	<svelte:fragment slot="content" >
+                <svelte:fragment slot="summary"> &nbsp; </svelte:fragment>
+                <svelte:fragment slot="content" >
                 <div data-popup="hello">(popup)</div>
                     <div class="table-container">
                         <!-- Native Table Element -->
@@ -53,10 +128,10 @@
                                 </tr>
                             </thead>
                             <tbody class=' w-full '>
-                                {#each tableArr as row, i}
+                                {#each table as row, i}
                                     <tr class=" " >
                                         <td class='text-center !align-middle '>{i+1}</td>
-                                        <td class='text-center  border-l border-surface-700 w-1/6 !align-middle '>{row.subject}</td>
+                                        <td class='text-center  border-l border-surface-700 w-1/6 !align-middle '>{row.username}</td>
                                         <td class='text-center  border-l border-surface-700 w-1/6 !align-middle ' >
                                             <p class={editable[i] ? 'hidden' : ""}>
                                                 {row.td}
@@ -99,8 +174,8 @@
                             </tbody>
                         </table>
                     </div>
-		    	</svelte:fragment>
-		    </AccordionItem>
+                </svelte:fragment>
+            </AccordionItem>
 		{/each}
 	</Accordion>
 

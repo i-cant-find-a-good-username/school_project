@@ -32,6 +32,9 @@ const register = async (req: Request, res: Response) => {
 		await (await student.save()).populate({ path: 'grade', model: Grade })
 		student.password = ""
 		
+
+		// here the admin selectes the teachers of each subject
+
 		// @ts-ignore
 		const teachers = await Teacher.find({subjects: { $in: [...student.grade.subjects.map(a => a)] }}).select("id username email profile_image subjects").populate({ path: 'subjects', model: Subject})
 		let notes: Note[] = []

@@ -130,7 +130,7 @@
 							console.log( head[j])
 							let obj = notes_groups[group].find(o => o.subject._id === head[j].id)
 							if( obj.notes === undefined ){
-								arr[j] = "not set"
+								arr[j] = "-"
 							}else{
 								const note = (obj.notes.td * obj.subject.notes_coefficient.td + obj.notes.tp * obj.subject.notes_coefficient.tp + obj.notes.exam * obj.subject.notes_coefficient.exam) / (obj.subject.notes_coefficient.exam + obj.subject.notes_coefficient.td + obj.subject.notes_coefficient.tp) 
 								console.log(obj)
@@ -275,6 +275,9 @@
 									<td class='text-center  border-surface-700  !align-middle { j !== 0 ? 'border-l' : ''} ' style={ j===0 ? '' : 'width: calc( 100% / '+(Object.keys(row).length-1)+' ) ' } >{col}</td>
 								{/each}
 							</tr>
+							<!--
+								if there is a complaint with this id only teacher see it and student can see own complaints
+							-->
 							{#if i === 0}
 								<tr class="!variant-ghost-error">
 									<td class='text-center !align-middle '>complaint</td>
