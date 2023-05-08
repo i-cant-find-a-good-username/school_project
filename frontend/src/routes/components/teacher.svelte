@@ -25,6 +25,38 @@
     let data_fetched = false;
     let notes_data: NotesData[];
 
+
+    const submit_notes = (note: string, td: number, tp: number, exam: number) => {
+		fetch(PUBLIC_API_URL + '/teacher/notes/' + note, {
+            method: 'PUT',
+            headers: {
+				'Content-Type': 'application/json',
+				'X-Authorization': localStorage.getItem('token') || ""
+			},
+            body: JSON.stringify({
+                td: td,
+                tp: tp,
+                exam: exam
+            })
+        })
+        .then((response) => {
+            if (response.status === 200) {
+                    toastStore.trigger(create_toast("success", "updated successfully"));
+                    return response.json();
+                } else if (response.status === 401) {
+                    toastStore.trigger(create_toast("error", "no auth"));
+                } else if (response.status === 404) {
+                    toastStore.trigger(create_toast("error", "note doesnt exist"));
+                } else {
+                    toastStore.trigger(create_toast("error", "server error"));
+                }
+        })
+        .then(data => {
+			console.log(data)
+			complaints = data
+		})
+	}
+
     const get_complaint = () => {
 		fetch(PUBLIC_API_URL + '/teacher/complaints/', {
             method: 'GET',
@@ -88,6 +120,7 @@
                     for (let h = 0; h < tableArr.length; h++) {
                         editable[h] = new Array(tableArr[h].length).fill(false);
                     }
+                    console.log(tableArr)
                 } else {
                     toastStore.trigger(
                         create_toast("warning", "data set empty")
@@ -106,7 +139,6 @@
 
 
 
-{JSON.stringify(complaints)}
 <div class="h-full flex flex-col  space-y-4  ">
 
 	<div class='flex space-x-2'>
@@ -213,6 +245,8 @@
                                             {/if}
                                         </td>
                                         <td class='text-center  border-l border-surface-700 w-1/6 !align-middle '>{ (row.td + row.tp + row.exam)/3 }</td>
+                                       
+                                        
                                         {#if !editable[i][j]}
                                             <td class='text-center  border-l border-surface-700 w-1/6 !p-2 space-x-8 !align-middle'> 
                                                 <button type="button" class="btn-icon variant-filled-primary" on:click={()=>{toggle_editable(i, j)}}> <Pen/> </button>
@@ -220,7 +254,7 @@
                                             </td>
                                         {:else}
                                             <td class='text-center  border-l border-surface-700 w-1/6 !p-2 space-x-8 !align-middle '> 
-                                                <button type="button" class="btn-icon variant-filled-primary" on:click={()=>{toggle_editable(i, j)}}><Check/></button>
+                                                <button type="button" class="btn-icon variant-filled-primary" on:click={()=>{toggle_editable(i, j); submit_notes(row._id, 0, 20 ,5) }}><Check/></button>
                                                 <button type="button" class="btn-icon variant-filled-error" on:click={()=>{toggle_editable(i, j)}}> <Cancel/></button>
                                             </td>
                                         {/if}

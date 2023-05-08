@@ -56,6 +56,7 @@ const get_global_notes_teacher = async (req: Request, res: Response) => {
 const edit_notes = async (req: Request, res: Response) => {
     try {
         const data = req.body
+        console.log(data)
         const result = await Note.updateOne({_id: new ObjectId(req.params.id)}, {notes: data})
         if(result.modifiedCount !== 0){
             res.status(200).json({

@@ -33,7 +33,7 @@ const get_teachers = async (req: Request, res: Response) => {
 
         res.status(200).json({
             message: teachers
-        }) 
+        })
     } catch (error) {
         res.status(500).json({
             message: error
@@ -46,12 +46,12 @@ const get_teachers = async (req: Request, res: Response) => {
 
 const delete_student = async (req: Request, res: Response) => {
     try {
-        const result = await Student.deleteOne({_id: new ObjectId(req.params.id)})
-        if(result.deletedCount !== 0){
+        const result = await Student.deleteOne({ _id: new ObjectId(req.params.id) })
+        if (result.deletedCount !== 0) {
             res.status(200).json({
                 result: "success"
             })
-        }else{
+        } else {
             res.status(404).json({
                 message: "student not found"
             })
@@ -68,12 +68,12 @@ const delete_student = async (req: Request, res: Response) => {
 
 const delete_teacher = async (req: Request, res: Response) => {
     try {
-        const result = await Teacher.deleteOne({_id: new ObjectId(req.params.id)})
-        if(result.deletedCount !== 0){
+        const result = await Teacher.deleteOne({ _id: new ObjectId(req.params.id) })
+        if (result.deletedCount !== 0) {
             res.status(200).json({
                 result: "success"
             })
-        }else{
+        } else {
             res.status(404).json({
                 message: "teacher not found"
             })
@@ -91,12 +91,12 @@ const delete_teacher = async (req: Request, res: Response) => {
 const edit_student = async (req: Request, res: Response) => {
     try {
         const data = req.body
-        const result = await Student.updateOne({_id: new ObjectId(req.params.id)}, data)
-        if(result.modifiedCount !== 0){
+        const result = await Student.updateOne({ _id: new ObjectId(req.params.id) }, data)
+        if (result.modifiedCount !== 0) {
             res.status(200).json({
                 result: "success"
             })
-        }else{
+        } else {
             res.status(404).json({
                 message: "student not found"
             })
@@ -107,15 +107,19 @@ const edit_student = async (req: Request, res: Response) => {
         })
     }
 }
+
+
+
+
 const edit_teacher = async (req: Request, res: Response) => {
     try {
         const data = req.body
-        const result = await Teacher.updateOne({_id: new ObjectId(req.params.id)}, data)
-        if(result.modifiedCount !== 0){
+        const result = await Teacher.updateOne({ _id: new ObjectId(req.params.id) }, data)
+        if (result.modifiedCount !== 0) {
             res.status(200).json({
                 result: "success"
             })
-        }else{
+        } else {
             res.status(404).json({
                 message: "teacher not found"
             })
@@ -137,26 +141,26 @@ const get_notes = async (req: Request, res: Response) => {
         // middleware mabe change location to middleware file
         const my_grades_admin = await Teacher.findOne({ _id: res.locals.user_data._id })
         // @ts-ignore
-        if(!my_grades_admin.grades_admin.includes(data.grade)){
+        if (!my_grades_admin.grades_admin.includes(data.grade)) {
             return res.status(400).json({
                 message: "invalid grade"
-            })   
+            })
         }
-        
-        const students = await Student.find({grade: data.grade, year: data.year }).select('_id username email profile_image grade year')
+
+        const students = await Student.find({ grade: data.grade, year: data.year }).select('_id username email profile_image grade year')
 
         let student_ids = [];
         for (let i = 0; i < students.length; i++) {
             student_ids.push(students[i]._id)
         }
 
-        let complaints = await Complaint.find({ student: { $in : student_ids } })            
+        let complaints = await Complaint.find({ student: { $in: student_ids } })
 
         res.status(200).json({
             message: students,
             student_ids: student_ids,
             complaints: complaints,
-        }) 
+        })
     } catch (error) {
         console.log(error)
         res.status(500).json({
@@ -168,15 +172,12 @@ const get_notes = async (req: Request, res: Response) => {
 
 
 
-
-
-
 const get_admin_complaints = async (req: Request, res: Response) => {
     try {
-        /// fix the previlage
-        let complaints = await Complaint.find({teacher: new ObjectId(res.locals.user_data._id)})
+        /// fix the previlage get complaints he is responsive for only
+        let complaints = await Complaint.find({ teacher: new ObjectId(res.locals.user_data._id) })
 
-        if(complaints.length === 0){
+        if (complaints.length === 0) {
             return res.status(404).json({
                 message: "no complaints"
             })
@@ -189,8 +190,10 @@ const get_admin_complaints = async (req: Request, res: Response) => {
             message: error
         })
     }
-    
+
 }
+
+
 
 
 export {
