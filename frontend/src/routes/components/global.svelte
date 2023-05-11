@@ -15,25 +15,21 @@
 	let grades_data: any
 	let current_grade: any
 	let user_data: any
+	let groups_head: {val: string, len: number}[] = []
+	let head: {id: string, val: string}[] = [{id:"", val:'name'}]
+	let rows: string[][] = [];
 
+	
 	grades.subscribe((grades: any) => {
 		grades_data = grades;
 	});
-
-
 	user.subscribe(( user : any) => {
 		user_data = user.user_data;
 	});
 	
 
 	// val groupe name, len number of subjects
-	let groups_head: {val: string, len: number}[] = []
-	let head: {id: string, val: string}[] = [{id:"", val:'name'}]
 
-	let rows: any = [
-		//["dude", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20"],
-		//["lon gdudenam eusername dudenameuser namedudena meusername", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20", "20"]
-	];
 
 	
 
@@ -72,37 +68,6 @@
 			if (data.lenght > 0 || Object.keys(data).length > 0){
 				notes_data = data
 				data_fetched = true
-
-
-				//for (let i = 0; i < notes_data.length; i++) {
-				//	let tempo_arr = []
-				//	let new_obj: any = {}
-				//	let subj = head.find((x: any) => x.id === notes_data[i].subject._id)
-				//	console.log("******************")
-				//	// @ts-ignore
-				//	new_obj.username = notes_data[i].student.username
-				//	new_obj.subject = notes_data[i].subject
-				//	console.log(new_obj)
-				//
-				//	//notes_data[i]
-				//}
-
-
-				//for (let i = 0; i < head.length; i++) {
-				//	let tempo_arr = []
-				//	let new_obj: any = {}
-				//	let subj = notes_data.find((x: any) => x.subject._id === head[i].id)
-				//	console.log("******************")
-				//	console.log(subj?.student.username)
-				//	new_obj.username = subj?.student.username
-				//	if(subj === undefined){
-				//	}else{
-				//		""
-				//	}
-				//	//new_arr.push()
-				//	//notes_data[i]
-				//}
-
 				const notes_groups = data.reduce((groups:any, item:any) => ({
 				  ...groups,
 				  [item.student._id]: [...(groups[item.student._id] || []), item]
@@ -129,16 +94,15 @@
 				for (let i = 0; i < Object.keys(notes_groups).length; i++) {
 					const group = Object.keys(notes_groups)[i]
 					let student_row: any = []
-					var arr = new Array(head.length).fill("")
+					var arr: string[] = new Array(head.length).fill("")
 
 
 					arr[0] = notes_groups[group][0].student.username
 					console.log(notes_groups[group])
 					for (let j = 1; j < head.length; j++) {
 						if( head[j].id !== '' ){
-							//get the note by this id **** head[j].id
 							console.log( head[j])
-							let obj = notes_groups[group].find(o => o.subject._id === head[j].id)
+							let obj = notes_groups[group].find((o: any) => o.subject._id === head[j].id)
 							if( obj.notes === undefined ){
 								arr[j] = "-"
 							}else{
@@ -159,10 +123,6 @@
 					}
 					console.log(arr)
 					rows = [...rows, arr]
-					//for (let j = 0; j < notes_groups[Object.keys(notes_groups)[i]].length; j++) {
-					//	console.log(notes_groups[Object.keys(notes_groups)[i]][j])
-					//}
-					//console.log('***********************')
 				}
 				
 
@@ -173,11 +133,13 @@
 		})
 	}
 
-	onMount(() => {
+
+	const init = () => {
+		groups_head = []
+		head = [{id:"", val:'name'}]
+		rows = [];
 		current_grade = grades_data.find((x: Grade) => x._id === selected_grade);
 		console.log(current_grade)
-
-
 		const groups = current_grade.subjects.reduce((groups:any, item:any) => ({
 		  ...groups,
 		  [item.group]: [...(groups[item.group] || []), item]
@@ -196,8 +158,11 @@
 		}
 		head = [...head, {id: '', val: 'average'}]
 		console.log(head)
-
 		fetch_data()
+	}
+
+	onMount(() => {
+		init()
 		
 
 
@@ -224,14 +189,14 @@
 
 		
 
-		<select class="select" bind:value={selected_grade} on:change={fetch_data} >
+		<select class="select" bind:value={selected_grade} on:change={init} >
 			{#each grades_data as grade}
 				<option class='capitalize'  value={grade._id}>{grade.grade} {grade.speciality} S{grade.simester}</option>
 			{/each}
 		</select>
 
 
-		<select class="select" bind:value={selected_year} on:change={fetch_data} >
+		<select class="select" bind:value={selected_year} on:change={init} >
 			<option value="2015">2015</option>
 			<option value="2016">2016</option>
 			<option value="2017">2017</option>
@@ -288,7 +253,7 @@
 							<!--
 								if there is a complaint with this id only teacher see it and student can see own complaints
 							-->
-							{#if i === 0}
+							{#if false}
 								<tr class="!variant-filled-error">
 									<td class='text-center !align-middle '>complaint</td>
 									<td colspan="15" class='text-center !align-middle  overflow-hidden truncate '>variant-filled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error error</td>

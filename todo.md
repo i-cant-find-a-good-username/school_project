@@ -1,2 +1,3 @@
-each grade has a admin
-GET NOTES ADMIN UNFINISHED
+- each grade has a admin
+- GET NOTES ADMIN UNFINISHED
+- bind teacher notes to variables

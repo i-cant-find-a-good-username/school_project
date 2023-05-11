@@ -175,7 +175,10 @@ const get_notes = async (req: Request, res: Response) => {
 const get_admin_complaints = async (req: Request, res: Response) => {
     try {
         /// fix the previlage get complaints he is responsive for only
-        let complaints = await Complaint.find({ teacher: new ObjectId(res.locals.user_data._id) })
+        let grades_admin = await Teacher.findOne({ _id: new ObjectId(res.locals.user_data._id) }).select('grades_admin')
+
+
+        let complaints = await Complaint.find({ subject: new ObjectId(grades_admin.grades_admin) })
 
         if (complaints.length === 0) {
             return res.status(404).json({

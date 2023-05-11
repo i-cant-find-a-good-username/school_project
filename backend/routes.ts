@@ -44,7 +44,7 @@ router.delete("/student/complaints/:id", isAuth, isStudent, delete_complaint)
 
 
 // teacher
-router.get("/teacher/notes/", isAuth, isTeacher, get_notes_teacher)
+router.get("/teacher/notes/:year", isAuth, isTeacher, get_notes_teacher)
 router.get("/teacher/notes_global/:grade/:year/", isAuth, isTeacher, get_global_notes_teacher)
 router.put("/teacher/notes/:id", note, isAuth, isTeacher, edit_notes)
 router.get("/teacher/complaints/", isAuth, isTeacher, get_teacher_complaints)
@@ -65,7 +65,7 @@ router.put("/admin/teacher/:id", teacherEdit, isAuth ,isAdmin , edit_teacher)
 router.delete("/admin/student/:id", isAuth, isAdmin, delete_student)
 router.delete("/admin/teacher/:id", isAuth, isAdmin, delete_teacher)
 
-router.get("/teacher/complaints/", isAuth, isTeacher, get_admin_complaints)
+router.get("/teacher/complaints/:grade/:year", isAuth, isTeacher, get_admin_complaints)
 
 
 

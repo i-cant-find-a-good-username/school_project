@@ -7,6 +7,7 @@
     import { PUBLIC_API_URL } from '$env/static/public';
 	import { create_toast } from '../../toasts'
     import type { Note, NotesData } from '../../types';
+    import { init } from 'svelte/internal';
 
 
 	let selected_grade_year: string
@@ -158,9 +159,13 @@
 		})
 	}
 
-	onMount(() => {
+	const init = () => {
+
 		fetch_data()
 		get_complaint()
+	}
+	onMount(() => {
+		init()
 	})
 
 
@@ -179,7 +184,7 @@
 	-->	
 
 	<div class='flex space-x-2'>
-		<select class="select" bind:value={selected_grade_year} on:change={fetch_data} >
+		<select class="select" bind:value={selected_grade_year} on:change={init} >
 			{#each user_data.user_data.previous as item, i}
 				<option value={item.grade._id + " " + item.year}>{item.year} {item.grade.grade}</option>
 			{/each}
@@ -194,7 +199,7 @@
 				<AccordionItem open={i==0}   >
 					<svelte:fragment slot="lead">
 						<p class='!text-2xl'>
-							{note.subject.name} <strong>({note.subject.name.match(/\b(\w)/g).join('')})</strong>
+							{note.subject.name} <strong>({note.subject.name.match(/\b(\w)/g).join('').toUpperCase()})</strong>
 						</p>
 					</svelte:fragment>
 					<svelte:fragment slot="summary">

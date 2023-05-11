@@ -10,7 +10,7 @@ import { Complaint } from '../models/complaint';
 
 const get_notes = async (req: Request, res: Response) => {
     try {
-        const notes = await Note.find({teacher: new ObjectId(res.locals.user_data._id)})
+        const notes = await Note.find({teacher: new ObjectId(res.locals.user_data._id), year: req.params.year})
             .populate({ path: 'subject', model: Subject})
             .populate({ path: 'grade', model: Grade})
             .populate({ path: 'student', select: 'username email profile_image', model: Student })

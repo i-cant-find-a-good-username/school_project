@@ -77,7 +77,7 @@
     const fetch_data = () => {
         notes_data = [];
         data_fetched = false;
-        fetch(PUBLIC_API_URL + "/teacher/notes/", {
+        fetch(PUBLIC_API_URL + "/teacher/notes/" + selected_year, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -130,9 +130,18 @@
             });
     };
 
-    onMount(() => {
+
+    const init = () => {
+        tableArr = [];
+        editable = [[]];
+    	complaints = []
+
         fetch_data();
         get_complaint()
+    }
+
+    onMount(() => {
+        init()
     });
 </script>
 
@@ -140,9 +149,9 @@
 
 
 <div class="h-full flex flex-col  space-y-4  ">
-
+    
 	<div class='flex space-x-2'>
-		<select class="select" bind:value={selected_year} on:change={fetch_data} >
+		<select class="select" bind:value={selected_year} on:change={init} >
 			<option value="2015">2015</option>
 			<option value="2016">2016</option>
 			<option value="2017">2017</option>
@@ -244,7 +253,9 @@
                                                 <input max='20' min='0' type="number" name="" value='0' class={editable[i][j] ? 'input text-center p-2' : "hidden"}>
                                             {/if}
                                         </td>
-                                        <td class='text-center  border-l border-surface-700 w-1/6 !align-middle '>{ (row.td + row.tp + row.exam)/3 }</td>
+                                        <td class='text-center  border-l border-surface-700 w-1/6 !align-middle '>{
+                                            (row.notes.td * row.subject.notes_coefficient.td + row.notes.tp * row.subject.notes_coefficient.tp + row.notes.exam * row.subject.notes_coefficient.exam)/ (row.subject.notes_coefficient.exam + row.subject.notes_coefficient.td + row.subject.notes_coefficient.tp)
+                                        }</td>
                                        
                                         
                                         {#if !editable[i][j]}
@@ -279,6 +290,4 @@
             </AccordionItem>
 		{/each}
 	</Accordion>
-
-
 </div>
