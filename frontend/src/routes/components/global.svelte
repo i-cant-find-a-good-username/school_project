@@ -112,10 +112,9 @@
 								//calculate here
 							}
 						}else if ( head[j].val === 'cred' ) {
-							//check if cred or avg
-							arr[j] = '/' + j
+							arr[j] = '/'
 						}else if (head[j].val === 'avg'){
-							arr[j] = '/' + j
+							arr[j] = '/'
 						}
 						// average here
 						arr[head.length-1] = '/' + j
@@ -133,7 +132,23 @@
 		})
 	}
 
-
+	const get_complaints = () => {
+		fetch(PUBLIC_API_URL + '/admin/complaints/' + selected_grade + '/' + selected_year, {
+    	    method: 'GET',
+    	    headers: {
+				'Content-Type': 'application/json',
+				'X-Authorization': localStorage.getItem('token') || ""
+			},
+    	})
+    	.then((response) => {
+			return response.json()
+    	})
+    	.then(data => {
+			console.log(data)
+			complaints = data
+			console.log(complaints)
+		})
+	}
 	const init = () => {
 		groups_head = []
 		head = [{id:"", val:'name'}]
@@ -163,7 +178,11 @@
 
 	onMount(() => {
 		init()
-		
+		if (user_data.role = 'teacher'){
+			if(user_data.isAdmin){
+				get_complaints()
+			}
+		}
 
 
 	})
@@ -266,7 +285,7 @@
 
 		</div>
 	</div>
-	<InputChip bind:value={complaints} name="chips" placeholder="Write a complaint..." />
+	<InputChip name="chips" placeholder="Write a complaint..." />
 
 </div>
 

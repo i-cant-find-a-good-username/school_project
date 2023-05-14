@@ -7,7 +7,6 @@
     import { PUBLIC_API_URL } from '$env/static/public';
 	import { create_toast } from '../../toasts'
     import type { Note, NotesData } from '../../types';
-    import { init } from 'svelte/internal';
 
 
 	let selected_grade_year: string
@@ -140,9 +139,9 @@
                 toastStore.trigger(create_toast('success', 'data fetched'));
 				return response.json()
             }else if (response.status === 401){
-                toastStore.trigger(create_toast('error', 'message here'));
+                toastStore.trigger(create_toast('error', 'unauthed'));
             }else if (response.status === 404){
-                toastStore.trigger(create_toast('error', 'message here'));
+                toastStore.trigger(create_toast('error', 'not found'));
             }else{
                 toastStore.trigger(create_toast('error', 'unknown error'));
 			}
@@ -161,6 +160,9 @@
 
 	const init = () => {
 
+		notes_data = []
+		complaints = []
+		complaints_ids = []
 		fetch_data()
 		get_complaint()
 	}

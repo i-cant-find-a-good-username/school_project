@@ -9,11 +9,16 @@
     import { PUBLIC_API_URL } from "$env/static/public";
     import { create_toast } from "../../toasts";
     import { onMount } from "svelte";
+    import { user } from "../../stores/user_store";
+
     let tableArr: any[] = [];
+    let inputs_state: {td?: number, tp?: number, exam?: number}[][] = [];
     let selected_year: string;
-    // change 1 with lenght or elements
     let editable: boolean[][] = [[]];
 	let complaints: any[] = []
+	let user_data: any
+    let data_fetched = false;
+    let notes_data: NotesData[];
 
     const toggle_editable = (n: number, m: number) => {
         console.log(n, m);
@@ -21,10 +26,9 @@
         console.log(editable);
     };
 
-    let selected_grade_year: string;
-    let data_fetched = false;
-    let notes_data: NotesData[];
-
+    user.subscribe(user => {
+		user_data = user;
+	});
 
     const submit_notes = (note: string, td: number, tp: number, exam: number) => {
 		fetch(PUBLIC_API_URL + '/teacher/notes/' + note, {
@@ -57,7 +61,7 @@
 		})
 	}
 
-    const get_complaint = () => {
+    const get_complaints = () => {
 		fetch(PUBLIC_API_URL + '/teacher/complaints/', {
             method: 'GET',
             headers: {
@@ -100,7 +104,6 @@
             .then((data) => {
                 if (data.lenght > 0 || Object.keys(data).length > 0) {
                     data_fetched = true;
-
                     const notes_data = data.reduce(
                         (groups: any, item: any) => ({
                             ...groups,
@@ -113,14 +116,13 @@
                     );
                     const keys = Object.keys(notes_data);
                     for (let j = 0; j < keys.length; j++) {
-                        console.log(notes_data[keys[j]]);
+                        console.log(notes_data[keys[j]])
                         tableArr = [...tableArr, notes_data[keys[j]]];
                     }
                     editable = new Array(tableArr.length).fill([]);
                     for (let h = 0; h < tableArr.length; h++) {
                         editable[h] = new Array(tableArr[h].length).fill(false);
                     }
-                    console.log(tableArr)
                 } else {
                     toastStore.trigger(
                         create_toast("warning", "data set empty")
@@ -136,8 +138,9 @@
         editable = [[]];
     	complaints = []
 
+        get_complaints()
+
         fetch_data();
-        get_complaint()
     }
 
     onMount(() => {
@@ -170,12 +173,12 @@
                     <p class='!text-2xl'>
                         {table[0].grade.grade} {table[0].grade.speciality} S{table[0].grade.simester}
                     </p>
+                    <p> {table[0].subject.name}  <strong>({table[0].subject.name.match(/\b(\w)/g).join('').toUpperCase()})</strong></p>
                 </svelte:fragment>
                 <svelte:fragment slot="summary"> &nbsp; </svelte:fragment>
                 <svelte:fragment slot="content" >
                 <div data-popup="hello">(popup)</div>
                     <div class="table-container">
-                        <!-- Native Table Element -->
                         <table class="table table-hover">
                             <thead>
                                 <tr>
@@ -221,9 +224,9 @@
                                                     </p>
                                                     <input max='20' min='0' type="number" name="" value={row.notes.tp} class={editable[i][j] ? 'input text-center p-2' : "hidden"}>
                                                 {:else}
-                                                <p class={editable[i][j] ? 'hidden' : " "}>
-                                                    -fff
-                                                </p>
+                                                    <p class={editable[i][j] ? 'hidden' : " "}>
+                                                        -
+                                                    </p>
                                                     <input max='20' min='0' type="number" name="" value='0' class={editable[i][j] ? 'input text-center p-2' : "hidden"}>
                                                 {/if}    
                                             {:else}
@@ -253,11 +256,13 @@
                                                 <input max='20' min='0' type="number" name="" value='0' class={editable[i][j] ? 'input text-center p-2' : "hidden"}>
                                             {/if}
                                         </td>
-                                        <td class='text-center  border-l border-surface-700 w-1/6 !align-middle '>{
-                                            (row.notes.td * row.subject.notes_coefficient.td + row.notes.tp * row.subject.notes_coefficient.tp + row.notes.exam * row.subject.notes_coefficient.exam)/ (row.subject.notes_coefficient.exam + row.subject.notes_coefficient.td + row.subject.notes_coefficient.tp)
-                                        }</td>
-                                       
-                                        
+                                        <td class='text-center  border-l border-surface-700 w-1/6 !align-middle '>
+                                            {#if row.notes}
+                                                {(row.notes.td * row.subject.notes_coefficient.td + row.notes.tp * row.subject.notes_coefficient.tp + row.notes.exam * row.subject.notes_coefficient.exam)/ (row.subject.notes_coefficient.exam + row.subject.notes_coefficient.td + row.subject.notes_coefficient.tp)}
+                                            {:else}
+                                                -
+                                            {/if}
+                                        </td>
                                         {#if !editable[i][j]}
                                             <td class='text-center  border-l border-surface-700 w-1/6 !p-2 space-x-8 !align-middle'> 
                                                 <button type="button" class="btn-icon variant-filled-primary" on:click={()=>{toggle_editable(i, j)}}> <Pen/> </button>
@@ -270,9 +275,7 @@
                                             </td>
                                         {/if}
                                     </tr>
-                                    
                                     {@const tempo_comps = complaints.filter(o => o.student === row.student._id)}
-                                  
                                     {#if tempo_comps }
                                         {#each tempo_comps as complaint}
                                             <tr class="!variant-filled-error">

@@ -5,6 +5,7 @@ import { Note } from "../models/note"
 import { Complaint } from "../models/complaint"
 import { ObjectId } from "mongodb";
 import { Types } from 'mongoose';
+import { Grade } from '../models/grade';
 
 
 
@@ -162,7 +163,6 @@ const get_notes = async (req: Request, res: Response) => {
             complaints: complaints,
         })
     } catch (error) {
-        console.log(error)
         res.status(500).json({
             message: error
         })
@@ -174,11 +174,22 @@ const get_notes = async (req: Request, res: Response) => {
 
 const get_admin_complaints = async (req: Request, res: Response) => {
     try {
-        /// fix the previlage get complaints he is responsive for only
         let grades_admin = await Teacher.findOne({ _id: new ObjectId(res.locals.user_data._id) }).select('grades_admin')
+        // @ts-ignore
+        let grade_subjects
+        // @ts-ignore
+        if(grades_admin.grades_admin.includes(req.params.grade)){
+            // @ts-ignore
+            grade_subjects = await Grade.findOne({ _id: {$in: grades_admin.grades_admin} }).select("subjects")
+        }else{
+            res.status(404).json({
+                message: "no grades found"
+            })
+        }
+        // @ts-ignore
+        let notes = await Note.find({ subject: { $in: grade_subjects.subjects } }).select('_id')
 
-
-        let complaints = await Complaint.find({ subject: new ObjectId(grades_admin.grades_admin) })
+        let complaints = await Complaint.find({ note: {$in: notes} })
 
         if (complaints.length === 0) {
             return res.status(404).json({
@@ -187,7 +198,6 @@ const get_admin_complaints = async (req: Request, res: Response) => {
         }
 
         res.status(200).json(complaints)
-
     } catch (error) {
         res.status(500).json({
             message: error

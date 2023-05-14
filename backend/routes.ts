@@ -65,7 +65,7 @@ router.put("/admin/teacher/:id", teacherEdit, isAuth ,isAdmin , edit_teacher)
 router.delete("/admin/student/:id", isAuth, isAdmin, delete_student)
 router.delete("/admin/teacher/:id", isAuth, isAdmin, delete_teacher)
 
-router.get("/teacher/complaints/:grade/:year", isAuth, isTeacher, get_admin_complaints)
+router.get("/admin/complaints/:grade/:year", isAuth, isTeacher, get_admin_complaints)
 
 
 

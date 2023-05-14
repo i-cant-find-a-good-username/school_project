@@ -5,7 +5,7 @@
 <div class='variant-glass-surface variant-ringed-surface rounded p-4 w-64 w-modal space-y-4'>
 
 
-    <h2>Select Theme</h2>
+    <h2>Select Theme (doesnt work)</h2>
     <label class="label">
         <span>Theme</span>
         <select class='select modal-prompt-input ' name="" id="">
