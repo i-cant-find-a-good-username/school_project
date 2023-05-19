@@ -13,6 +13,9 @@ const login = async (req: Request, res: Response) => {
 	try {
 		const data = req.body
 
+		console.log('student')
+		console.log(data)
+		
 		let user
 		if(data.type == 'teacher'){
 			user = await Teacher.findOne({email: data.email})

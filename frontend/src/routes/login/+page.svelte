@@ -28,14 +28,12 @@
         }
     }
 
-
     import {
 		PUBLIC_API_URL,
 	} from '$env/static/public';
     import { goto } from '$app/navigation';
 
     $: url =  is_teacher ? '/teacher' : '/student'
-
 
     const login_enter = (e: KeyboardEvent) => {
         if (e.keyCode === 13){

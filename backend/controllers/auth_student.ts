@@ -12,7 +12,7 @@ import { Grade } from '../models/grade';
 const register = async (req: Request, res: Response) => {
 	try {
 		const data = req.body
-
+		
 		let student = await Student.findOne({email: data.email})
 		if(student) return res.status(401).json({
 			message: 'email taken'

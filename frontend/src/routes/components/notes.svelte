@@ -39,7 +39,8 @@
         .then(data => {
 			for (let i = 0; i < data.length; i++) {
 				complaints.push(data[i].message)
-				complaints_ids.push(data[i]._id)
+				complaints_ids = [...complaints_ids, data[i]._id]
+
 			}
 		})
 	}
@@ -62,32 +63,50 @@
                 toastStore.trigger(create_toast('success', 'complaint submitted'));
 				return response.json()
             }else if (response.status === 401){
-                toastStore.trigger(create_toast('error', 'messagfe here'));
+                toastStore.trigger(create_toast('error', 'un authed'));
 				complaints.pop()
             }else if (response.status === 404){
-                toastStore.trigger(create_toast('error', 'messagfe here'));
+                toastStore.trigger(create_toast('error', 'not found'));
 				complaints.pop()
             }else{
-                toastStore.trigger(create_toast('error', 'unknown error'));
+                toastStore.trigger(create_toast('error', 'server error'));
 				complaints.pop()
 			}
         })
         .then(data => {
-			for (let i = 0; i < data.length; i++) {
-				complaints.push(data[i].message)
-				complaints_ids.push(data[i]._id)
-			}
+			console.log(data)
+			//	complaints.push(data.message)
+			//	complaints_ids = [...complaints_ids, data._id]
 		})
 	}
 	
 	const delete_complaint = (e: any, note_id: string) => {
+		fetch(PUBLIC_API_URL + '/student/complaints/' + complaints_ids[e.detail.chipIndex], {
+            method: 'DELETE',
+            headers: {
+				'Content-Type': 'application/json',
+				'X-Authorization': localStorage.getItem('token') || ""
+			},
+        })
+        .then((response) => {
+            if (response.status === 200){
+                toastStore.trigger(create_toast('success', 'deleted'));
+				return response.json()
+            }else if (response.status === 401){
+                toastStore.trigger(create_toast('error', 'un authed student'));
+            }else if (response.status === 404){
+                toastStore.trigger(create_toast('error', 'not found'));
+            }else{
+                toastStore.trigger(create_toast('error', 'server error'));
+			}
+        })
+        .then(data => {
+			console.log(data)
+			complaints_ids = [...complaints_ids.filter((item: any) => item !== complaints_ids[e.detail.chipIndex])]
+			console.log(complaints_ids)
+			console.log(complaints_ids.filter((item: any) => item !== complaints_ids[e.detail.chipIndex]))
+		})
 	}
-
-
-
-
-
-
 	
 	const create_table = (i: number, data: Note[], coeffs: Note): TableSource  => {
 		if ( data[0] === undefined ){
@@ -98,15 +117,6 @@
 				foot: ['Average', '', '-']
 			};
 		}else{
-			//removed because 0 is considered (-) null so
-
-			//let average
-			//if( data[0].tp && data[0].td && data[0].exam ){
-			//	average = data[0].tp*coeffs.tp + data[0].td*coeffs.td + data[0].exam*coeffs.exam
-			//	average = (average / (coeffs.td + coeffs.tp + coeffs.exam)).toFixed(2)
-			//}else{
-			//	average = '-'
-			//}
 			const average = ((data[0].tp*coeffs.tp + data[0].td*coeffs.td + data[0].exam*coeffs.exam) / (coeffs.td + coeffs.tp + coeffs.exam)).toFixed(2)
 			return {
 				head: ['TD', 'TP', 'Exam'],
@@ -132,7 +142,7 @@
                 toastStore.trigger(create_toast('success', 'data fetched'));
 				return response.json()
             }else if (response.status === 401){
-                toastStore.trigger(create_toast('error', 'unauthed'));
+                toastStore.trigger(create_toast('error', 'un authed student'));
             }else if (response.status === 404){
                 toastStore.trigger(create_toast('error', 'not found'));
             }else{
@@ -173,6 +183,12 @@
 </script>
 
 <div  class='space-y-4'>
+	{JSON.stringify(complaints[0])}
+	{JSON.stringify(complaints)}
+	{JSON.stringify(complaints.length)}
+
+	{JSON.stringify(complaints_ids)}
+	{JSON.stringify(complaints_ids.length)}
 	<!-- 
 		filled ghost soft ringed glass
 	-->	
@@ -213,7 +229,7 @@
 						</div>
     			        <Table interactive={true} source={create_table(i, [note.notes], note.subject.notes_coefficient)} regionCell='border-l border-surface-700 text-center w-1/3 align-bottom' regionHeadCell="text-center"   regionFootCell="text-center"   />               
 						Last Update: {note.updatedAt.substring(0,10)} {note.updatedAt.substring(11,19)}     
-						<InputChip on:add={(e) => {submit_complaint(e, note._id)}} on:remove={(e) => {delete_complaint(e, note._id)}} bind:value={complaints} name="chips" placeholder="Write a complaint..." />
+						<InputChip chips="variant-filled-primary !border-4 border-red-600 !w-full" on:add={(e) => {submit_complaint(e, note._id)}} on:remove={(e) => {delete_complaint(e, note._id)}} bind:value={complaints} name="chips" placeholder="Write a complaint..." />
 					</svelte:fragment>
 				</AccordionItem>
 			{/each}

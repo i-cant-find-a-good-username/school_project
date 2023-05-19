@@ -159,7 +159,7 @@
 
 	onMount(() => {
 		init()
-		if (user_data.role = 'teacher'){
+		if (user_data.role === 'teacher'){
 			if(user_data.isAdmin){
 				get_complaints()
 			}

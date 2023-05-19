@@ -101,7 +101,7 @@
                     toastStore.trigger(create_toast("success", "data fetched"));
                     return response.json();
                 } else if (response.status === 401) {
-                    toastStore.trigger(create_toast("error", "un authed"));
+                    toastStore.trigger(create_toast("error", "un authed teacher"));
                     goto("/login")
                 } else if (response.status === 404) {
                     toastStore.trigger(create_toast("error", "resources not found"));
@@ -278,18 +278,16 @@
                                             </td>
                                         {/if}
                                     </tr>
-                                    <!--
-                                        {@const tempo_comps = complaints.filter(o => o.student === row.student._id)}
-                                        {#if tempo_comps }
-                                            {#each tempo_comps as complaint}
-                                                <tr class="!variant-filled-error">
-                                                    <td class='text-center !align-middle '>complaint</td>
-                                                    <td colspan="5" class='text-center !align-middle overflow-hidden truncate '> {complaint.message} </td>
-                                                    <td class='text-center !align-middle overflow-hidden truncate '> <button type="button" class="btn variant-filled-primary">responde</button> </td>
-                                                </tr>
-                                            {/each}
-                                        {/if}
-                                    -->
+                                    {@const tempo_comps = complaints.filter(o => o.student === row.student._id)}
+                                    {#if tempo_comps }
+                                        {#each tempo_comps as complaint}
+                                            <tr class="!variant-filled-error">
+                                                <td class='text-center !align-middle '>complaint</td>
+                                                <td colspan="5" class='text-center !align-middle overflow-hidden truncate '> {complaint.message} </td>
+                                                <td class='text-center !align-middle overflow-hidden truncate '> <button type="button" class="btn variant-filled-primary">responde</button> </td>
+                                            </tr>
+                                        {/each}
+                                    {/if}
                                 {/each}
                             </tbody>
                         </table>

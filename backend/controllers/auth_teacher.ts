@@ -14,8 +14,6 @@ const register = async (req: Request, res: Response) => {
 		if(teacher) return res.status(401).json({
 			message: 'email taken'
 		})
-	
-
 
 		const hash_password = await bcrypt.hash(data.password, 10)
 		teacher = new Teacher({
