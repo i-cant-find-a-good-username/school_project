@@ -19,20 +19,12 @@
 	let head: {id: string, val: string}[] = [{id:"", val:'name'}]
 	let rows: string[][] = [];
 
-	
 	grades.subscribe((grades: any) => {
 		grades_data = grades;
 	});
 	user.subscribe(( user : any) => {
 		user_data = user.user_data;
 	});
-	
-
-	// val groupe name, len number of subjects
-
-
-	
-
 
 	const fetch_data = () => {
 		notes_data = []
@@ -51,7 +43,6 @@
 			},
         })
         .then((response) => {
-            console.log(response)
             if (response.status === 200){
                 toastStore.trigger(create_toast('success', 'data fetched'));
 				return response.json()
@@ -64,7 +55,6 @@
 			}
         })
         .then(data => {
-			console.log(data)
 			if (data.lenght > 0 || Object.keys(data).length > 0){
 				notes_data = data
 				data_fetched = true
@@ -72,12 +62,6 @@
 				  ...groups,
 				  [item.student._id]: [...(groups[item.student._id] || []), item]
 				}), {});
-				console.log(Object.keys(notes_groups))
-				console.log(notes_groups)
-				console.log(head)
-				console.log(current_grade.subjects)
-
-
 				const subjects_groups = current_grade.subjects.reduce((groups:any, item:any) => ({
 				  ...groups,
 				  [item.group]: [...(groups[item.group] || []), item]
@@ -90,41 +74,42 @@
 					}
 					subjs.push(new_ar)
 				}
-
+				let total_avg: {coeff: number, avg: number}[] = []
 				for (let i = 0; i < Object.keys(notes_groups).length; i++) {
 					const group = Object.keys(notes_groups)[i]
-					let student_row: any = []
 					var arr: string[] = new Array(head.length).fill("")
-
-
 					arr[0] = notes_groups[group][0].student.username
-					console.log(notes_groups[group])
+					let avg: {coeff: number, avg: number}[] = []
 					for (let j = 1; j < head.length; j++) {
 						if( head[j].id !== '' ){
-							console.log( head[j])
 							let obj = notes_groups[group].find((o: any) => o.subject._id === head[j].id)
 							if( obj.notes === undefined ){
 								arr[j] = "-"
+								avg.push({ coeff: obj.subject.coefficient, avg: NaN })
 							}else{
 								const note = (obj.notes.td * obj.subject.notes_coefficient.td + obj.notes.tp * obj.subject.notes_coefficient.tp + obj.notes.exam * obj.subject.notes_coefficient.exam) / (obj.subject.notes_coefficient.exam + obj.subject.notes_coefficient.td + obj.subject.notes_coefficient.tp) 
-								console.log(obj)
 								arr[j] = (note.toFixed(2))
-								//calculate here
+								avg.push({ coeff: obj.subject.coefficient, avg: note })
 							}
 						}else if ( head[j].val === 'cred' ) {
-							arr[j] = '/'
+							arr[j] = "/"
 						}else if (head[j].val === 'avg'){
-							arr[j] = '/'
+							let average: number = 0
+							let coeffs: number = 0
+							for (let k = 0; k < avg.length; k++) {
+								average = avg.reduce((total, obj) => obj.avg*obj.coeff + total,0)
+								coeffs = avg.reduce((total, obj) => obj.coeff + total,0)
+							}
+							let note = average / coeffs
+							arr[j] = note.toFixed(2)
+							total_avg.push(...avg)
+							avg = []
 						}
-						// average here
-						arr[head.length-1] = '/' + j
-
 					}
-					console.log(arr)
+					arr[head.length-1] = (total_avg.reduce((total, obj) => obj.avg*obj.coeff + total,0)/total_avg.reduce((total, obj) => obj.coeff + total,0)).toFixed(2)
+					total_avg = []
 					rows = [...rows, arr]
 				}
-				
-
 			}else{
 				toastStore.trigger(create_toast('warning', 'data set empty'));
 				data_fetched = true
@@ -144,9 +129,7 @@
 			return response.json()
     	})
     	.then(data => {
-			console.log(data)
 			complaints = data
-			console.log(complaints)
 		})
 	}
 	const init = () => {
@@ -154,7 +137,6 @@
 		head = [{id:"", val:'name'}]
 		rows = [];
 		current_grade = grades_data.find((x: Grade) => x._id === selected_grade);
-		console.log(current_grade)
 		const groups = current_grade.subjects.reduce((groups:any, item:any) => ({
 		  ...groups,
 		  [item.group]: [...(groups[item.group] || []), item]
@@ -172,7 +154,6 @@
 			head = [...head, {id: '', val: "avg"}, {id: '', val: 'cred'}]
 		}
 		head = [...head, {id: '', val: 'average'}]
-		console.log(head)
 		fetch_data()
 	}
 
@@ -183,37 +164,16 @@
 				get_complaints()
 			}
 		}
-
-
 	})
-
-	
-	
 </script>
 
 <div class="h-full flex flex-col  space-y-4  ">
-
-
 	<div class='flex space-x-2'>
-
-		<!-- all years -->
-		<!-- all years 
-		<select class="select" bind:value={selected_grade_year} on:change={fetch_data} >
-			<option selected value={user_data.user_data.grade._id + " " + user_data.user_data.year}>{user_data.user_data.year} {user_data.user_data.grade.grade}</option>
-		</select>
-		-->
-
-		<!-- all grades -->
-
-
-		
-
 		<select class="select" bind:value={selected_grade} on:change={init} >
 			{#each grades_data as grade}
 				<option class='capitalize'  value={grade._id}>{grade.grade} {grade.speciality} S{grade.simester}</option>
 			{/each}
 		</select>
-
 
 		<select class="select" bind:value={selected_year} on:change={init} >
 			<option value="2015">2015</option>
@@ -225,20 +185,12 @@
 			<option value="2021">2021</option>
 			<option selected value="2022">2022</option>
 		</select>
-
-
 	</div>
-
-	<!--  -->
-
 
 	<div class="rounded-md w-full grow overflow-auto space-y-8" >
 		<div class="w-full space-y-4  ">
-		
 			<div class="table-container ">
-				<!-- Native Table Element -->
 				<table class="table table-hover">
-
 					<thead>
 						<tr>
 							<th class='text-center !align-middle'  >-</th>
@@ -282,10 +234,10 @@
 					</tbody>
 				</table>
 			</div>
-
 		</div>
 	</div>
-	<InputChip name="chips" placeholder="Write a complaint..." />
-
+	{#if user_data.role == 'student'}
+		<InputChip name="chips" placeholder="Write a complaint..." />
+	{/if}
 </div>
 

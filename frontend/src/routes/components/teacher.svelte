@@ -10,6 +10,7 @@
     import { create_toast } from "../../toasts";
     import { onMount } from "svelte";
     import { user } from "../../stores/user_store";
+    import { goto } from "$app/navigation";
 
     let tableArr: any[] = [];
     let inputs_state: {td?: number, tp?: number, exam?: number}[][] = [];
@@ -21,9 +22,7 @@
     let notes_data: NotesData[];
 
     const toggle_editable = (n: number, m: number) => {
-        console.log(n, m);
         editable[n][m] = !editable[n][m];
-        console.log(editable);
     };
 
     user.subscribe(user => {
@@ -56,7 +55,6 @@
                 }
         })
         .then(data => {
-			console.log(data)
 			complaints = data
 		})
 	}
@@ -73,7 +71,6 @@
 			return response.json()
         })
         .then(data => {
-			console.log(data)
 			complaints = data
 		})
 	}
@@ -89,14 +86,14 @@
             },
         })
             .then((response) => {
-                console.log(response);
                 if (response.status === 200) {
                     toastStore.trigger(create_toast("success", "data fetched"));
                     return response.json();
                 } else if (response.status === 401) {
-                    toastStore.trigger(create_toast("error", "message here"));
+                    toastStore.trigger(create_toast("error", "un authed"));
+                    goto("/login")
                 } else if (response.status === 404) {
-                    toastStore.trigger(create_toast("error", "message here"));
+                    toastStore.trigger(create_toast("error", "resources not found"));
                 } else {
                     toastStore.trigger(create_toast("error", "unknown error"));
                 }
@@ -116,7 +113,6 @@
                     );
                     const keys = Object.keys(notes_data);
                     for (let j = 0; j < keys.length; j++) {
-                        console.log(notes_data[keys[j]])
                         tableArr = [...tableArr, notes_data[keys[j]]];
                     }
                     editable = new Array(tableArr.length).fill([]);

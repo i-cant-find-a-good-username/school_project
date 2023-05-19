@@ -37,7 +37,6 @@
 			return response.json()
         })
         .then(data => {
-			console.log(data)
 			for (let i = 0; i < data.length; i++) {
 				complaints.push(data[i].message)
 				complaints_ids.push(data[i]._id)
@@ -46,10 +45,7 @@
 	}
 
 	const submit_complaint = (e: any, note_id: string) => {
-		console.log(e.detail.chipIndex)
-		console.log(e)
 		complaints_ids.push('some')
-
 		fetch(PUBLIC_API_URL + '/student/complaints/', {
             method: 'POST',
             headers: {
@@ -77,7 +73,6 @@
 			}
         })
         .then(data => {
-			console.log(data)
 			for (let i = 0; i < data.length; i++) {
 				complaints.push(data[i].message)
 				complaints_ids.push(data[i]._id)
@@ -86,7 +81,6 @@
 	}
 	
 	const delete_complaint = (e: any, note_id: string) => {
-		console.log(e.detail.chipIndex)
 	}
 
 
@@ -134,7 +128,6 @@
 			},
         })
         .then((response) => {
-            console.log(response)
             if (response.status === 200){
                 toastStore.trigger(create_toast('success', 'data fetched'));
 				return response.json()
@@ -148,7 +141,6 @@
         })
         .then(data => {
 			if (data.lenght > 0 || Object.keys(data).length > 0){
-				console.log(data)
 				notes_data = data
 				data_fetched = true
 			}else{
