@@ -34,6 +34,7 @@
 				<Home/>
 			{:else if  page === 1}
 				{#if user_data.user_data.role === "student"}
+					{alert('gg')}
 					<Notes/>
 				{:else}
 					<Teacher/>

@@ -29,34 +29,45 @@
 		user_data = user;
 	});
 
-    const submit_notes = (note: string, td: number, tp: number, exam: number) => {
-		fetch(PUBLIC_API_URL + '/teacher/notes/' + note, {
-            method: 'PUT',
-            headers: {
-				'Content-Type': 'application/json',
-				'X-Authorization': localStorage.getItem('token') || ""
-			},
-            body: JSON.stringify({
-                td: td,
-                tp: tp,
-                exam: exam
+    const submit_notes = (note: string, td: number, tp: number, exam: number, i: number, j: number) => {
+        if( td > 20 || td < 0 || tp > 20 || tp < 0 || exam > 20 || exam < 0){
+            toastStore.trigger(create_toast("error", "values must bet between 0 and 20"))
+        }else{
+            fetch(PUBLIC_API_URL + '/teacher/notes/' + note, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Authorization': localStorage.getItem('token') || ""
+                },
+                body: JSON.stringify({
+                    td: td,
+                    tp: tp,
+                    exam: exam
+                })
             })
-        })
-        .then((response) => {
-            if (response.status === 200) {
-                    toastStore.trigger(create_toast("success", "updated successfully"));
-                    return response.json();
-                } else if (response.status === 401) {
-                    toastStore.trigger(create_toast("error", "no auth"));
-                } else if (response.status === 404) {
-                    toastStore.trigger(create_toast("error", "note doesnt exist"));
-                } else {
-                    toastStore.trigger(create_toast("error", "server error"));
-                }
-        })
-        .then(data => {
-			complaints = data
-		})
+            .then((response) => {
+                if (response.status === 200) {
+                        toastStore.trigger(create_toast("success", "updated successfully"));
+                        console.log(inputs_state)
+                        inputs_state[i][j].td = td
+                        inputs_state[i][j].tp = tp
+                        inputs_state[i][j].exam = exam
+                        console.log(inputs_state)
+                        return response.json();
+                    } else if (response.status === 401) {
+                        toastStore.trigger(create_toast("error", "no auth"));
+                    } else if (response.status === 404) {
+                        toastStore.trigger(create_toast("error", "note doesnt exist"));
+                    }else if (response.status === 400) {
+                        toastStore.trigger(create_toast("error", "invalid request"))
+                    } else {
+                        toastStore.trigger(create_toast("error", "server error"));
+                    }
+            })
+            .then(data => {
+                complaints = data
+            })
+        }
 	}
 
     const get_complaints = () => {
@@ -116,8 +127,10 @@
                         tableArr = [...tableArr, notes_data[keys[j]]];
                     }
                     editable = new Array(tableArr.length).fill([]);
+                    inputs_state = new Array(tableArr.length).fill([]);
                     for (let h = 0; h < tableArr.length; h++) {
                         editable[h] = new Array(tableArr[h].length).fill(false);
+                        inputs_state[h] = tableArr[h].map((a: any) => a.notes);
                     }
                 } else {
                     toastStore.trigger(
@@ -128,14 +141,11 @@
             });
     };
 
-
     const init = () => {
         tableArr = [];
         editable = [[]];
     	complaints = []
-
         get_complaints()
-
         fetch_data();
     }
 
@@ -143,9 +153,6 @@
         init()
     });
 </script>
-
-
-
 
 <div class="h-full flex flex-col  space-y-4  ">
     
@@ -193,68 +200,68 @@
                                         <td class='text-center !align-middle '>{j+1}</td>
                                         <td class='text-center  border-l border-surface-700 w-1/6 !align-middle '>{row.student.username} </td>
                                         <td class='text-center  border-l border-surface-700 w-1/6 !align-middle ' >
-                                            {#if row.notes}
-                                                {#if row.notes.td}
+                                            {#if inputs_state[i][j]}
+                                                {#if inputs_state[i][j].td}
                                                     <p class={editable[i][j] ? 'hidden' : ""}>
-                                                        {row.notes.td}
+                                                        {inputs_state[i][j].td}
                                                     </p>   
-                                                    <input max='20' min='0' type="number" name="" value={row.notes.td} class={editable[i][j] ? 'input text-center p-2' : "hidden"}>
+                                                    <input bind:value={inputs_state[i][j].td} max='20' min='0' type="number" name=""  class={editable[i][j] ? 'input text-center p-2' : "hidden"}>
                                                 {:else}
                                                 <p class={editable[i][j] ? 'hidden' : " "}>
                                                     -
                                                 </p>
-                                                    <input max='20' min='0' type="number" name="" value='0' class={editable[i][j] ? 'input text-center p-2' : "hidden"}>
+                                                    <input bind:value={inputs_state[i][j].td} max='20' min='0' type="number" name=""   class={editable[i][j] ? 'input text-center p-2' : "hidden"}>
                                                 {/if}    
                                             {:else}
                                             <p class={editable[i][j] ? 'hidden' : " "}>
                                                 -
                                                 </p>
-                                                <input max='20' min='0' type="number" name="" value='0' class={editable[i][j] ? 'input text-center p-2' : "hidden"}>
+                                                <input bind:value={inputs_state[i][j].td} max='20' min='0' type="number" name=""   class={editable[i][j] ? 'input text-center p-2' : "hidden"}>
                                             {/if}
                                         </td>
                                         <td class='text-center  border-l border-surface-700 w-1/6 !align-middle ' >
-                                            {#if row.notes}
-                                                {#if row.notes.tp}  
+                                            {#if inputs_state[i][j]}
+                                                {#if inputs_state[i][j].tp}  
                                                     <p class={editable[i][j] ? 'hidden' : " "}>
-                                                        {row.notes.tp}
+                                                        {inputs_state[i][j].tp}
                                                     </p>
-                                                    <input max='20' min='0' type="number" name="" value={row.notes.tp} class={editable[i][j] ? 'input text-center p-2' : "hidden"}>
+                                                    <input bind:value={inputs_state[i][j].tp} max='20' min='0' type="number" name=""  class={editable[i][j] ? 'input text-center p-2' : "hidden"}>
                                                 {:else}
                                                     <p class={editable[i][j] ? 'hidden' : " "}>
                                                         -
                                                     </p>
-                                                    <input max='20' min='0' type="number" name="" value='0' class={editable[i][j] ? 'input text-center p-2' : "hidden"}>
+                                                    <input bind:value={inputs_state[i][j].tp} max='20' min='0' type="number" name=""   class={editable[i][j] ? 'input text-center p-2' : "hidden"}>
                                                 {/if}    
                                             {:else}
                                                 <p class={editable[i][j] ? 'hidden' : " "}>
                                                     -
                                                 </p>
-                                                <input max='20' min='0' type="number" name="" value='0' class={editable[i][j] ? 'input text-center p-2' : "hidden"}>
+                                                <input bind:value={inputs_state[i][j].tp} max='20' min='0' type="number" name=""   class={editable[i][j] ? 'input text-center p-2' : "hidden"}>
                                             {/if}
                                         </td>
                                         <td class='text-center  border-l border-surface-700 w-1/6 !align-middle ' >
-                                            {#if row.notes}
-                                                {#if row.notes.exam}    
+                                            {#if inputs_state[i][j]}
+                                                {#if inputs_state[i][j].exam}    
                                                     <p class={editable[i][j] ? 'hidden' : " "}>
-                                                        {row.notes.exam}
+                                                        {inputs_state[i][j].exam}
                                                     </p>
-                                                    <input max='20' min='0' type="number" name="" value={row.notes.exam} class={editable[i][j] ? 'input text-center p-2' : "hidden"}>
+                                                    <input bind:value={inputs_state[i][j].exam} max='20' min='0' type="number" name="" class={editable[i][j] ? 'input text-center p-2' : "hidden"}>
                                                 {:else}
                                                     <p class={editable[i][j] ? 'hidden' : " "}>
                                                         -
                                                     </p>
-                                                    <input max='20' min='0' type="number" name="" value='0' class={editable[i][j] ? 'input text-center p-2' : "hidden"}>
+                                                    <input bind:value={inputs_state[i][j].exam} max='20' min='0' type="number" name=""   class={editable[i][j] ? 'input text-center p-2' : "hidden"}>
                                                 {/if}    
                                             {:else}
                                                 <p class={editable[i][j] ? 'hidden' : " "}>
                                                     -
                                                 </p>
-                                                <input max='20' min='0' type="number" name="" value='0' class={editable[i][j] ? 'input text-center p-2' : "hidden"}>
+                                                <input bind:value={inputs_state[i][j].exam} max='20' min='0' type="number" name=""   class={editable[i][j] ? 'input text-center p-2' : "hidden"}>
                                             {/if}
                                         </td>
                                         <td class='text-center  border-l border-surface-700 w-1/6 !align-middle '>
                                             {#if row.notes}
-                                                {(row.notes.td * row.subject.notes_coefficient.td + row.notes.tp * row.subject.notes_coefficient.tp + row.notes.exam * row.subject.notes_coefficient.exam)/ (row.subject.notes_coefficient.exam + row.subject.notes_coefficient.td + row.subject.notes_coefficient.tp)}
+                                                {(((inputs_state[i][j].td || 0) * row.subject.notes_coefficient.td + (inputs_state[i][j].tp || 0) * row.subject.notes_coefficient.tp + (inputs_state[i][j].exam || 0) * row.subject.notes_coefficient.exam)/ (row.subject.notes_coefficient.exam + row.subject.notes_coefficient.td + row.subject.notes_coefficient.tp)).toFixed(2)}
                                             {:else}
                                                 -
                                             {/if}
@@ -266,21 +273,23 @@
                                             </td>
                                         {:else}
                                             <td class='text-center  border-l border-surface-700 w-1/6 !p-2 space-x-8 !align-middle '> 
-                                                <button type="button" class="btn-icon variant-filled-primary" on:click={()=>{toggle_editable(i, j); submit_notes(row._id, 0, 20 ,5) }}><Check/></button>
+                                                <button type="button" class="btn-icon variant-filled-primary" on:click={()=>{toggle_editable(i, j); submit_notes(row._id, (inputs_state[i][j].td || 0), (inputs_state[i][j].tp || 0) ,(inputs_state[i][j].exam || 0), i, j )}}><Check/></button>
                                                 <button type="button" class="btn-icon variant-filled-error" on:click={()=>{toggle_editable(i, j)}}> <Cancel/></button>
                                             </td>
                                         {/if}
                                     </tr>
-                                    {@const tempo_comps = complaints.filter(o => o.student === row.student._id)}
-                                    {#if tempo_comps }
-                                        {#each tempo_comps as complaint}
-                                            <tr class="!variant-filled-error">
-                                                <td class='text-center !align-middle '>complaint</td>
-                                                <td colspan="5" class='text-center !align-middle overflow-hidden truncate '> {complaint.message} </td>
-                                                <td class='text-center !align-middle overflow-hidden truncate '> <button type="button" class="btn variant-filled-primary">responde</button> </td>
-                                            </tr>
-                                        {/each}
-                                    {/if}
+                                    <!--
+                                        {@const tempo_comps = complaints.filter(o => o.student === row.student._id)}
+                                        {#if tempo_comps }
+                                            {#each tempo_comps as complaint}
+                                                <tr class="!variant-filled-error">
+                                                    <td class='text-center !align-middle '>complaint</td>
+                                                    <td colspan="5" class='text-center !align-middle overflow-hidden truncate '> {complaint.message} </td>
+                                                    <td class='text-center !align-middle overflow-hidden truncate '> <button type="button" class="btn variant-filled-primary">responde</button> </td>
+                                                </tr>
+                                            {/each}
+                                        {/if}
+                                    -->
                                 {/each}
                             </tbody>
                         </table>

@@ -10,10 +10,8 @@
 		user_data = user;
 	});
     const logout = () => {
-        alert('f')
         localStorage.removeItem('user_data')
         localStorage.removeItem('token')
-        alert('f')
         goto('/login')
     }
 </script>

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { isRegisterTeacher, isLoginUser, isRegisterStudent, isGlobalNotesReq, isComplaint, studentEdit, teacherEdit, note } from './middleware/types'
+import { isRegisterTeacher, isLoginUser, isRegisterStudent, isGlobalNotesReq, isComplaint, studentEdit, teacherEdit, note } from './middleware/validation'
 import { isAuth } from './middleware/auth'
 import { isAdmin } from './middleware/admin'
 import { isTeacher } from './middleware/teacher'

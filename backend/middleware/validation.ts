@@ -134,10 +134,18 @@ const note = (req: Request, res: Response, next: Function) => {
     const allowed = [ "td", "tp", "exam" ]
     const body = req.body
     var keys = Object.keys(body);
+    var values: number[] = Object.values(body);
+    for (let i = 0; i < values.length; i++) {
+        if (values[i] > 20 || values[i] <0) {
+            return res.status(400).json({
+                message: "invalid note " + keys[i] + ': ' + values[i]
+            })
+        }
+    }
     for (let i = 0; i < keys.length; i++) {
         if (!allowed.includes(keys[i])){
             if(typeof(keys[i]) !== 'number'){
-                res.status(400).json({
+                return res.status(400).json({
                     message: "only numbers allowed"
                 })
             }
