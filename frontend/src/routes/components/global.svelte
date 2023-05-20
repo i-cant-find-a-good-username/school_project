@@ -12,6 +12,7 @@
 	let selected_year: string
 	let notes_data: NotesData[]
 	let complaints: string[] = []
+	let complaints_ids: string[] = []
 	let grades_data: any
 	let current_grade: any
 	let user_data: any
@@ -26,6 +27,107 @@
 		user_data = user.user_data;
 	});
 
+	const get_complaints_admin = () => {
+		fetch(PUBLIC_API_URL + '/admin/complaints/' + selected_grade + "/" + selected_year, {
+            method: 'GET',
+            headers: {
+				'Content-Type': 'application/json',
+				'X-Authorization': localStorage.getItem('token') || ""
+			},
+        })
+        .then((response) => {
+			return response.json()
+        })
+        .then(data => {
+			for (let i = 0; i < data.length; i++) {
+				complaints.push(data[i].message)
+				complaints_ids = [...complaints_ids, data[i]._id]
+			}
+		})
+		console.log(complaints)
+	}
+
+	const get_complains = () => {
+		fetch(PUBLIC_API_URL + '/student/global_complaints/', {
+            method: 'GET',
+            headers: {
+				'Content-Type': 'application/json',
+				'X-Authorization': localStorage.getItem('token') || ""
+			},
+        })
+        .then((response) => {
+			return response.json()
+        })
+        .then(data => {
+			for (let i = 0; i < data.length; i++) {
+				complaints.push(data[i].message)
+				complaints_ids = [...complaints_ids, data[i]._id]
+			}
+		})
+		console.log(complaints)
+	}
+
+	const submit_complaint = (e: any) => {
+		fetch(PUBLIC_API_URL + '/student/global_complaints/	', {
+            method: 'POST',
+            headers: {
+				'Content-Type': 'application/json',
+				'X-Authorization': localStorage.getItem('token') || ""
+			},
+			body: JSON.stringify({
+				message: e.detail.chipValue,
+				grade: selected_grade,
+				year: selected_year
+			})
+        })
+        .then((response) => {
+			console.log(response)
+			if (response.status === 201){
+                toastStore.trigger(create_toast('success', 'complaint submitted'));
+				return response.json()
+            }else if (response.status === 401){
+                toastStore.trigger(create_toast('error', 'un authed'));
+				complaints.pop()
+            }else if (response.status === 404){
+                toastStore.trigger(create_toast('error', 'not found'));
+				complaints.pop()
+            }else{
+                toastStore.trigger(create_toast('error', "server error"));
+				complaints.pop()
+			}	
+        })
+        .then(data => {
+			console.log(data)
+		})
+	}
+	
+	const delete_complaint = (e: any) => {
+		fetch(PUBLIC_API_URL + '/student/global_complaints/' + complaints_ids[e.detail.chipIndex], {
+            method: 'DELETE',
+            headers: {
+				'Content-Type': 'application/json',
+				'X-Authorization': localStorage.getItem('token') || ""
+			},
+        })
+        .then((response) => {
+            if (response.status === 200){
+                toastStore.trigger(create_toast('success', 'deleted'));
+				return response.json()
+            }else if (response.status === 401){
+                toastStore.trigger(create_toast('error', 'un authed student'));
+            }else if (response.status === 404){
+                toastStore.trigger(create_toast('error', 'not found'));
+            }else{
+                toastStore.trigger(create_toast('error', 'server error'));
+			}
+        })
+        .then(data => {
+			console.log(data)
+			complaints_ids = [...complaints_ids.filter((item: any) => item !== complaints_ids[e.detail.chipIndex])]
+			console.log(complaints_ids)
+			console.log(complaints_ids.filter((item: any) => item !== complaints_ids[e.detail.chipIndex]))
+		})
+	}
 	const fetch_data = () => {
 		notes_data = []
 		data_fetched = false
@@ -159,14 +261,20 @@
 
 	onMount(() => {
 		init()
-		if (user_data.role === 'teacher'){
+		
+		if (user_data.role === 'student'){
+			console.log("student'){")
+			get_complains()
+		}else if (user_data.role === 'teacher'){
+			console.log("== 'teacher")
 			if(user_data.isAdmin){
-				get_complaints()
+				get_complaints_admin()
 			}
 		}
 	})
 </script>
-
+{JSON.stringify(complaints)}
+{JSON.stringify(complaints_ids)}
 <div class="h-full flex flex-col  space-y-4  ">
 	<div class='flex space-x-2'>
 		<select class="select" bind:value={selected_grade} on:change={init} >
@@ -224,7 +332,7 @@
 							<!--
 								if there is a complaint with this id only teacher see it and student can see own complaints
 							-->
-							{#if false}
+							{#if user_data.role == 'teacher' && user_data.isAdmin === true}
 								<tr class="!variant-filled-error">
 									<td class='text-center !align-middle '>complaint</td>
 									<td colspan="15" class='text-center !align-middle  overflow-hidden truncate '>variant-filled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error error</td>
@@ -237,7 +345,7 @@
 		</div>
 	</div>
 	{#if user_data.role == 'student'}
-		<InputChip chips="variant-filled-primary" on:add={(e) => {submit_complaint(e, note._id)}} on:remove={(e) => {delete_complaint(e, note._id)}} bind:value={complaints} name="chips" placeholder="Write a complaint..." />
+		<InputChip chips="variant-filled-primary" on:add={(e) => {submit_complaint(e)}} on:remove={(e) => {delete_complaint(e)}} bind:value={complaints} name="chips" placeholder="Write a complaint..." />
 	{/if}
 </div>
 

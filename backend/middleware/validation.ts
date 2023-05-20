@@ -96,6 +96,23 @@ const isComplaint = (req: Request, res: Response, next: Function) => {
 
 
 
+const isGlobalComplaint = (req: Request, res: Response, next: Function) => {
+    const body = req.body
+    if (
+        body.grade !== undefined && ObjectId.isValid(body.grade) &&
+        body.year !== undefined && typeof(body.year) === "number" &&
+        body.message !== undefined
+    ){
+        next()
+    }else{
+        res.status(400).json({
+            message: "bad input"
+        })
+    }
+}
+
+
+
 
 const studentEdit = (req: Request, res: Response, next: Function) => {
     const allowed = [ "username" ,"email" ,"grade" ,"year"]
@@ -160,7 +177,6 @@ const note = (req: Request, res: Response, next: Function) => {
 
 
 
-
 export {
     isRegisterTeacher,
     isLoginUser,
@@ -169,5 +185,6 @@ export {
     isComplaint,
     studentEdit,
     teacherEdit,
-    note
+    note,
+    isGlobalComplaint
 }

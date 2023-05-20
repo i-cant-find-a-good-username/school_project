@@ -40,13 +40,11 @@
 			for (let i = 0; i < data.length; i++) {
 				complaints.push(data[i].message)
 				complaints_ids = [...complaints_ids, data[i]._id]
-
 			}
 		})
 	}
 
 	const submit_complaint = (e: any, note_id: string) => {
-		complaints_ids.push('some')
 		fetch(PUBLIC_API_URL + '/student/complaints/', {
             method: 'POST',
             headers: {

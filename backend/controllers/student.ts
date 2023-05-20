@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { Student, Teacher } from "../models/user"
 import { Subject } from "../models/subject"
 import { Note } from "../models/note"
-import { Complaint } from "../models/complaint"
+import { Complaint, ComplaintGlobal } from "../models/complaint"
 import { ObjectId } from "mongodb";
 
 
@@ -121,11 +121,75 @@ const delete_complaint = async (req: Request, res: Response) => {
 }
 
 
+
+
 const get_global_complaints = async (req: Request, res: Response) => {
-    
+    try {
+        console.log('error 000000000000000000')
+        let complaints = await ComplaintGlobal.find({student: new ObjectId(res.locals.user_data._id)})
+
+        if(complaints.length === 0){
+            return res.status(404).json({
+                message: "no complaints"
+            })
+        }
+
+        res.status(200).json(complaints)
+
+    } catch (error) {
+        res.status(500).json({
+            message: error
+        })
+    }
 }
+
+
+
+
 const submit_global_complaint = async (req: Request, res: Response) => {
-    
+    try {
+        console.log('error 111111111111111111')
+        const data = req.body
+
+        const complaint = new ComplaintGlobal({
+            student: new ObjectId(res.locals.user_data._id),
+            grade: new ObjectId(data.grade),
+            year: data.year,
+            message: data.message
+        })
+        complaint.save()
+        res.status(201).json(complaint)
+        
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            message: error
+        })
+    }
+}
+
+
+
+
+const delete_global_complaint = async (req: Request, res: Response) => {
+    try {
+        console.log('error 222222222222222222')
+        const result = await ComplaintGlobal.deleteOne({_id: new ObjectId(req.params.id)})
+        if(result.deletedCount !== 0){
+            res.status(200).json({
+                result: "success"
+            })
+        }else{
+            res.status(404).json({
+                message: "complaint not found"
+            })
+        }
+    } catch (error) {
+        res.status(500).json({
+            result: error
+        })
+    }
+
 }
 
 
@@ -139,5 +203,6 @@ export {
     submit_complaint,
     delete_complaint,
     get_global_complaints,
-    submit_global_complaint
+    submit_global_complaint,
+    delete_global_complaint
 }
