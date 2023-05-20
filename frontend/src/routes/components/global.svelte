@@ -40,11 +40,10 @@
         })
         .then(data => {
 			for (let i = 0; i < data.length; i++) {
-				complaints.push(data[i].message)
+				complaints = [...complaints, data[i].message]
 				complaints_ids = [...complaints_ids, data[i]._id]
 			}
 		})
-		console.log(complaints)
 	}
 
 	const get_complains = () => {
@@ -60,15 +59,15 @@
         })
         .then(data => {
 			for (let i = 0; i < data.length; i++) {
-				complaints.push(data[i].message)
+				complaints = [...complaints, data[i].message]
 				complaints_ids = [...complaints_ids, data[i]._id]
 			}
 		})
-		console.log(complaints)
 	}
 
+	//not working idk why
 	const submit_complaint = (e: any) => {
-		fetch(PUBLIC_API_URL + '/student/global_complaints/	', {
+		fetch(PUBLIC_API_URL + '/student/global_complaints/', {
             method: 'POST',
             headers: {
 				'Content-Type': 'application/json',
@@ -81,20 +80,23 @@
 			})
         })
         .then((response) => {
-			console.log(response)
+				console.log(response)
 			if (response.status === 201){
                 toastStore.trigger(create_toast('success', 'complaint submitted'));
 				return response.json()
             }else if (response.status === 401){
                 toastStore.trigger(create_toast('error', 'un authed'));
 				complaints.pop()
+				complaints = [...complaints]
             }else if (response.status === 404){
                 toastStore.trigger(create_toast('error', 'not found'));
 				complaints.pop()
+				complaints = [...complaints]
             }else{
-                toastStore.trigger(create_toast('error', "server error"));
+                toastStore.trigger(create_toast('error', 'server error'));
 				complaints.pop()
-			}	
+				complaints = [...complaints]
+			}
         })
         .then(data => {
 			console.log(data)
@@ -273,9 +275,8 @@
 		}
 	})
 </script>
-{JSON.stringify(complaints)}
-{JSON.stringify(complaints_ids)}
-<div class="h-full flex flex-col  space-y-4  ">
+
+<div class="h-full flex flex-col  space-y-4">
 	<div class='flex space-x-2'>
 		<select class="select" bind:value={selected_grade} on:change={init} >
 			{#each grades_data as grade}
@@ -296,7 +297,7 @@
 	</div>
 
 	<div class="rounded-md w-full grow overflow-auto space-y-8" >
-		<div class="w-full space-y-4  ">
+		<div class="w-full space-y-4">
 			<div class="table-container ">
 				<table class="table table-hover">
 					<thead>
@@ -348,4 +349,3 @@
 		<InputChip chips="variant-filled-primary" on:add={(e) => {submit_complaint(e)}} on:remove={(e) => {delete_complaint(e)}} bind:value={complaints} name="chips" placeholder="Write a complaint..." />
 	{/if}
 </div>
-

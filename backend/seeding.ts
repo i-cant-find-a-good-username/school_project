@@ -111,7 +111,11 @@ const main = async () => {
             subject: new ObjectId(inserted_grades[0].subjects[0]._id),
             grade: new ObjectId(inserted_grades[0]._id),
             year: 2022,
-            notes:{}
+            notes:{
+                td: 0,
+                tp: 0,
+                exam: 0
+            }
         },
         {
             student: new ObjectId(inserted_students[0]._id),
@@ -120,7 +124,11 @@ const main = async () => {
             subject: new ObjectId(inserted_grades[0].subjects[1]._id),
             grade: new ObjectId(inserted_grades[0]._id),
             year: 2022,
-            notes:{}
+            notes:{
+                td: 0,
+                tp: 0,
+                exam: 0
+            }
         },
         {
             student: new ObjectId(inserted_students[0]._id),
@@ -129,7 +137,11 @@ const main = async () => {
             subject: new ObjectId(inserted_grades[0].subjects[2]._id),
             grade: new ObjectId(inserted_grades[0]._id),
             year: 2022,
-            notes:{}
+            notes:{
+                td: 0,
+                tp: 0,
+                exam: 0
+            }
         },
         {
             student: new ObjectId(inserted_students[0]._id),
@@ -138,7 +150,11 @@ const main = async () => {
             subject: new ObjectId(inserted_grades[0].subjects[3]._id),
             grade: new ObjectId(inserted_grades[0]._id),
             year: 2022,
-            notes:{}
+            notes:{
+                td: 0,
+                tp: 0,
+                exam: 0
+            }
         },
 
 
@@ -157,7 +173,11 @@ const main = async () => {
             subject: new ObjectId(inserted_grades[1].subjects[0]._id),
             grade: new ObjectId(inserted_grades[1]._id),
             year: 2022,
-            notes:{}
+            notes:{
+                td: 0,
+                tp: 0,
+                exam: 0
+            }
         },
         {
             student: new ObjectId(inserted_students[1]._id),
@@ -166,7 +186,11 @@ const main = async () => {
             subject: new ObjectId(inserted_grades[1].subjects[1]._id),
             grade: new ObjectId(inserted_grades[1]._id),
             year: 2022,
-            notes:{}
+            notes:{
+                td: 0,
+                tp: 0,
+                exam: 0
+            }
         },
         {
             student: new ObjectId(inserted_students[1]._id),
@@ -175,7 +199,11 @@ const main = async () => {
             subject: new ObjectId(inserted_grades[1].subjects[2]._id),
             grade: new ObjectId(inserted_grades[1]._id),
             year: 2022,
-            notes:{}
+            notes:{
+                td: 0,
+                tp: 0,
+                exam: 0
+            }
         },
         {
             student: new ObjectId(inserted_students[1]._id),
@@ -184,7 +212,11 @@ const main = async () => {
             subject: new ObjectId(inserted_grades[1].subjects[3]._id),
             grade: new ObjectId(inserted_grades[1]._id),
             year: 2022,
-            notes:{}
+            notes:{
+                td: 0,
+                tp: 0,
+                exam: 0
+            }
         },
 //
 //
@@ -203,7 +235,11 @@ const main = async () => {
             subject: new ObjectId(inserted_grades[2].subjects[0]._id),
             grade: new ObjectId(inserted_grades[2]._id),
             year: 2022,
-            notes:{}
+            notes:{
+                td: 0,
+                tp: 0,
+                exam: 0
+            }
         },
         {
             student: new ObjectId(inserted_students[2]._id),
@@ -212,7 +248,11 @@ const main = async () => {
             subject: new ObjectId(inserted_grades[2].subjects[1]._id),
             grade: new ObjectId(inserted_grades[2]._id),
             year: 2022,
-            notes:{}
+            notes:{
+                td: 0,
+                tp: 0,
+                exam: 0
+            }
         },
         {
             student: new ObjectId(inserted_students[2]._id),
@@ -221,7 +261,11 @@ const main = async () => {
             subject: new ObjectId(inserted_grades[2].subjects[2]._id),
             grade: new ObjectId(inserted_grades[2]._id),
             year: 2022,
-            notes:{}
+            notes:{
+                td: 0,
+                tp: 0,
+                exam: 0
+            }
         },
         {
             student: new ObjectId(inserted_students[2]._id),
@@ -230,7 +274,11 @@ const main = async () => {
             subject: new ObjectId(inserted_grades[2].subjects[3]._id),
             grade: new ObjectId(inserted_grades[2]._id),
             year: 2022,
-            notes:{}
+            notes:{
+                td: 0,
+                tp: 0,
+                exam: 0
+            }
         },
 //
 //
@@ -249,7 +297,11 @@ const main = async () => {
             subject: new ObjectId(inserted_grades[3].subjects[0]._id),
             grade: new ObjectId(inserted_grades[3]._id),
             year: 2022,
-            notes:{}
+            notes:{
+                td: 0,
+                tp: 0,
+                exam: 0
+            }
         },
         {
             student: new ObjectId(inserted_students[3]._id),
@@ -258,7 +310,11 @@ const main = async () => {
             subject: new ObjectId(inserted_grades[3].subjects[1]._id),
             grade: new ObjectId(inserted_grades[3]._id),
             year: 2022,
-            notes:{}
+            notes:{
+                td: 0,
+                tp: 0,
+                exam: 0
+            }
         },
         {
             student: new ObjectId(inserted_students[3]._id),
@@ -267,7 +323,11 @@ const main = async () => {
             subject: new ObjectId(inserted_grades[3].subjects[2]._id),
             grade: new ObjectId(inserted_grades[3]._id),
             year: 2022,
-            notes:{}
+            notes:{
+                td: 0,
+                tp: 0,
+                exam: 0
+            }
         },
         {
             student: new ObjectId(inserted_students[3]._id),
@@ -276,7 +336,11 @@ const main = async () => {
             subject: new ObjectId(inserted_grades[3].subjects[3]._id),
             grade: new ObjectId(inserted_grades[3]._id),
             year: 2022,
-            notes:{}
+            notes:{
+                td: 0,
+                tp: 0,
+                exam: 0
+            }
         }
     )
 

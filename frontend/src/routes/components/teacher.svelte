@@ -47,12 +47,10 @@
             })
             .then((response) => {
                 if (response.status === 200) {
-                        toastStore.trigger(create_toast("success", "updated successfully"));
-                        console.log(inputs_state)
                         inputs_state[i][j].td = td
                         inputs_state[i][j].tp = tp
                         inputs_state[i][j].exam = exam
-                        console.log(inputs_state)
+                        toastStore.trigger(create_toast("success", "updated successfully"));
                         return response.json();
                     } else if (response.status === 401) {
                         toastStore.trigger(create_toast("error", "no auth"));
@@ -213,8 +211,8 @@
                                                     <input bind:value={inputs_state[i][j].td} max='20' min='0' type="number" name=""   class={editable[i][j] ? 'input text-center p-2' : "hidden"}>
                                                 {/if}    
                                             {:else}
-                                            <p class={editable[i][j] ? 'hidden' : " "}>
-                                                -
+                                                <p class={editable[i][j] ? 'hidden' : " "}>
+                                                    -
                                                 </p>
                                                 <input bind:value={inputs_state[i][j].td} max='20' min='0' type="number" name=""   class={editable[i][j] ? 'input text-center p-2' : "hidden"}>
                                             {/if}

@@ -47,7 +47,11 @@ const register = async (req: Request, res: Response) => {
 					subject: new ObjectId(teachers[i].subjects[0]._id),
 					grade: new ObjectId(data.grade),
 					year: 2022,
-					notes:{}
+					notes:{
+						td: 0,
+						tp: 0,
+						exam: 0
+					}
 				}
 			)
 		}

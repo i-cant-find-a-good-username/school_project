@@ -63,12 +63,15 @@
             }else if (response.status === 401){
                 toastStore.trigger(create_toast('error', 'un authed'));
 				complaints.pop()
+				complaints = [...complaints]
             }else if (response.status === 404){
                 toastStore.trigger(create_toast('error', 'not found'));
 				complaints.pop()
+				complaints = [...complaints]
             }else{
                 toastStore.trigger(create_toast('error', 'server error'));
 				complaints.pop()
+				complaints = [...complaints]
 			}
         })
         .then(data => {
