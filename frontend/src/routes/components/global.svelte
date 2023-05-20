@@ -237,7 +237,7 @@
 		</div>
 	</div>
 	{#if user_data.role == 'student'}
-		<InputChip name="chips" placeholder="Write a complaint..." />
+		<InputChip chips="variant-filled-primary" on:add={(e) => {submit_complaint(e, note._id)}} on:remove={(e) => {delete_complaint(e, note._id)}} bind:value={complaints} name="chips" placeholder="Write a complaint..." />
 	{/if}
 </div>
 

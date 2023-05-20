@@ -121,6 +121,15 @@ const delete_complaint = async (req: Request, res: Response) => {
 }
 
 
+const get_global_complaints = async (req: Request, res: Response) => {
+    
+}
+const submit_global_complaint = async (req: Request, res: Response) => {
+    
+}
+
+
+
 
 
 export {
@@ -128,5 +137,7 @@ export {
     get_global_notes,
     get_complaints,
     submit_complaint,
-    delete_complaint
+    delete_complaint,
+    get_global_complaints,
+    submit_global_complaint
 }

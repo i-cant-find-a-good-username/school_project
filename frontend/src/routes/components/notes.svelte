@@ -183,12 +183,6 @@
 </script>
 
 <div  class='space-y-4'>
-	{JSON.stringify(complaints[0])}
-	{JSON.stringify(complaints)}
-	{JSON.stringify(complaints.length)}
-
-	{JSON.stringify(complaints_ids)}
-	{JSON.stringify(complaints_ids.length)}
 	<!-- 
 		filled ghost soft ringed glass
 	-->	
@@ -229,7 +223,7 @@
 						</div>
     			        <Table interactive={true} source={create_table(i, [note.notes], note.subject.notes_coefficient)} regionCell='border-l border-surface-700 text-center w-1/3 align-bottom' regionHeadCell="text-center"   regionFootCell="text-center"   />               
 						Last Update: {note.updatedAt.substring(0,10)} {note.updatedAt.substring(11,19)}     
-						<InputChip chips="variant-filled-primary !border-4 border-red-600 !w-full" on:add={(e) => {submit_complaint(e, note._id)}} on:remove={(e) => {delete_complaint(e, note._id)}} bind:value={complaints} name="chips" placeholder="Write a complaint..." />
+						<InputChip chips="variant-filled-primary" on:add={(e) => {submit_complaint(e, note._id)}} on:remove={(e) => {delete_complaint(e, note._id)}} bind:value={complaints} name="chips" placeholder="Write a complaint..." />
 					</svelte:fragment>
 				</AccordionItem>
 			{/each}
