@@ -40,8 +40,7 @@
         })
         .then(data => {
 			for (let i = 0; i < data.length; i++) {
-				complaints = [...complaints, data[i].message]
-				complaints_ids = [...complaints_ids, data[i]._id]
+				complaints = [...complaints, data[i]]
 			}
 		})
 	}
@@ -181,7 +180,7 @@
 				let total_avg: {coeff: number, avg: number}[] = []
 				for (let i = 0; i < Object.keys(notes_groups).length; i++) {
 					const group = Object.keys(notes_groups)[i]
-					var arr: string[] = new Array(head.length).fill("")
+					var arr: any[] = new Array(head.length).fill("")
 					arr[0] = notes_groups[group][0].student.username
 					let avg: {coeff: number, avg: number}[] = []
 					for (let j = 1; j < head.length; j++) {
@@ -275,7 +274,7 @@
 		}
 	})
 </script>
-
+{JSON.stringify(complaints)}
 <div class="h-full flex flex-col  space-y-4">
 	<div class='flex space-x-2'>
 		<select class="select" bind:value={selected_grade} on:change={init} >
@@ -334,10 +333,13 @@
 								if there is a complaint with this id only teacher see it and student can see own complaints
 							-->
 							{#if user_data.role == 'teacher' && user_data.isAdmin === true}
-								<tr class="!variant-filled-error">
-									<td class='text-center !align-middle '>complaint</td>
-									<td colspan="15" class='text-center !align-middle  overflow-hidden truncate '>variant-filled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error error</td>
-								</tr>
+								{#if false}
+									 <!-- content here -->
+									<tr class="!variant-filled-error">
+										<td class='text-center !align-middle '>complaint</td>
+										<td colspan="15" class='text-center !align-middle  overflow-hidden truncate '>variant-filled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error errorfilled- error error</td>
+									</tr>
+								{/if}
 							{/if}
 						{/each}
 					</tbody>
