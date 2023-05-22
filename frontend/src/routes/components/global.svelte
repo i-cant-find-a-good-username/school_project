@@ -274,7 +274,8 @@
 		}
 	})
 </script>
-{JSON.stringify(complaints)}
+
+
 <div class="h-full flex flex-col  space-y-4">
 	<div class='flex space-x-2'>
 		<select class="select" bind:value={selected_grade} on:change={init} >
