@@ -187,12 +187,9 @@ const get_admin_complaints = async (req: Request, res: Response) => {
             })
         }
         // @ts-ignore
-        //let notes = await Note.find({ subject: { $in: grade_subjects.subjects } }).select('_id')
 
-        console.log(grades_admin)
         // @ts-ignore
         let complaints = await ComplaintGlobal.find({ grade: {$in: grades_admin.grades_admin} })
-        console.log(complaints)
 
         if (complaints.length === 0) {
             return res.status(404).json({

@@ -50,7 +50,6 @@
                 body: JSON.stringify({email: email.value, password: password.value, type: is_teacher ? 'teacher' : 'student'})
             })
             .then((response) => {
-                console.log(response)
                 if (response.status === 200){
                     toastStore.trigger(create_toast('success', 'data fetched'));
                     return response.json()

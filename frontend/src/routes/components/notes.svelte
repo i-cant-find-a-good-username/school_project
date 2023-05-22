@@ -75,9 +75,7 @@
 			}
         })
         .then(data => {
-			console.log(data)
-			//	complaints.push(data.message)
-			//	complaints_ids = [...complaints_ids, data._id]
+
 		})
 	}
 	
@@ -102,10 +100,7 @@
 			}
         })
         .then(data => {
-			console.log(data)
 			complaints_ids = [...complaints_ids.filter((item: any) => item !== complaints_ids[e.detail.chipIndex])]
-			console.log(complaints_ids)
-			console.log(complaints_ids.filter((item: any) => item !== complaints_ids[e.detail.chipIndex]))
 		})
 	}
 	

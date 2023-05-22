@@ -13,9 +13,6 @@ const login = async (req: Request, res: Response) => {
 	try {
 		const data = req.body
 
-		console.log('student')
-		console.log(data)
-		
 		let user
 		if(data.type == 'teacher'){
 			user = await Teacher.findOne({email: data.email})
@@ -46,7 +43,6 @@ const login = async (req: Request, res: Response) => {
 			token: generate_token(user, user.id, data.type)
 		})
 	} catch (error) {
-		console.log(error)
 		res.status(500).json({
 			message: error
 		})

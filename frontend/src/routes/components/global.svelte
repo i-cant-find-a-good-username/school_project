@@ -79,7 +79,6 @@
 			})
         })
         .then((response) => {
-				console.log(response)
 			if (response.status === 201){
                 toastStore.trigger(create_toast('success', 'complaint submitted'));
 				return response.json()
@@ -98,7 +97,7 @@
 			}
         })
         .then(data => {
-			console.log(data)
+			
 		})
 	}
 	
@@ -123,10 +122,7 @@
 			}
         })
         .then(data => {
-			console.log(data)
 			complaints_ids = [...complaints_ids.filter((item: any) => item !== complaints_ids[e.detail.chipIndex])]
-			console.log(complaints_ids)
-			console.log(complaints_ids.filter((item: any) => item !== complaints_ids[e.detail.chipIndex]))
 		})
 	}
 	const fetch_data = () => {
@@ -264,10 +260,8 @@
 		init()
 		
 		if (user_data.role === 'student'){
-			console.log("student'){")
 			get_complains()
 		}else if (user_data.role === 'teacher'){
-			console.log("== 'teacher")
 			if(user_data.isAdmin){
 				get_complaints_admin()
 			}

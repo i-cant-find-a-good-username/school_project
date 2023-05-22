@@ -40,7 +40,6 @@ const get_global_notes = async (req: Request, res: Response) => {
     
         res.status(200).json(notes)  
     } catch (error) {
-        console.log(error)
         res.status(500).json({
             message: error
         })
@@ -91,7 +90,6 @@ const submit_complaint = async (req: Request, res: Response) => {
             res.status(201).json(complaint)
         }
     } catch (error) {
-        console.log(error)
         res.status(500).json({
             message: error
         })
@@ -125,7 +123,6 @@ const delete_complaint = async (req: Request, res: Response) => {
 
 const get_global_complaints = async (req: Request, res: Response) => {
     try {
-        console.log('error 000000000000000000')
         let complaints = await ComplaintGlobal.find({student: new ObjectId(res.locals.user_data._id)})
 
         if(complaints.length === 0){
@@ -148,7 +145,6 @@ const get_global_complaints = async (req: Request, res: Response) => {
 
 const submit_global_complaint = async (req: Request, res: Response) => {
     try {
-        console.log('error 111111111111111111')
         const data = req.body
 
         const complaint = new ComplaintGlobal({
@@ -161,7 +157,6 @@ const submit_global_complaint = async (req: Request, res: Response) => {
         res.status(201).json(complaint)
         
     } catch (error) {
-        console.log(error)
         res.status(500).json({
             message: error
         })
@@ -173,7 +168,6 @@ const submit_global_complaint = async (req: Request, res: Response) => {
 
 const delete_global_complaint = async (req: Request, res: Response) => {
     try {
-        console.log('error 222222222222222222')
         const result = await ComplaintGlobal.deleteOne({_id: new ObjectId(req.params.id)})
         if(result.deletedCount !== 0){
             res.status(200).json({

@@ -12,7 +12,6 @@ const get_grades = async (req: Request, res: Response) => {
 
 			res.status(200).json(grades)
 	} catch (error) {
-		console.log(error)
 		res.status(500).json({
 			message: error
 		})

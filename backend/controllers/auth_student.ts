@@ -61,7 +61,6 @@ const register = async (req: Request, res: Response) => {
 			message: student,
 		})
 	} catch (error) {
-		console.log(error)
 		res.status(500).json({
 			message: error
 		})
